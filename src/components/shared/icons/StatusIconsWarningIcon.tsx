@@ -1,0 +1,10 @@
+import * as React from 'react';
+import type { SVGProps } from "react";
+
+const StatusIconsWarningIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+     width="1em" height="1em" viewBox="0 0 32 34" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M31.9241 11.3007V22.7007C31.9241 24.5673 30.8715 26.3007 29.1697 27.2507L18.7487 32.9674C17.0469 33.9007 14.9416 33.9007 13.2223 32.9674L2.80127 27.2507C1.09952 26.3174 0.046875 24.584 0.046875 22.7007V11.3007C0.046875 9.43404 1.09952 7.70064 2.80127 6.75064L13.2223 1.03398C14.9241 0.100651 17.0294 0.100651 18.7487 1.03398L29.1697 6.75064C30.8715 7.70064 31.9241 9.41737 31.9241 11.3007Z" fill="#C07D14" /><path d="M16 9.91797V18.668" stroke="white" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" /><path d="M16 22.5996V22.5997" stroke="white" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+export default StatusIconsWarningIcon;

@@ -1,0 +1,163 @@
+@import 'tailwindcss';
+@import './components/ui/style.css';
+@import './components/shared/style.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-dana: var(--font-dana);
+  --font-poppins: var(--font-poppins);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary-10: oklch(0.8913 0.053 275.91);
+  --color-primary-20: oklch(0.8171 0.0901 275.21);
+  --color-primary-30: oklch(0.7277 0.1395 273.87);
+  --color-primary-40: oklch(0.642 0.1895 271.69);
+  --color-primary-50: oklch(0.5631 0.2362 268.5);
+  --color-primary: oklch(0.5011 0.2764 265.51); /*base*/
+  --color-primary-60: oklch(0.4404 0.2388 265.66);
+  --color-primary-70: oklch(0.3763 0.2004 265.97);
+  --color-primary-80: oklch(0.3111 0.159 266.39);
+  --color-primary-90: oklch(0.2395 0.1144 266.96);
+  --color-primary-100: oklch(0.1826 0.0759 267.59);
+  --color-secondary-10: oklch(0.9283 0.0399 47.46);
+  --color-secondary-20: oklch(0.8824 0.0669 48.9);
+  --color-secondary-30: oklch(0.8271 0.1028 47.42);
+  --color-secondary-40: oklch(0.776 0.1389 46.16);
+  --color-secondary-50: oklch(0.7306 0.1717 45.22);
+  --color-secondary: oklch(0.6921 0.2008 41.77); /*base*/
+  --color-secondary-60: oklch(0.6051 0.1739 41.91);
+  --color-secondary-70: oklch(0.5148 0.1459 42.09);
+  --color-secondary-80: oklch(0.422 0.1154 42.98);
+  --color-secondary-90: oklch(0.3204 0.0828 44.51);
+  --color-secondary-100: oklch(0.2353 0.0561 45.36);
+  --color-neutral-10: oklch(1 0 0);
+  --color-neutral-20: oklch(0.9881 0 0);
+  --color-neutral-30: oklch(0.9731 0 0);
+  --color-neutral-40: oklch(0.937 0 0);
+  --color-neutral-50: oklch(0.9006 0 0);
+  --color-neutral-60: oklch(0.8483 0 0);
+  --color-neutral-70: oklch(0.7889 0 0);
+  --color-neutral: oklch(0.6268 0 0); /*base*/
+  --color-neutral-80: oklch(0.4165 0 0);
+  --color-neutral-90: oklch(0.3052 0 0);
+  --color-neutral-100: oklch(0.2478 0 0);
+  --color-neutral-110: oklch(0.1822 0 0);
+  --color-neutral-120: oklch(0.1398 0 0);
+  --color-success-10: oklch(0.9732 0.0204 173.96);
+  --color-success-20: oklch(0.9013 0.0784 172.57);
+  --color-success: oklch(0.7292 0.1387 172.36); /*base*/
+  --color-success-30: oklch(0.5772 0.1096 172.02);
+  --color-success-40: oklch(0.3226 0.0586 173.76);
+  --color-info-10: oklch(0.9648 0.0178 245.38);
+  --color-info-20: oklch(0.8542 0.0754 248.72);
+  --color-info: oklch(0.6115 0.2118 258.12); /*base*/
+  --color-info-30: oklch(0.5031 0.1728 258.18);
+  --color-info-40: oklch(0.3396 0.1151 260.29);
+  --color-warning-10: oklch(0.9769 0.0186 75.33);
+  --color-warning-20: oklch(0.9048 0.0812 76.14);
+  --color-warning: oklch(0.8028 0.1614 70.65); /*base*/
+  --color-warning-30: oklch(0.6444 0.134 70.56);
+  --color-warning-40: oklch(0.3801 0.0762 69.6);
+  --color-error-10: oklch(0.953 0.0248 2.07);
+  --color-error-20: oklch(0.8422 0.09 7.04);
+  --color-error: oklch(0.5501 0.2104 19.99); /*base*/
+  --color-error-30: oklch(0.4386 0.1673 19.26);
+  --color-error-40: oklch(0.292 0.1106 16.8);
+
+  --radius-xs: 4px;
+  --radius-xs-plus: 6px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-3xl: 24px;
+  --radius-4xl: 32px;
+}
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.1822 0 0);
+  --primary-10: oklch(0.8913 0.053 275.91);
+  --primary-20: oklch(0.8171 0.0901 275.21);
+  --primary-30: oklch(0.7277 0.1395 273.87);
+  --primary-40: oklch(0.642 0.1895 271.69);
+  --primary-50: oklch(0.5631 0.2362 268.5);
+  --primary: oklch(0.5011 0.2764 265.51); /*base*/
+  --primary-60: oklch(0.4404 0.2388 265.66);
+  --primary-70: oklch(0.3763 0.2004 265.97);
+  --primary-80: oklch(0.3111 0.159 266.39);
+  --primary-90: oklch(0.2395 0.1144 266.96);
+  --primary-100: oklch(0.1826 0.0759 267.59);
+  --secondary-10: oklch(0.9283 0.0399 47.46);
+  --secondary-20: oklch(0.8824 0.0669 48.9);
+  --secondary-30: oklch(0.8271 0.1028 47.42);
+  --secondary-40: oklch(0.776 0.1389 46.16);
+  --secondary-50: oklch(0.7306 0.1717 45.22);
+  --secondary: oklch(0.6921 0.2008 41.77); /*base*/
+  --secondary-60: oklch(0.6051 0.1739 41.91);
+  --secondary-70: oklch(0.5148 0.1459 42.09);
+  --secondary-80: oklch(0.422 0.1154 42.98);
+  --secondary-90: oklch(0.3204 0.0828 44.51);
+  --secondary-100: oklch(0.2353 0.0561 45.36);
+  --neutral-10: oklch(1 0 0);
+  --neutral-20: oklch(0.9881 0 0);
+  --neutral-30: oklch(0.9731 0 0);
+  --neutral-40: oklch(0.937 0 0);
+  --neutral-50: oklch(0.9006 0 0);
+  --neutral-60: oklch(0.8483 0 0);
+  --neutral-70: oklch(0.7889 0 0);
+  --neutral: oklch(0.6268 0 0); /*base*/
+  --neutral-80: oklch(0.4165 0 0);
+  --neutral-90: oklch(0.3052 0 0);
+  --neutral-100: oklch(0.2478 0 0);
+  --neutral-110: oklch(0.1822 0 0);
+  --neutral-120: oklch(0.1398 0 0);
+  --success-10: oklch(0.9732 0.0204 173.96);
+  --success-20: oklch(0.9013 0.0784 172.57);
+  --success: oklch(0.7292 0.1387 172.36); /*base*/
+  --success-30: oklch(0.5772 0.1096 172.02);
+  --success-40: oklch(0.3226 0.0586 173.76);
+  --success-disabled: oklch(0.8977 0.0513 180.95);
+  --info-10: oklch(0.9648 0.0178 245.38);
+  --info-20: oklch(0.8542 0.0754 248.72);
+  --info: oklch(0.6115 0.2118 258.12); /*base*/
+  --info-30: oklch(0.5031 0.1728 258.18);
+  --info-40: oklch(0.3396 0.1151 260.29);
+  --info-disabled: oklch(0.8444 0.0442 254.76);
+  --warning-10: oklch(0.9769 0.0186 75.33);
+  --warning-20: oklch(0.9048 0.0812 76.14);
+  --warning: oklch(0.8028 0.1614 70.65); /*base*/
+  --warning-30: oklch(0.6444 0.134 70.56);
+  --warning-40: oklch(0.3801 0.0762 69.6);
+  --warning-disabled: oklch(0.8841 0.044 78.47);
+  --error-10: oklch(0.953 0.0248 2.07);
+  --error-20: oklch(0.8422 0.09 7.04);
+  --error: oklch(0.5501 0.2104 19.99); /*base*/
+  --error-30: oklch(0.4386 0.1673 19.26);
+  --error-40: oklch(0.292 0.1106 16.8);
+  --error-disabled: oklch(0.831 0.0565 5.8);
+}
+
+.dark {
+  --background: oklch(0.1822 0 0);
+  --foreground: oklch(1 0 0);
+  --success-disabled: oklch(0.434 0.0498 178.39);
+  --info-disabled: oklch(0.3746 0.0475 255.82);
+  --warning-disabled: oklch(0.4164 0.0446 76.66);
+  --error-disabled: oklch(0.3651 0.0616 9.89);
+}
+
+@layer base {
+  html {
+    @apply font-dana;
+    -moz-font-feature-settings: "ss02";
+    -webkit-font-feature-settings: "ss02";
+    font-feature-settings: "ss02";
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

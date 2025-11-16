@@ -1,0 +1,47 @@
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
+  rel="stylesheet"
+/>
+<link
+  href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap"
+  rel="stylesheet"
+/>
+<style>
+  body {
+    font-family: 'Geist', 'Geist Mono', Arial, Helvetica, sans-serif !important;
+  }
+
+  body,
+  .sbdocs,
+  .sbdocs > div {
+    background-color: rgb(var(--storybook-bg)) !important;
+    color: hsl(var(--storybook-fg)) !important;
+    font-family: 'Geist' !important;
+  }
+
+  body *:not(button):not(.alert):not(.tooltip):not(svg):not(#storybook-root > *):not(.sb-story > div > *):not(.sb-story *):not(#storybook-root *) {
+    color: hsl(var(--storybook-fg));
+  }
+
+  .docblock-argstable tr * {
+    background-color: transparent !important;
+  }
+
+  .docblock-argstable {
+    background-color: rgb(var(--storybook-bg)) !important;
+  }
+
+  .docblock-argstable td:last-of-type,
+  .docblock-argstable th:last-of-type {
+    display: none !important;
+  }
+
+  .sb-story > div,
+  #storybook-root {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+  }
+</style>

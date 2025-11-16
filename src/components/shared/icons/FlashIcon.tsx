@@ -1,0 +1,10 @@
+import * as React from 'react';
+import type { SVGProps } from "react";
+
+const FlashIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+     width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M6.08998 13.2809H9.17998V20.4809C9.17998 22.1609 10.09 22.5009 11.2 21.2409L18.77 12.6409C19.7 11.5909 19.31 10.7209 17.9 10.7209H14.81V3.52087C14.81 1.84087 13.9 1.50087 12.79 2.76087L5.21998 11.3609C4.29998 12.4209 4.68998 13.2809 6.08998 13.2809Z" stroke="currentColor" strokeWidth={1.8} strokeMiterlimit={10} strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+export default FlashIcon;

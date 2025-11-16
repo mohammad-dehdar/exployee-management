@@ -1,0 +1,10 @@
+import * as React from 'react';
+import type { SVGProps } from "react";
+
+const MicrophoneIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+     width="1em" height="1em" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M12 16C14.21 16 16 14.21 16 12V6.5C16 4.29 14.21 2.5 12 2.5C9.79 2.5 8 4.29 8 6.5V12C8 14.21 9.79 16 12 16Z" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" /><path d="M4.35001 10.1504V11.8504C4.35001 16.0704 7.78001 19.5004 12 19.5004C16.22 19.5004 19.65 16.0704 19.65 11.8504V10.1504" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" /><path d="M12 19.5V22.5" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+export default MicrophoneIcon;

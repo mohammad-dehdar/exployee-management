@@ -1,0 +1,10 @@
+import * as React from 'react';
+import type { SVGProps } from "react";
+
+const FilterIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+     width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M3.3479 2H12.2479C12.9879 2 13.5979 2.61001 13.5979 3.35001V4.82999C13.5979 5.36999 13.2579 6.04 12.9279 6.38L10.028 8.94C9.62795 9.28 9.35791 9.94999 9.35791 10.49V13.39C9.35791 13.79 9.08792 14.33 8.74792 14.54L7.80792 15.15C6.92792 15.69 5.71789 15.08 5.71789 14V10.43C5.71789 9.95999 5.44792 9.35001 5.17792 9.01001L2.61792 6.31C2.27792 5.97 2.00793 5.36999 2.00793 4.95999V3.41C1.99793 2.61 2.6079 2 3.3479 2Z" stroke="currentColor" strokeWidth={1.5} strokeMiterlimit={10} strokeLinecap="round" strokeLinejoin="round" /><path d="M2 12V15C2 20 4 22 9 22H15C20 22 22 20 22 15V9C22 5.88 21.22 3.91999 19.41 2.89999C18.9 2.60999 17.88 2.38999 16.95 2.23999" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" /><path d="M13 13H18" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" /><path d="M11 17H18" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+export default FilterIcon;

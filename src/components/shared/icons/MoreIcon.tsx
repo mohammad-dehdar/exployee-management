@@ -1,0 +1,10 @@
+import * as React from 'react';
+import type { SVGProps } from "react";
+
+const MoreIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+     width="1em" height="1em" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><rect y={9.5} width={6} height={6} rx={3} fill="currentColor" /><rect x={9} y={9.5} width={6} height={6} rx={3} fill="currentColor" /><rect x={18} y={9.5} width={6} height={6} rx={3} fill="currentColor" />
+  </svg>
+);
+
+export default MoreIcon;
