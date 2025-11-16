@@ -1,0 +1,60 @@
+@layer components {
+  .label {
+    @apply peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
+  }
+
+  /* Color */
+  .label-primary {
+    @apply text-primary active:text-primary/30;
+  }
+  .label-secondary {
+    @apply text-secondary active:text-secondary/30;
+  }
+  .label-success {
+    @apply text-success active:text-success/30;
+  }
+  .label-error {
+    @apply text-error active:text-error/30;
+  }
+  .label-warning {
+    @apply text-warning active:text-warning/30;
+  }
+  .label-info {
+    @apply text-info active:text-info/30;
+  }
+  .label-neutral {
+    @apply text-neutral active:text-neutral/30;
+  } 
+
+  /* Size Variants */
+ .label-xs {
+    @apply text-xs;
+  }
+  .label-sm {
+    @apply text-sm;
+  }
+  .label-md {
+    @apply text-base;
+  }
+  .label-lg {
+    @apply text-lg;
+  }
+  .label-xl {
+    @apply text-xl;
+  } 
+
+  /* Align  */
+.label-left {
+    @apply text-left;
+  }
+  .label-right {
+    @apply text-right;
+  }
+  .label-center {
+    @apply text-center;
+  }
+  .label-justify {
+    @apply text-justify;
+  } 
+}
+

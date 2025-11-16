@@ -1,3 +1,5 @@
+import { LoginFeature } from "@/feature/login";
+
 export default function LoginPage() {
-    return <div>Login</div>;
+    return <LoginFeature />;
 }

@@ -1,0 +1,269 @@
+@layer components {
+  .textInput {
+    @apply bg-neutral-30 dark:bg-neutral-90 focus-within:border-primary relative flex h-14 w-100 cursor-pointer items-center gap-2.5 rounded-[14px] border-1 border-transparent px-5 transition-colors focus:outline-none;
+    input {
+      @apply dark:placeholder:text-neutral h-full placeholder:text-neutral-60 text-base font-medium placeholder:text-base placeholder:font-medium;
+    }
+    svg {
+      @apply text-neutral-60 h-4.5 w-4.5;
+    }
+  }
+
+  .textInputLabel {
+    @apply text-neutral-90 dark:text-neutral mb-2 font-semibold;
+  }
+
+  .textInputMessage {
+    @apply mt-2 font-semibold;
+  }
+
+  /* Primary */
+  .textInput-primary {
+    @apply focus-within:border-primary;
+  }
+
+  .textInput-primary.textInput-outline {
+    @apply focus-within:bg-primary/10 border-primary border;
+  }
+
+  .textInput-primary.textInput-fill {
+    @apply bg-primary focus-within:bg-primary/90 text-white;
+  }
+
+  .textInput-primary.textInput-ghost {
+    @apply text-primary focus-within:bg-primary/10 border-transparent;
+  }
+
+  .textInput-primary span svg {
+    @apply stroke-primary;
+  }
+
+  /* Secondary */
+  .textInput-secondary {
+    @apply focus-within:bg-secondary/90;
+  }
+
+  .textInput-secondary.textInput-outline {
+    @apply border-secondary text-secondary focus-within:bg-secondary/10 border;
+  }
+
+  .textInput-secondary.textInput-fill {
+    @apply bg-secondary focus-within:bg-secondary/90 text-white;
+  }
+
+  .textInput-secondary.textInput-ghost {
+    @apply text-secondary focus-within:bg-secondary/10 border-transparent;
+  }
+
+  .textInput-secondary span svg {
+    @apply stroke-secondary;
+  }
+
+  /* Success */
+  .textInput-success {
+    @apply text-success focus-within:border-success border-success;
+  }
+
+  .textInput-success.textInput-outline {
+    @apply border-success text-success focus-within:bg-success/10 border;
+  }
+
+  .textInput-success.textInput-fill {
+    @apply bg-success focus-within:bg-success/90 text-white;
+  }
+
+  .textInput-success.textInput-ghost {
+    @apply text-success focus-within:bg-success/10 border-transparent;
+  }
+
+  .textInput-success span svg {
+    @apply stroke-success;
+  }
+
+  /* Warning */
+  .textInput-warning {
+    @apply text-warning focus-within:border-warning border-warning;
+  }
+
+  .textInput-warning.textInput-outline {
+    @apply border-warning text-warning focus-within:bg-warning/10 border;
+  }
+
+  .textInput-warning.textInput-fill {
+    @apply bg-warning focus-within:bg-warning/90 text-white;
+  }
+
+  .textInput-warning.textInput-ghost {
+    @apply text-warning focus-within:bg-warning/10 border-transparent;
+  }
+
+  .textInput-warning span svg {
+    @apply stroke-warning;
+  }
+
+  /* error */
+  .textInput-error {
+    @apply text-error focus-within:border-error border-error;
+  }
+
+  .textInput-error.textInput-outline {
+    @apply border-error text-error focus-within:bg-error/10 border;
+  }
+
+  .textInput-error.textInput-fill {
+    @apply bg-error focus-within:bg-error/90 text-white;
+  }
+
+  .textInput-error.textInput-ghost {
+    @apply text-error focus-within:bg-error/10 border-transparent;
+  }
+
+  .textInput-error span svg {
+    @apply stroke-error;
+  }
+
+  /* Info */
+  .textInput-info {
+    @apply focus-within:bg-info/90;
+  }
+
+  .textInput-info.textInput-outline {
+    @apply border-info text-info focus-within:bg-info/10 border;
+  }
+
+  .textInput-info.textInput-fill {
+    @apply bg-info focus-within:bg-info/90 text-white;
+  }
+
+  .textInput-info.textInput-ghost {
+    @apply text-info focus-within:bg-info/10 border-transparent;
+  }
+
+  .textInput-info span svg {
+    @apply stroke-info;
+  }
+
+  /* Neutral */
+  .textInput-neutral {
+    @apply focus-within:bg-neutral/90;
+  }
+
+  .textInput-neutral.textInput-outline {
+    @apply border-neutral text-neutral focus-within:bg-neutral/10 border;
+  }
+
+  .textInput-neutral.textInput-fill {
+    @apply bg-neutral focus-within:bg-neutral/90 text-white;
+  }
+
+  .textInput-neutral.textInput-ghost {
+    @apply text-neutral focus-within:bg-neutral/10 border-transparent;
+  }
+
+  .textInput-neutral span svg {
+    @apply stroke-neutral;
+  }
+
+  /* Full width */
+  .textInput-fullWidth {
+    @apply w-full;
+  }
+
+  /* Disabled */
+  .textInput-disabled {
+    @apply pointer-events-none cursor-not-allowed;
+  }
+}
+
+/* Size TextInput */
+@utility textInput-base {
+  @apply gap-2.5;
+  input {
+    @apply dark:placeholder:text-neutral placeholder:text-neutral-50;
+  }
+  svg {
+    @apply text-neutral-60;
+  }
+}
+
+@utility textInput-sm {
+  @apply textInput-base h-12 w-75 rounded-[12px] px-5;
+  input {
+    @apply text-sm font-normal placeholder:text-sm placeholder:font-normal;
+  }
+  svg {
+    @apply h-4 w-4;
+  }
+}
+
+@utility textInput-md {
+  @apply textInput-base h-14 w-100 rounded-[14px] px-5;
+  input {
+    @apply text-base font-medium placeholder:text-base placeholder:font-medium;
+  }
+  svg {
+    @apply h-4.5 w-4.5;
+  }
+}
+
+@utility textInput-lg {
+  @apply textInput-base h-16 w-125 rounded-[16px] px-6;
+  input {
+    @apply text-lg font-medium placeholder:text-lg placeholder:font-medium;
+  }
+  svg {
+    @apply h-5 w-5;
+  }
+}
+
+/* Light Bckground */
+@utility textInput-sm-light {
+  @apply textInput-sm bg-neutral-10 dark:bg-neutral-90;
+}
+
+@utility textInput-md-light {
+  @apply textInput-md bg-neutral-10 dark:bg-neutral-90;
+}
+
+@utility textInput-lg-light {
+  @apply textInput-lg bg-neutral-10 dark:bg-neutral-90;
+}
+
+/* EndAction Icon */
+@utility textInput-sm-endAction {
+  @apply textInput-sm pr-4 pl-3;
+}
+
+@utility textInput-md-endAction {
+  @apply textInput-md pr-4.5 pl-3.5;
+}
+
+@utility textInput-lg-endAction {
+  @apply textInput-lg pr-5 pl-4;
+}
+
+/* Label size */
+@utility textInput-sm-label {
+  @apply text-sm;
+}
+
+@utility textInput-md-label {
+  @apply text-base;
+}
+
+@utility textInput-lg-label {
+  @apply text-lg;
+}
+
+/* Label Message */
+@utility textInput-sm-inputMessage {
+  @apply text-sm;
+}
+
+@utility textInput-md-inputMessage {
+  @apply text-base;
+}
+
+@utility textInput-lg-inputMessage {
+  @apply text-lg;
+}
