@@ -4,6 +4,7 @@ import { env } from '@/config/env';
 import { ThemeProvider } from 'next-themes';
 import { ToastProvider } from '@/components/feedback';
 import { QueryClientProviderWrapper } from '@/providers/QueryClientProviderWrapper';
+import { ThemeSwitcher } from '@/components/shared';
 
 export const metadata: Metadata = {
   title: 'Etmify',
@@ -36,6 +37,7 @@ export default function RootLayout({
         <QueryClientProviderWrapper>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
+            <ThemeSwitcher variant='icon' />
             <ToastProvider />
           </ThemeProvider>
         </QueryClientProviderWrapper>
