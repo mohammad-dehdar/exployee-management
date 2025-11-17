@@ -1,31 +1,31 @@
 @layer components {
   .button {
-    @apply inline-flex h-fit w-fit cursor-pointer items-center justify-center gap-2 transition-all focus:outline-none active:scale-95;
+    @apply inline-flex h-fit w-fit cursor-pointer items-center justify-center gap-2 rounded-md border border-transparent bg-neutral-10 px-4 py-2 text-sm font-medium text-neutral-90 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:bg-neutral-90 dark:text-neutral-10;
   }
 
   .button-disabled {
-    @apply pointer-events-none cursor-not-allowed opacity-50;
+    @apply pointer-events-none cursor-not-allowed opacity-60;
   }
 
   /* Primary */
   .button-primary {
-    @apply hover:bg-primary/90 active:bg-primary/70;
+    @apply text-primary;
   }
 
   .button-primary.button-outline {
-    @apply text-primary hover:bg-primary/10 active:bg-primary/15 border;
+    @apply border border-primary/60 bg-transparent hover:bg-primary/5 active:bg-primary/10;
   }
 
   .button-primary.button-fill {
-    @apply bg-primary hover:bg-primary/90 active:bg-primary/70 text-neutral-10;
+    @apply border border-primary/50 bg-primary/90 text-neutral-10 hover:bg-primary;
   }
 
   .button-primary.button-ghost {
-    @apply text-primary hover:bg-primary/10 active:bg-primary/80 active:text-primary bg-transparent;
+    @apply bg-transparent text-primary hover:bg-primary/5 active:bg-primary/10;
   }
 
   .button-primary.button-link {
-    @apply text-primary bg-transparent p-0 hover:underline hover:opacity-80;
+    @apply border-none bg-transparent p-0 text-primary underline-offset-4 hover:underline;
   }
 
   .button-primary.button-ghost span svg,
@@ -36,23 +36,23 @@
 
   /* Secondary */
   .button-secondary {
-    @apply hover:bg-secondary/90 active:bg-secondary/70;
+    @apply text-secondary;
   }
 
   .button-secondary.button-outline {
-    @apply border-secondary text-secondary hover:bg-secondary/10 active:bg-secondary/15 border;
+    @apply border border-secondary/60 bg-transparent hover:bg-secondary/5 active:bg-secondary/10;
   }
 
   .button-secondary.button-fill {
-    @apply bg-secondary hover:bg-secondary/90 active:bg-secondary/70 text-neutral-10;
+    @apply border border-secondary/50 bg-secondary/90 text-neutral-10 hover:bg-secondary;
   }
 
   .button-secondary.button-ghost {
-    @apply text-secondary hover:bg-secondary/10 active:bg-secondary/80 active:text-secondary bg-transparent;
+    @apply bg-transparent text-secondary hover:bg-secondary/5 active:bg-secondary/10;
   }
 
   .button-secondary.button-link {
-    @apply text-secondary bg-transparent p-0 hover:underline hover:opacity-80;
+    @apply border-none bg-transparent p-0 text-secondary underline-offset-4 hover:underline;
   }
 
   .button-secondary.button-ghost span svg,
@@ -63,23 +63,23 @@
 
   /* Success */
   .button-success {
-    @apply hover:bg-success/90 active:bg-success/70;
+    @apply text-success;
   }
 
   .button-success.button-outline {
-    @apply border-success text-success hover:bg-success/10 active:bg-success/15 border;
+    @apply border border-success/60 bg-transparent hover:bg-success/5 active:bg-success/10;
   }
 
   .button-success.button-fill {
-    @apply bg-success hover:bg-success/90 active:bg-success/70 text-neutral-10;
+    @apply border border-success/50 bg-success/90 text-neutral-10 hover:bg-success;
   }
 
   .button-success.button-ghost {
-    @apply text-success hover:bg-success/10 active:bg-success/80 active:text-success bg-transparent;
+    @apply bg-transparent text-success hover:bg-success/5 active:bg-success/10;
   }
 
   .button-success.button-link {
-    @apply text-success bg-transparent p-0 hover:underline hover:opacity-80;
+    @apply border-none bg-transparent p-0 text-success underline-offset-4 hover:underline;
   }
 
   .button-success.button-ghost span svg,
@@ -90,23 +90,23 @@
 
   /* Error */
   .button-error {
-    @apply hover:bg-error/90 active:bg-error/70;
+    @apply text-error;
   }
 
   .button-error.button-outline {
-    @apply border-error text-error hover:bg-error/10 active:bg-error/15 border;
+    @apply border border-error/60 bg-transparent hover:bg-error/5 active:bg-error/10;
   }
 
   .button-error.button-fill {
-    @apply bg-error hover:bg-error/90 active:bg-error/70 text-neutral-10;
+    @apply border border-error/50 bg-error/90 text-neutral-10 hover:bg-error;
   }
 
   .button-error.button-ghost {
-    @apply text-error hover:bg-error/10 active:bg-error/80 active:text-error bg-transparent;
+    @apply bg-transparent text-error hover:bg-error/5 active:bg-error/10;
   }
 
   .button-error.button-link {
-    @apply text-error bg-transparent p-0 hover:underline hover:opacity-80;
+    @apply border-none bg-transparent p-0 text-error underline-offset-4 hover:underline;
   }
 
   .button-error.button-ghost span svg,
@@ -117,23 +117,23 @@
 
   /* Warning */
   .button-warning {
-    @apply hover:bg-warning/90 active:bg-warning/70;
+    @apply text-warning;
   }
 
   .button-warning.button-outline {
-    @apply border-warning text-warning hover:bg-warning/10 active:bg-warning/15 border;
+    @apply border border-warning/60 bg-transparent hover:bg-warning/5 active:bg-warning/10;
   }
 
   .button-warning.button-fill {
-    @apply bg-warning hover:bg-warning/90 active:bg-warning/70 text-neutral-10;
+    @apply border border-warning/50 bg-warning/90 text-neutral-10 hover:bg-warning;
   }
 
   .button-warning.button-ghost {
-    @apply text-warning hover:bg-warning/10 active:bg-warning/80 active:text-warning bg-transparent;
+    @apply bg-transparent text-warning hover:bg-warning/5 active:bg-warning/10;
   }
 
   .button-warning.button-link {
-    @apply text-warning bg-transparent p-0 hover:underline hover:opacity-80;
+    @apply border-none bg-transparent p-0 text-warning underline-offset-4 hover:underline;
   }
 
   .button-warning.button-ghost span svg,
@@ -144,23 +144,23 @@
 
   /* Info */
   .button-info {
-    @apply hover:bg-info/90 active:bg-info/70;
+    @apply text-info;
   }
 
   .button-info.button-outline {
-    @apply border-info text-info hover:bg-info/10 active:bg-info/15 border;
+    @apply border border-info/60 bg-transparent hover:bg-info/5 active:bg-info/10;
   }
 
   .button-info.button-fill {
-    @apply bg-info hover:bg-info/90 active:bg-info/70 text-neutral-10;
+    @apply border border-info/50 bg-info/90 text-neutral-10 hover:bg-info;
   }
 
   .button-info.button-ghost {
-    @apply text-info hover:bg-info/10 active:bg-info/80 active:text-info bg-transparent;
+    @apply bg-transparent text-info hover:bg-info/5 active:bg-info/10;
   }
 
   .button-info.button-link {
-    @apply text-info bg-transparent p-0 hover:underline hover:opacity-80;
+    @apply border-none bg-transparent p-0 text-info underline-offset-4 hover:underline;
   }
 
   .button-info.button-ghost span svg,
@@ -171,27 +171,23 @@
 
   /* Neutral */
   .button-neutral {
-    @apply hover:bg-neutral/90 active:bg-neutral/70;
+    @apply text-neutral;
   }
 
   .button-neutral.button-outline {
-    @apply border-neutral text-neutral hover:bg-neutral/10 active:bg-neutral/15 border;
+    @apply border border-neutral/60 bg-transparent hover:bg-neutral/5 active:bg-neutral/10;
   }
 
   .button-neutral.button-fill {
-    @apply bg-neutral hover:bg-neutral/90 active:bg-neutral/70 text-neutral-10;
-  }
-
-  .button-neutral.button-fill span svg {
-    @apply stroke-neutral;
+    @apply border border-neutral/50 bg-neutral/90 text-neutral-10 hover:bg-neutral;
   }
 
   .button-neutral.button-ghost {
-    @apply text-neutral hover:bg-neutral/10 active:bg-neutral/80 active:text-neutral bg-transparent;
+    @apply bg-transparent text-neutral hover:bg-neutral/5 active:bg-neutral/10;
   }
 
   .button-neutral.button-link {
-    @apply text-neutral bg-transparent p-0 hover:underline hover:opacity-80;
+    @apply border-none bg-transparent p-0 text-neutral underline-offset-4 hover:underline;
   }
 
   .button-neutral.button-ghost span svg,
@@ -203,35 +199,35 @@
 
 /* Sizes */
 @utility button-text-xs {
-  @apply rounded-xs-plus px-4 py-1;
+  @apply rounded-sm px-3 py-1 text-xs;
 }
 
 @utility button-text-sm {
-  @apply rounded-sm px-4 py-2;
+  @apply rounded-sm px-3.5 py-2 text-sm;
 }
 
 @utility button-text-md {
-  @apply rounded-md px-6 py-3;
+  @apply rounded-md px-4 py-2.5 text-sm;
 }
 
 @utility button-text-lg {
-  @apply rounded-lg px-8 py-4;
+  @apply rounded-lg px-5 py-3 text-base;
 }
 
 @utility button-text-xl {
-  @apply rounded-lg px-10 py-5;
+  @apply rounded-lg px-6 py-3.5 text-base;
 }
 
 @utility button-text-2xl {
-  @apply rounded-xl px-12 py-6;
+  @apply rounded-xl px-7 py-4 text-lg;
 }
 
 @utility button-icon-xs {
-  @apply rounded-xs-plus h-5 w-5 p-4;
+  @apply h-7 w-7 rounded-sm;
 }
 
 @utility button-icon-sm {
-  @apply h-[30px] w-[30px] rounded-sm;
+  @apply h-8 w-8 rounded-sm;
 }
 
 @utility button-icon-md {
@@ -239,15 +235,15 @@
 }
 
 @utility button-icon-lg {
-  @apply h-14 w-14 rounded-lg;
+  @apply h-12 w-12 rounded-lg;
 }
 
 @utility button-icon-xl {
-  @apply h-16 w-16 rounded-lg;
+  @apply h-14 w-14 rounded-lg;
 }
 
 @utility button-icon-2xl {
-  @apply h-19 w-19 rounded-xl;
+  @apply h-16 w-16 rounded-xl;
 }
 
 /* Additional styles */

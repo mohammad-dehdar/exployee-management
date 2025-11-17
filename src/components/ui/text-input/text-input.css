@@ -1,20 +1,22 @@
 @layer components {
   .textInput {
-    @apply bg-neutral-30 dark:bg-neutral-90 focus-within:border-primary relative flex h-14 w-100 cursor-pointer items-center gap-2.5 rounded-[14px] border-1 border-transparent px-5 transition-colors focus:outline-none;
+    @apply relative flex h-14 w-100 items-center gap-2.5 rounded-lg border border-neutral-30 bg-neutral-10 px-4 transition-colors duration-200 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30 focus-within:ring-offset-0 dark:border-neutral-80 dark:bg-neutral-90;
+
     input {
-      @apply dark:placeholder:text-neutral h-full placeholder:text-neutral-60 text-base font-medium placeholder:text-base placeholder:font-medium;
+      @apply h-full w-full bg-transparent text-base font-medium text-neutral-90 placeholder:text-neutral-50 focus:outline-none dark:text-neutral-10 dark:placeholder:text-neutral-60;
     }
+
     svg {
-      @apply text-neutral-60 h-4.5 w-4.5;
+      @apply h-4.5 w-4.5 text-neutral-60;
     }
   }
 
   .textInputLabel {
-    @apply text-neutral-90 dark:text-neutral mb-2 font-semibold;
+    @apply mb-2 text-sm font-semibold text-neutral-80 dark:text-neutral;
   }
 
   .textInputMessage {
-    @apply mt-2 font-semibold;
+    @apply mt-2 text-sm font-medium text-neutral-70;
   }
 
   /* Primary */
@@ -23,15 +25,15 @@
   }
 
   .textInput-primary.textInput-outline {
-    @apply focus-within:bg-primary/10 border-primary border;
+    @apply border-primary bg-transparent;
   }
 
   .textInput-primary.textInput-fill {
-    @apply bg-primary focus-within:bg-primary/90 text-white;
+    @apply border-primary bg-primary/5 text-primary;
   }
 
   .textInput-primary.textInput-ghost {
-    @apply text-primary focus-within:bg-primary/10 border-transparent;
+    @apply border-transparent bg-transparent text-primary;
   }
 
   .textInput-primary span svg {
@@ -40,19 +42,19 @@
 
   /* Secondary */
   .textInput-secondary {
-    @apply focus-within:bg-secondary/90;
+    @apply focus-within:border-secondary;
   }
 
   .textInput-secondary.textInput-outline {
-    @apply border-secondary text-secondary focus-within:bg-secondary/10 border;
+    @apply border-secondary bg-transparent text-secondary;
   }
 
   .textInput-secondary.textInput-fill {
-    @apply bg-secondary focus-within:bg-secondary/90 text-white;
+    @apply border-secondary bg-secondary/5 text-secondary;
   }
 
   .textInput-secondary.textInput-ghost {
-    @apply text-secondary focus-within:bg-secondary/10 border-transparent;
+    @apply border-transparent bg-transparent text-secondary;
   }
 
   .textInput-secondary span svg {
@@ -61,19 +63,19 @@
 
   /* Success */
   .textInput-success {
-    @apply text-success focus-within:border-success border-success;
+    @apply focus-within:border-success;
   }
 
   .textInput-success.textInput-outline {
-    @apply border-success text-success focus-within:bg-success/10 border;
+    @apply border-success bg-transparent text-success;
   }
 
   .textInput-success.textInput-fill {
-    @apply bg-success focus-within:bg-success/90 text-white;
+    @apply border-success bg-success/5 text-success;
   }
 
   .textInput-success.textInput-ghost {
-    @apply text-success focus-within:bg-success/10 border-transparent;
+    @apply border-transparent bg-transparent text-success;
   }
 
   .textInput-success span svg {
@@ -82,19 +84,19 @@
 
   /* Warning */
   .textInput-warning {
-    @apply text-warning focus-within:border-warning border-warning;
+    @apply focus-within:border-warning;
   }
 
   .textInput-warning.textInput-outline {
-    @apply border-warning text-warning focus-within:bg-warning/10 border;
+    @apply border-warning bg-transparent text-warning;
   }
 
   .textInput-warning.textInput-fill {
-    @apply bg-warning focus-within:bg-warning/90 text-white;
+    @apply border-warning bg-warning/5 text-warning;
   }
 
   .textInput-warning.textInput-ghost {
-    @apply text-warning focus-within:bg-warning/10 border-transparent;
+    @apply border-transparent bg-transparent text-warning;
   }
 
   .textInput-warning span svg {
@@ -103,19 +105,19 @@
 
   /* error */
   .textInput-error {
-    @apply text-error focus-within:border-error border-error;
+    @apply focus-within:border-error;
   }
 
   .textInput-error.textInput-outline {
-    @apply border-error text-error focus-within:bg-error/10 border;
+    @apply border-error bg-transparent text-error;
   }
 
   .textInput-error.textInput-fill {
-    @apply bg-error focus-within:bg-error/90 text-white;
+    @apply border-error bg-error/5 text-error;
   }
 
   .textInput-error.textInput-ghost {
-    @apply text-error focus-within:bg-error/10 border-transparent;
+    @apply border-transparent bg-transparent text-error;
   }
 
   .textInput-error span svg {
@@ -124,19 +126,19 @@
 
   /* Info */
   .textInput-info {
-    @apply focus-within:bg-info/90;
+    @apply focus-within:border-info;
   }
 
   .textInput-info.textInput-outline {
-    @apply border-info text-info focus-within:bg-info/10 border;
+    @apply border-info bg-transparent text-info;
   }
 
   .textInput-info.textInput-fill {
-    @apply bg-info focus-within:bg-info/90 text-white;
+    @apply border-info bg-info/5 text-info;
   }
 
   .textInput-info.textInput-ghost {
-    @apply text-info focus-within:bg-info/10 border-transparent;
+    @apply border-transparent bg-transparent text-info;
   }
 
   .textInput-info span svg {
@@ -145,19 +147,19 @@
 
   /* Neutral */
   .textInput-neutral {
-    @apply focus-within:bg-neutral/90;
+    @apply focus-within:border-neutral;
   }
 
   .textInput-neutral.textInput-outline {
-    @apply border-neutral text-neutral focus-within:bg-neutral/10 border;
+    @apply border-neutral bg-transparent text-neutral;
   }
 
   .textInput-neutral.textInput-fill {
-    @apply bg-neutral focus-within:bg-neutral/90 text-white;
+    @apply border-neutral bg-neutral/5 text-neutral;
   }
 
   .textInput-neutral.textInput-ghost {
-    @apply text-neutral focus-within:bg-neutral/10 border-transparent;
+    @apply border-transparent bg-transparent text-neutral;
   }
 
   .textInput-neutral span svg {
@@ -171,62 +173,70 @@
 
   /* Disabled */
   .textInput-disabled {
-    @apply pointer-events-none cursor-not-allowed;
+    @apply pointer-events-none cursor-not-allowed opacity-60;
   }
 }
 
 /* Size TextInput */
 @utility textInput-base {
   @apply gap-2.5;
+
   input {
-    @apply dark:placeholder:text-neutral placeholder:text-neutral-50;
+    @apply placeholder:text-neutral-50 dark:placeholder:text-neutral-60;
   }
+
   svg {
     @apply text-neutral-60;
   }
 }
 
 @utility textInput-sm {
-  @apply textInput-base h-12 w-75 rounded-[12px] px-5;
+  @apply textInput-base h-12 w-75 rounded-md px-4;
+
   input {
-    @apply text-sm font-normal placeholder:text-sm placeholder:font-normal;
+    @apply text-sm font-normal placeholder:text-sm;
   }
+
   svg {
     @apply h-4 w-4;
   }
 }
 
 @utility textInput-md {
-  @apply textInput-base h-14 w-100 rounded-[14px] px-5;
+  @apply textInput-base h-14 w-100 rounded-lg px-4;
+
   input {
-    @apply text-base font-medium placeholder:text-base placeholder:font-medium;
+    @apply text-base font-medium placeholder:text-base;
   }
+
   svg {
     @apply h-4.5 w-4.5;
   }
 }
 
 @utility textInput-lg {
-  @apply textInput-base h-16 w-125 rounded-[16px] px-6;
+  @apply textInput-base h-16 w-125 rounded-xl px-5;
+
   input {
-    @apply text-lg font-medium placeholder:text-lg placeholder:font-medium;
+    @apply text-lg font-medium placeholder:text-lg;
   }
+
   svg {
     @apply h-5 w-5;
   }
 }
 
-/* Light Bckground */
+/* Light Background */
 @utility textInput-sm-light {
-  @apply textInput-sm bg-neutral-10 dark:bg-neutral-90;
+  @apply textInput-sm bg-neutral-0 dark:bg-neutral-90;
 }
 
 @utility textInput-md-light {
-  @apply textInput-md bg-neutral-10 dark:bg-neutral-90;
+  @apply textInput-md bg-neutral-0 dark:bg-neutral-90;
 }
 
 @utility textInput-lg-light {
-  @apply textInput-lg bg-neutral-10 dark:bg-neutral-90;
+  @apply textInput-lg bg-neutral-0 dark:bg-neutral-90;
 }
 
 /* EndAction Icon */
