@@ -99,6 +99,7 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             value={value}
             placeholder={placeholder}
             onChange={onValueChange}
+            onBlur={onBlur}
             disabled={disabled}
             {...props}
             className={cn('w-full flex-1 focus:outline-none', classNames?.input)}

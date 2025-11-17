@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { LoginInput, SignupInput } from '@/schemas/auth.schema';
 import type { User } from '@/store/user.store';
-import type { LoginResponse, SignupResponse, ApiError } from './types';
+import type { LoginResponse, SignupResponse } from './types';
 
 class AuthService {
   private baseURL = '/api/auth';

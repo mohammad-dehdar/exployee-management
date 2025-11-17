@@ -34,7 +34,7 @@ export async function GET(req: Request) {
         name: user.name,
       },
     });
-  } catch (_error) {
+  } catch {
     return NextResponse.json({ user: null });
   }
 }

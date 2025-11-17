@@ -1,61 +1,71 @@
 import { z } from "zod";
 
-const experienceSchema = z.object({
-  company: z.string().optional(),
-  role: z.string().optional(),
-  responsibilities: z.string().optional(),
-  startDate: z.string().optional(),
-  endDate: z.string().optional(),
-});
+const limitedText = (max = 256) => z.string().trim().max(max);
 
-const certificationSchema = z.object({
-  title: z.string().optional(),
-  issuer: z.string().optional(),
-  issueDate: z.string().optional(),
-  duration: z.string().optional(),
-});
+const experienceSchema = z
+  .object({
+    company: limitedText(128).optional().nullable(),
+    role: limitedText(128).optional().nullable(),
+    responsibilities: limitedText(512).optional().nullable(),
+    startDate: limitedText(32).optional().nullable(),
+    endDate: limitedText(32).optional().nullable(),
+  })
+  .strict();
 
-const attachmentSchema = z.object({
-  id: z.string(),
-  label: z.string(),
-  fileName: z.string(),
-});
+const certificationSchema = z
+  .object({
+    title: limitedText(128).optional().nullable(),
+    issuer: limitedText(128).optional().nullable(),
+    issueDate: limitedText(32).optional().nullable(),
+    duration: limitedText(64).optional().nullable(),
+  })
+  .strict();
 
-export const employeeProfileSchema = z.object({
-  firstName: z.string().optional().nullable(),
-  lastName: z.string().optional().nullable(),
-  fatherName: z.string().optional().nullable(),
-  nationalId: z.string().optional().nullable(),
-  birthDate: z.string().optional().nullable(),
-  gender: z.string().optional().nullable(),
-  mobile: z.string().optional().nullable(),
-  emergencyContact: z.string().optional().nullable(),
-  orgEmail: z.string().email().optional().nullable(),
-  personalEmail: z.string().email().optional().nullable(),
-  address: z.string().optional().nullable(),
-  city: z.string().optional().nullable(),
-  position: z.string().optional().nullable(),
-  contractType: z.string().optional().nullable(),
-  startDate: z.string().optional().nullable(),
-  endDate: z.string().optional().nullable(),
-  workLocation: z.string().optional().nullable(),
-  baseSalary: z.string().optional().nullable(),
-  benefits: z.string().optional().nullable(),
-  commission: z.string().optional().nullable(),
-  overtimeRate: z.string().optional().nullable(),
-  educationLevel: z.string().optional().nullable(),
-  fieldOfStudy: z.string().optional().nullable(),
-  university: z.string().optional().nullable(),
-  graduationYear: z.string().optional().nullable(),
-  skills: z.string().optional().nullable(),
-  maritalStatus: z.string().optional().nullable(),
-  linkedin: z.string().optional().nullable(),
-  github: z.string().optional().nullable(),
-  website: z.string().optional().nullable(),
-  notes: z.string().optional().nullable(),
-  experiences: z.array(experienceSchema),
-  certifications: z.array(certificationSchema),
-  attachments: z.array(attachmentSchema),
-});
+const attachmentSchema = z
+  .object({
+    id: limitedText(64),
+    label: limitedText(128),
+    fileName: limitedText(256),
+  })
+  .strict();
+
+export const employeeProfileSchema = z
+  .object({
+    firstName: limitedText(128).optional().nullable(),
+    lastName: limitedText(128).optional().nullable(),
+    fatherName: limitedText(128).optional().nullable(),
+    nationalId: limitedText(32).optional().nullable(),
+    birthDate: limitedText(32).optional().nullable(),
+    gender: limitedText(32).optional().nullable(),
+    mobile: limitedText(32).optional().nullable(),
+    emergencyContact: limitedText(64).optional().nullable(),
+    orgEmail: z.string().email().trim().max(256).optional().nullable(),
+    personalEmail: z.string().email().trim().max(256).optional().nullable(),
+    address: limitedText(256).optional().nullable(),
+    city: limitedText(128).optional().nullable(),
+    position: limitedText(128).optional().nullable(),
+    contractType: limitedText(64).optional().nullable(),
+    startDate: limitedText(32).optional().nullable(),
+    endDate: limitedText(32).optional().nullable(),
+    workLocation: limitedText(128).optional().nullable(),
+    baseSalary: limitedText(64).optional().nullable(),
+    benefits: limitedText(256).optional().nullable(),
+    commission: limitedText(64).optional().nullable(),
+    overtimeRate: limitedText(64).optional().nullable(),
+    educationLevel: limitedText(128).optional().nullable(),
+    fieldOfStudy: limitedText(128).optional().nullable(),
+    university: limitedText(128).optional().nullable(),
+    graduationYear: limitedText(16).optional().nullable(),
+    skills: limitedText(512).optional().nullable(),
+    maritalStatus: limitedText(32).optional().nullable(),
+    linkedin: z.string().url().max(256).optional().nullable(),
+    github: z.string().url().max(256).optional().nullable(),
+    website: z.string().url().max(256).optional().nullable(),
+    notes: limitedText(1024).optional().nullable(),
+    experiences: z.array(experienceSchema).max(25).default([]),
+    certifications: z.array(certificationSchema).max(25).default([]),
+    attachments: z.array(attachmentSchema).max(15).default([]),
+  })
+  .strict();
 
 export type EmployeeProfileInput = z.infer<typeof employeeProfileSchema>;

@@ -43,4 +43,12 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Environment
 
-- `JWT_SECRET`: used for signing auth tokens. Set in `.env.local` or update `src/config/env.ts`. A default placeholder (`change-me-jwt-secret`) is bundled for local testing—replace it before deploying.
+Copy `.env.example` to `.env.local` (or your preferred env file) and update the values as needed:
+
+```
+cp .env.example .env.local
+```
+
+- `NEXT_PUBLIC_API_URL`: Public base URL the frontend should use for API requests (defaults to `http://localhost:3000` in development).
+- `MONGODB_URI`: Connection string for MongoDB.
+- `JWT_SECRET`: Secret used to sign authentication tokens—*always* replace the default in production.

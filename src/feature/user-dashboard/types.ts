@@ -74,6 +74,9 @@ export interface EmployeeProfileFormData {
 }
 
 export interface EmployeeProfilePayload extends EmployeeProfileFormData {
+  _id?: string;
+  userId?: string;
+  userEmail?: string;
   experiences: Experience[];
   certifications: Certification[];
   attachments: Attachment[];

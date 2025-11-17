@@ -22,7 +22,7 @@ export async function checkToken(): Promise<TokenPayload | null> {
     ) as TokenPayload;
 
     return decoded;
-  } catch (error) {
+  } catch {
     // Token invalid or expired
     return null;
   }
@@ -54,7 +54,7 @@ export function checkTokenClient(): boolean {
 
     // فقط بررسی وجود token، decode در سمت سرور انجام می‌شود
     return true;
-  } catch (error) {
+  } catch {
     return false;
   }
 }

@@ -1,4 +1,3 @@
-import React, { ReactNode } from 'react';
 import { Bounce, Flip, Slide, Zoom } from 'react-toastify';
 
 export type TypeOptions = 'success' | 'warning' | 'error' | 'info';

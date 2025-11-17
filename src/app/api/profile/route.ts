@@ -43,7 +43,33 @@ export async function GET(req: Request) {
     const collection = await getEmployeeProfilesCollection();
     const profile = await collection.findOne({ userId: auth.id });
 
-    return NextResponse.json({ profile: profile ?? null });
+    if (!profile) {
+      return NextResponse.json({ profile: null });
+    }
+
+    const normalizedProfile: EmployeeProfile = {
+      ...profile,
+      ...normalizeStrings(profile as EmployeeProfileInput),
+      experiences: (profile.experiences ?? []).map((item) => ({
+        company: item?.company ?? "",
+        role: item?.role ?? "",
+        responsibilities: item?.responsibilities ?? "",
+        startDate: item?.startDate ?? "",
+        endDate: item?.endDate ?? "",
+      })),
+      certifications: (profile.certifications ?? []).map((item) => ({
+        title: item?.title ?? "",
+        issuer: item?.issuer ?? "",
+        issueDate: item?.issueDate ?? "",
+        duration: item?.duration ?? "",
+      })),
+      attachments: profile.attachments ?? [],
+      orgEmail: profile.orgEmail ?? auth.email,
+      userEmail: profile.userEmail ?? auth.email,
+      userId: profile.userId ?? auth.id,
+    };
+
+    return NextResponse.json({ profile: normalizedProfile });
   } catch (error) {
     console.error("Profile GET error:", error);
     return NextResponse.json(
@@ -57,6 +83,17 @@ type StringField = Exclude<
   keyof EmployeeProfileInput,
   "experiences" | "certifications" | "attachments"
 >;
+
+const MAX_ITEMS = {
+  experiences: 25,
+  certifications: 25,
+  attachments: 15,
+} as const;
+
+const trimAndLimit = (value: unknown, max = 256) => {
+  if (typeof value !== "string") return value;
+  return value.trim().slice(0, max);
+};
 
 const stringFields: StringField[] = [
   "firstName",
@@ -97,7 +134,7 @@ function normalizeStrings(
 ): Record<StringField, string> {
   const result = {} as Record<StringField, string>;
   stringFields.forEach((field) => {
-    result[field] = data[field] ?? "";
+    result[field] = trimAndLimit(data[field], 1024) ?? "";
   });
   return result;
 }
@@ -110,42 +147,57 @@ type ProfilePayload = Partial<EmployeeProfileInput> & {
   attachments?: EmployeeProfileInput["attachments"];
 };
 
-function sanitizePayload(payload: ProfilePayload | null | undefined): EmployeeProfileInput {
+function sanitizePayload(
+  payload: ProfilePayload | null | undefined
+): EmployeeProfileInput {
   const source = payload ?? {};
   const sanitized: Record<string, unknown> = { ...source };
 
   stringFields.forEach((field) => {
     const value = sanitized[field as string];
+    const normalized = trimAndLimit(value, 1024);
     sanitized[field as string] =
-      value === "" || value === null ? undefined : value;
+      normalized === "" || normalized === null ? undefined : normalized;
   });
 
   const experiencesSource = Array.isArray(source.experiences)
     ? (source.experiences as Array<Partial<ExperienceInput> | null>)
     : [];
 
-  sanitized.experiences = experiencesSource.map((item) => ({
-        company: item?.company ?? "",
-        role: item?.role ?? "",
-        responsibilities: item?.responsibilities ?? "",
-        startDate: item?.startDate ?? "",
-        endDate: item?.endDate ?? "",
-      })) as EmployeeProfileInput["experiences"];
+  sanitized.experiences = experiencesSource
+    .slice(0, MAX_ITEMS.experiences)
+    .map((item) => ({
+      company: trimAndLimit(item?.company, 128) ?? "",
+      role: trimAndLimit(item?.role, 128) ?? "",
+      responsibilities: trimAndLimit(item?.responsibilities, 512) ?? "",
+      startDate: trimAndLimit(item?.startDate, 32) ?? "",
+      endDate: trimAndLimit(item?.endDate, 32) ?? "",
+    })) as EmployeeProfileInput["experiences"];
 
   const certificationsSource = Array.isArray(source.certifications)
     ? (source.certifications as Array<Partial<CertificationInput> | null>)
     : [];
 
-  sanitized.certifications = certificationsSource.map((item) => ({
-        title: item?.title ?? "",
-        issuer: item?.issuer ?? "",
-        issueDate: item?.issueDate ?? "",
-        duration: item?.duration ?? "",
-      })) as EmployeeProfileInput["certifications"];
+  sanitized.certifications = certificationsSource
+    .slice(0, MAX_ITEMS.certifications)
+    .map((item) => ({
+      title: trimAndLimit(item?.title, 128) ?? "",
+      issuer: trimAndLimit(item?.issuer, 128) ?? "",
+      issueDate: trimAndLimit(item?.issueDate, 32) ?? "",
+      duration: trimAndLimit(item?.duration, 64) ?? "",
+    })) as EmployeeProfileInput["certifications"];
 
-  sanitized.attachments = Array.isArray(source.attachments)
-    ? (source.attachments as EmployeeProfileInput["attachments"])
-    : [];
+  sanitized.attachments = (Array.isArray(source.attachments)
+    ? source.attachments
+    : []
+  )
+    .slice(0, MAX_ITEMS.attachments)
+    .map((attachment) => ({
+      ...attachment,
+      id: trimAndLimit(attachment?.id, 64),
+      label: trimAndLimit(attachment?.label, 128),
+      fileName: trimAndLimit(attachment?.fileName, 256),
+    })) as EmployeeProfileInput["attachments"];
 
   return sanitized as EmployeeProfileInput;
 }
