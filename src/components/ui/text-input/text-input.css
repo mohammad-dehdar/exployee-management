@@ -1,6 +1,6 @@
 @layer components {
   .textInput {
-    @apply relative flex h-14 w-100 items-center gap-2.5 rounded-lg border border-neutral-30 bg-neutral-10 px-4 transition-colors duration-200 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30 focus-within:ring-offset-0 dark:border-neutral-80 dark:bg-neutral-90;
+    @apply relative flex h-10 w-100 items-center gap-2.5 rounded-md border border-neutral-30 bg-neutral-10 px-4 transition-colors duration-200 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30 focus-within:ring-offset-0 dark:border-neutral-80 dark:bg-neutral-90;
 
     input {
       @apply h-full w-full bg-transparent text-base font-medium text-neutral-90 placeholder:text-neutral-50 focus:outline-none dark:text-neutral-10 dark:placeholder:text-neutral-60;
@@ -191,7 +191,7 @@
 }
 
 @utility textInput-sm {
-  @apply textInput-base h-12 w-75 rounded-md px-4;
+  @apply textInput-base h-8 w-75 rounded-md px-4;
 
   input {
     @apply text-sm font-normal placeholder:text-sm;
@@ -203,7 +203,7 @@
 }
 
 @utility textInput-md {
-  @apply textInput-base h-14 w-100 rounded-lg px-4;
+  @apply textInput-base h-10 w-100 rounded-lg px-4;
 
   input {
     @apply text-base font-medium placeholder:text-base;
@@ -215,7 +215,7 @@
 }
 
 @utility textInput-lg {
-  @apply textInput-base h-16 w-125 rounded-xl px-5;
+  @apply textInput-base h-12 w-125 rounded-xl px-5;
 
   input {
     @apply text-lg font-medium placeholder:text-lg;
@@ -228,15 +228,15 @@
 
 /* Light Background */
 @utility textInput-sm-light {
-  @apply textInput-sm bg-neutral-0 dark:bg-neutral-90;
+  @apply textInput-sm bg-neutral-10 dark:bg-neutral-90;
 }
 
 @utility textInput-md-light {
-  @apply textInput-md bg-neutral-0 dark:bg-neutral-90;
+  @apply textInput-md bg-neutral-10 dark:bg-neutral-90;
 }
 
 @utility textInput-lg-light {
-  @apply textInput-lg bg-neutral-0 dark:bg-neutral-90;
+  @apply textInput-lg bg-neutral-10 dark:bg-neutral-90;
 }
 
 /* EndAction Icon */

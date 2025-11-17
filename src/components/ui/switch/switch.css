@@ -4,6 +4,6 @@
   }
 
   .switch-thumb {
-    @apply pointer-events-none flex size-4 items-center justify-center rounded-full bg-neutral-0 transition-transform duration-200 shadow-sm data-[state=checked]:translate-x-6 data-[state=unchecked]:translate-x-0.5 md:size-5 rtl:data-[state=checked]:translate-x-0.5 rtl:data-[state=unchecked]:translate-x-5 md:rtl:data-[state=unchecked]:translate-x-6;
+    @apply pointer-events-none flex size-4 items-center justify-center rounded-full bg-neutral-10 transition-transform duration-200 shadow-sm data-[state=checked]:translate-x-6 data-[state=unchecked]:translate-x-0.5 md:size-5 rtl:data-[state=checked]:translate-x-0.5 rtl:data-[state=unchecked]:translate-x-5 md:rtl:data-[state=unchecked]:translate-x-6;
   }
 }
