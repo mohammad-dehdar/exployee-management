@@ -11,8 +11,6 @@ export const LoginForm = () => {
             <h2 className="text-2xl font-bold mb-6 text-center text-neutral-90">ورود</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <TextInput
-                    variant="fill"
-                    color="primary"
                     type="email"
                     placeholder="ایمیل"
                     value={formData.email}
@@ -22,7 +20,6 @@ export const LoginForm = () => {
                     fullWidth
                 />
                 <TextInput
-                    variant="outline"
                     type="password"
                     placeholder="رمز عبور"
                     value={formData.password}
@@ -33,7 +30,7 @@ export const LoginForm = () => {
                 />
                 <Button
                     type="submit"
-                    className="w-full"
+                    fullWidth
                     isLoading={isLoading}
                     isDisabled={isLoading}
                 >
