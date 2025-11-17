@@ -1,9 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { Button } from './button';
-import { withTests } from '@storybook/addon-jest';
-
-import results from '~/.jest-test-results.json';
 
 const meta: Meta<typeof Button> = {
   title: 'UI/Button',

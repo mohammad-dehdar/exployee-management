@@ -1,0 +1,9 @@
+@layer components {
+  .switch {
+    @apply data-[state=checked]:bg-primary data-[state=unchecked]:bg-neutral-40 dark:data-[state=unchecked]:bg-neutral-80 inline-flex h-5 w-10 shrink-0 items-center rounded-full border-none transition-all duration-300 outline-none disabled:cursor-not-allowed disabled:opacity-50 md:h-6 md:w-12;
+  }
+
+  .switch-thumb {
+    @apply bg-neutral-10 pointer-events-none flex size-4 items-center justify-center rounded-full transition-transform duration-300 data-[state=checked]:translate-x-6 data-[state=unchecked]:translate-x-0.5 md:size-5 rtl:data-[state=checked]:translate-x-0.5 rtl:data-[state=unchecked]:translate-x-5 md:rtl:data-[state=unchecked]:translate-x-6;
+  }
+}

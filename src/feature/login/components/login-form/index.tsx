@@ -30,6 +30,7 @@ export const LoginForm = () => {
                 />
                 <Button
                     type="submit"
+                    className="button-text-sm"
                     fullWidth
                     isLoading={isLoading}
                     isDisabled={isLoading}
