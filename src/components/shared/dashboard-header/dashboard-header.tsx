@@ -4,13 +4,7 @@ import { LogoutIcon } from '@icons';
 import { Button } from '@/components/ui';
 import { useAuth } from '@/hooks/use-auth';
 import { cn } from '@/utils/ui';
-
-export interface DashboardHeaderProps {
-  greeting: string;
-  description: string;
-  badge: string;
-  badgeClass: string;
-}
+import { DashboardHeaderProps } from './types';
 
 export const DashboardHeader = ({ greeting, description, badge, badgeClass }: DashboardHeaderProps) => {
   const { logout, isLoggingOut } = useAuth();

@@ -1,5 +1,6 @@
 import { Card, Button } from "@/components/ui";
-import { AdminDashboardSectionsProps } from "./constant";
+import { AdminDashboardSectionsProps } from "./types";
+
 
 
 export const AdminDashboardSections = ({

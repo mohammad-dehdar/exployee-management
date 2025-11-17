@@ -1,6 +1,6 @@
-import { DashboardHeader } from "@/components/shared/dashboard-header";
-import type { DashboardFeatureProps } from "@/feature/dashboard-shared/types";
+import { DashboardFeatureProps } from "./components/dashboard-section/constant";
 import { UserDashboardSections } from "./components/dashboard-section";
+import { DashboardHeader } from "@/components/shared/dashboard-header";
 import { userSections } from "./constant";
 
 export const UserDashboardFeature = ({ user }: DashboardFeatureProps) => {

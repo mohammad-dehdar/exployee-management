@@ -37,7 +37,7 @@ export default function RootLayout({
         <QueryClientProviderWrapper>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
-            <ThemeSwitcher variant='icon' />
+            <ThemeSwitcher variant='icon' className='absolute top-0  right-0' />
             <ToastProvider />
           </ThemeProvider>
         </QueryClientProviderWrapper>

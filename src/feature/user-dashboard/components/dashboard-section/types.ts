@@ -16,3 +16,7 @@ export type SectionConfig = {
     color: ComponentProps<typeof Button>["color"];
   }>;
 };
+
+export interface UserDashboardSectionsProps {
+    sections: SectionConfig[];
+}

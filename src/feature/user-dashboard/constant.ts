@@ -1,4 +1,4 @@
-import { SectionConfig } from "../dashboard-shared/types";
+import { SectionConfig } from "./components/dashboard-section/types";
 
 export const userSections: SectionConfig[] = [
     {

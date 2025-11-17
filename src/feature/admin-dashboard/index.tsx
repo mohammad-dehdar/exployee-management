@@ -1,6 +1,6 @@
 import { DashboardHeader } from "@/components/shared/dashboard-header";
 import { AdminDashboardSections } from "./components/dashboard-sections";
-import type { DashboardFeatureProps } from "@/feature/dashboard-shared/types";
+import { DashboardFeatureProps } from "./components/types";
 import { adminSections } from "./constant";
 
 export const AdminDashboardFeature = ({ user }: DashboardFeatureProps) => {
