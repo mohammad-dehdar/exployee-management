@@ -1,4 +1,4 @@
-import { DashboardFeatureProps } from "./components/dashboard-section/constant";
+import { DashboardFeatureProps } from "./types";
 import { UserDashboardSections } from "./components/dashboard-section";
 import { DashboardHeader } from "@/components/shared/dashboard-header";
 import { userSections } from "./constant";

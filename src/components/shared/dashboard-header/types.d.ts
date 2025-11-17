@@ -3,4 +3,5 @@ export interface DashboardHeaderProps {
     description: string;
     badge: string;
     badgeClass: string;
+    href?: string;
   }

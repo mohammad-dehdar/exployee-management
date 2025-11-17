@@ -15,7 +15,8 @@ export type TextInputType =
   | 'file'
   | 'reset'
   | 'radio'
-  | 'checkbox';
+  | 'checkbox'
+  | 'date';
 
 export type TextInputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'color' | 'type'> &
   VariantProps<typeof textInputVariants> & {

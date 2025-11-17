@@ -1,9 +1,8 @@
 import { Card, Button } from "@/components/ui";
-import { UserDashboardSectionsProps } from "./constant";
+import { UserDashboardSectionsProps } from "./types";
 
-export const UserDashboardSections = ({
-    sections,
-}: UserDashboardSectionsProps) => (
+
+export const UserDashboardSections = ({ sections }: UserDashboardSectionsProps) => (
     <section className="grid gap-4 md:grid-cols-2">
         {sections.map((section) => (
             <Card
@@ -12,26 +11,35 @@ export const UserDashboardSections = ({
             >
                 <div className="flex flex-col gap-3">
                     <div>
-                        <h3 className="text-lg font-semibold text-neutral-90 dark:text-neutral-10">
-                            {section.title}
-                        </h3>
-                        <p className="text-sm text-neutral-70 dark:text-neutral-40">
-                            {section.description}
-                        </p>
+                        <h3 className="text-lg font-semibold text-neutral-90 dark:text-neutral-10">{section.title}</h3>
+                        <p className="text-sm text-neutral-70 dark:text-neutral-40">{section.description}</p>
                     </div>
                     {section.actions?.length ? (
                         <div className="flex flex-wrap gap-3">
-                            {section.actions.map((action) => (
-                                <Button
-                                    key={action.label}
-                                    type="button"
-                                    variant="outline"
-                                    color={action.color}
-                                    className="button-text-sm"
-                                >
-                                    {action.label}
-                                </Button>
-                            ))}
+                            {section.actions.map((action) =>
+                                action.href ? (
+                                    <Button
+                                        key={action.label}
+                                        as="link"
+                                        href={action.href}
+                                        variant="outline"
+                                        color={action.color}
+                                        className="button-text-sm"
+                                    >
+                                        {action.label}
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        key={action.label}
+                                        type="button"
+                                        variant="outline"
+                                        color={action.color}
+                                        className="button-text-sm"
+                                    >
+                                        {action.label}
+                                    </Button>
+                                ),
+                            )}
                         </div>
                     ) : null}
                 </div>
