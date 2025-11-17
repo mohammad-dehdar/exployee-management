@@ -1,6 +1,6 @@
 import clientPromise from './mongodb';
 import { Db, Collection } from 'mongodb';
-import { User, Employee, Department } from '@/models';
+import { User, Employee, Department, EmployeeProfile } from '@/models';
 
 export async function getDb(): Promise<Db> {
   const client = await clientPromise;
@@ -20,4 +20,9 @@ export async function getEmployeesCollection(): Promise<Collection<Employee>> {
 export async function getDepartmentsCollection(): Promise<Collection<Department>> {
   const db = await getDb();
   return db.collection<Department>('departments');
+}
+
+export async function getEmployeeProfilesCollection(): Promise<Collection<EmployeeProfile>> {
+  const db = await getDb();
+  return db.collection<EmployeeProfile>('employee_profiles');
 }

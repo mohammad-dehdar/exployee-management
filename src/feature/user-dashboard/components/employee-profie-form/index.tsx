@@ -1,12 +1,13 @@
 "use client";
 
 import type React from "react";
-import { useMemo, useState } from "react";
+import { startTransition, useEffect, useMemo, useState } from "react";
 import { DashboardHeader } from "@/components/shared/dashboard-header";
 import { Button, Card, TextInput } from "@/components/ui";
 import { Label } from "@/components/ui/label";
-import { Attachment, Certification, EmployeeProfileFormProps, Experience } from "./tpes";
+import { Attachment, Certification, EmployeeProfileFormProps, EmployeeProfileFormData, Experience } from "./tpes";
 import { contractTypes, educationLevels, genderOptions, maritalStatuses, workLocations } from "./constant";
+import { useEmployeeProfile } from "../../hooks/use-employee-profile";
 
 const selectClassName =
     "w-full rounded-xl border border-neutral-30 bg-neutral-10/90 px-4 py-3 text-sm text-neutral-90 shadow-sm transition focus:border-primary-50 focus:outline-none dark:border-neutral-80 dark:bg-neutral-110 dark:text-neutral-10";
@@ -14,51 +15,98 @@ const selectClassName =
 const textareaClassName =
     "w-full rounded-xl border border-neutral-30 bg-neutral-10/90 px-4 py-3 text-sm text-neutral-90 shadow-sm transition focus:border-primary-50 focus:outline-none dark:border-neutral-80 dark:bg-neutral-110 dark:text-neutral-10";
 
-export const EmployeeProfileForm = ({ userEmail, userName }: EmployeeProfileFormProps) => {
-    const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
-        fatherName: "",
-        nationalId: "",
-        birthDate: "",
-        gender: "",
-        mobile: "",
-        emergencyContact: "",
-        orgEmail: userEmail,
-        personalEmail: "",
-        address: "",
-        city: "",
-        position: "",
-        contractType: contractTypes[0],
-        startDate: "",
-        endDate: "",
-        workLocation: workLocations[0],
-        baseSalary: "",
-        benefits: "",
-        commission: "",
-        overtimeRate: "",
-        educationLevel: "",
-        fieldOfStudy: "",
-        university: "",
-        graduationYear: "",
-        skills: "",
-        linkedin: "",
-        github: "",
-        website: "",
-        maritalStatus: "",
-        notes: "",
-    });
+const createInitialFormData = (userEmail: string): EmployeeProfileFormData => ({
+    firstName: "",
+    lastName: "",
+    fatherName: "",
+    nationalId: "",
+    birthDate: "",
+    gender: "",
+    mobile: "",
+    emergencyContact: "",
+    orgEmail: userEmail,
+    personalEmail: "",
+    address: "",
+    city: "",
+    position: "",
+    contractType: contractTypes[0],
+    startDate: "",
+    endDate: "",
+    workLocation: workLocations[0],
+    baseSalary: "",
+    benefits: "",
+    commission: "",
+    overtimeRate: "",
+    educationLevel: "",
+    fieldOfStudy: "",
+    university: "",
+    graduationYear: "",
+    skills: "",
+    linkedin: "",
+    github: "",
+    website: "",
+    maritalStatus: "",
+    notes: "",
+});
 
-    const [experiences, setExperiences] = useState<Experience[]>([
-        { company: "", role: "", responsibilities: "", startDate: "", endDate: "" },
-    ]);
-    const [certifications, setCertifications] = useState<Certification[]>([
-        { title: "", issuer: "", issueDate: "", duration: "" },
-    ]);
+const createEmptyExperience = (): Experience => ({
+    company: "",
+    role: "",
+    responsibilities: "",
+    startDate: "",
+    endDate: "",
+});
+
+const createEmptyCertification = (): Certification => ({
+    title: "",
+    issuer: "",
+    issueDate: "",
+    duration: "",
+});
+
+export const EmployeeProfileForm = ({ userEmail, userName }: EmployeeProfileFormProps) => {
+    const initialFormData = useMemo(() => createInitialFormData(userEmail), [userEmail]);
+    const [formData, setFormData] = useState<EmployeeProfileFormData>(initialFormData);
+
+    const [experiences, setExperiences] = useState<Experience[]>([createEmptyExperience()]);
+    const [certifications, setCertifications] = useState<Certification[]>([createEmptyCertification()]);
     const [attachments, setAttachments] = useState<Attachment[]>([]);
     const [submitted, setSubmitted] = useState(false);
+    const { profile, isLoading, isSaving, error, loadProfile, upsertProfile } = useEmployeeProfile();
 
-    const profileOwner = useMemo(() => userName || "کاربر", [userName]);
+    const profileOwner = useMemo(() => {
+        const fullName = `${formData.firstName} ${formData.lastName}`.trim();
+        if (fullName) {
+            return fullName;
+        }
+        return userName ? userName.trim() : "";
+    }, [formData.firstName, formData.lastName, userName]);
+
+    useEffect(() => {
+        loadProfile();
+    }, [loadProfile]);
+
+    useEffect(() => {
+        startTransition(() => {
+            if (!profile) {
+                setFormData(initialFormData);
+                setExperiences([createEmptyExperience()]);
+                setCertifications([createEmptyCertification()]);
+                setAttachments([]);
+                return;
+            }
+
+            setFormData({
+                ...initialFormData,
+                ...profile,
+                orgEmail: profile.orgEmail || userEmail,
+            });
+
+            setExperiences(profile.experiences?.length ? profile.experiences : [createEmptyExperience()]);
+            setCertifications(profile.certifications?.length ? profile.certifications : [createEmptyCertification()]);
+            setAttachments(profile.attachments ?? []);
+        });
+    }, [profile, initialFormData, userEmail]);
 
     const handleChange = (
         field: keyof typeof formData,
@@ -102,7 +150,7 @@ export const EmployeeProfileForm = ({ userEmail, userName }: EmployeeProfileForm
     };
 
     const addExperience = () => {
-        setExperiences((prev) => [...prev, { company: "", role: "", responsibilities: "", startDate: "", endDate: "" }]);
+        setExperiences((prev) => [...prev, createEmptyExperience()]);
     };
 
     const removeExperience = (index: number) => {
@@ -110,28 +158,66 @@ export const EmployeeProfileForm = ({ userEmail, userName }: EmployeeProfileForm
     };
 
     const addCertification = () => {
-        setCertifications((prev) => [...prev, { title: "", issuer: "", issueDate: "", duration: "" }]);
+        setCertifications((prev) => [...prev, createEmptyCertification()]);
     };
 
     const removeCertification = (index: number) => {
         setCertifications((prev) => prev.filter((_, idx) => idx !== index));
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setSubmitted(true);
+        setSubmitted(false);
+
+        try {
+            await upsertProfile({
+                ...formData,
+                experiences,
+                certifications,
+                attachments,
+            });
+            setSubmitted(true);
+        } catch {
+            // error state handled by hook
+        }
     };
 
     const getAttachmentName = (label: string) => attachments.find((item) => item.label === label)?.fileName || "";
 
+    if (isLoading && !profile) {
+        return (
+            <div className="flex min-h-[200px] items-center justify-center">
+                <p className="text-sm text-neutral-70 dark:text-neutral-40">در حال بارگذاری اطلاعات...</p>
+            </div>
+        );
+    }
+
     return (
         <div className="space-y-6">
             <DashboardHeader
-                greeting={`سلام ${profileOwner}!`}
+                greeting={`سلام${profileOwner ? ` ${profileOwner}` : ""}!`}
                 description="اطلاعات خود را کامل کنید تا تیم منابع انسانی بتواند بهتر از شما پشتیبانی کند."
                 badge="پروفایل"
                 badgeClass="bg-primary-40 text-neutral-10"
             />
+
+            <div className="flex justify-end">
+                <Button
+                    as="link"
+                    href="/dashboard/user"
+                    variant="ghost"
+                    color="neutral"
+                    className="button-text-sm"
+                >
+                    بازگشت به داشبورد
+                </Button>
+            </div>
+
+            {error ? (
+                <div className="rounded-xl border border-error-40 bg-error-10/40 px-4 py-3 text-sm text-error-80">
+                    {error}
+                </div>
+            ) : null}
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 <Card className="rounded-2xl border border-neutral-40/40 bg-neutral-10/90 p-6 shadow-md backdrop-blur dark:border-neutral-80/60 dark:bg-neutral-110/50">
@@ -404,7 +490,7 @@ export const EmployeeProfileForm = ({ userEmail, userName }: EmployeeProfileForm
                         <Button type="button" variant="ghost" color="neutral" className="button-text-sm">
                             انصراف
                         </Button>
-                        <Button type="submit" color="primary" className="button-text-sm">
+                        <Button type="submit" color="primary" className="button-text-sm" isLoading={isSaving}>
                             ثبت پروفایل
                         </Button>
                     </div>

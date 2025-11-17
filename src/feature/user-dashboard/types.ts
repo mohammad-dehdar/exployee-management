@@ -17,3 +17,64 @@ export type SectionConfig = {
     href?: string;
   }>;
 };
+
+export interface Experience {
+  company: string;
+  role: string;
+  responsibilities: string;
+  startDate: string;
+  endDate: string;
+}
+
+export interface Certification {
+  title: string;
+  issuer: string;
+  issueDate: string;
+  duration: string;
+}
+
+export interface Attachment {
+  id: string;
+  label: string;
+  fileName: string;
+}
+
+export interface EmployeeProfileFormData {
+  firstName: string;
+  lastName: string;
+  fatherName: string;
+  nationalId: string;
+  birthDate: string;
+  gender: string;
+  mobile: string;
+  emergencyContact: string;
+  orgEmail: string;
+  personalEmail: string;
+  address: string;
+  city: string;
+  position: string;
+  contractType: string;
+  startDate: string;
+  endDate: string;
+  workLocation: string;
+  baseSalary: string;
+  benefits: string;
+  commission: string;
+  overtimeRate: string;
+  educationLevel: string;
+  fieldOfStudy: string;
+  university: string;
+  graduationYear: string;
+  skills: string;
+  maritalStatus: string;
+  linkedin: string;
+  github: string;
+  website: string;
+  notes: string;
+}
+
+export interface EmployeeProfilePayload extends EmployeeProfileFormData {
+  experiences: Experience[];
+  certifications: Certification[];
+  attachments: Attachment[];
+}
