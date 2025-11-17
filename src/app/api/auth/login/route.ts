@@ -3,6 +3,9 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { getUsersCollection } from "@/utils/db";
 import { loginSchema } from "@/schemas/auth.schema";
+import { findAllowedUser } from "@/config/allowed-users";
+import { env } from "@/config/env";
+import type { User } from "@/models";
 
 export async function POST(req: Request) {
   try {
@@ -21,20 +24,77 @@ export async function POST(req: Request) {
     }
 
     const { email, password } = validationResult.data;
+    const allowedUser = findAllowedUser(email);
 
-    const usersCollection = await getUsersCollection();
-    const user = await usersCollection.findOne({ email });
-
-    if (!user) {
+    if (!allowedUser) {
       return NextResponse.json(
         { message: "Invalid credentials" },
         { status: 401 }
       );
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      allowedUser.passwordHash
+    );
 
     if (!isPasswordValid) {
+      return NextResponse.json(
+        { message: "Invalid credentials" },
+        { status: 401 }
+      );
+    }
+
+    const usersCollection = await getUsersCollection();
+    let user = await usersCollection.findOne<User>({ email });
+
+    if (!user) {
+      const now = new Date();
+      const result = await usersCollection.insertOne({
+        email: allowedUser.email,
+        password: allowedUser.passwordHash,
+        role: allowedUser.role || "user",
+        name: allowedUser.name || "",
+        isActive: true,
+        createdAt: now,
+        updatedAt: now,
+      });
+
+      user = {
+        _id: result.insertedId,
+        email: allowedUser.email,
+        password: allowedUser.passwordHash,
+        role: allowedUser.role || "user",
+        name: allowedUser.name || "",
+        isActive: true,
+        createdAt: now,
+        updatedAt: now,
+      };
+    } else {
+      const updates: Partial<User> = {};
+      if (user.password !== allowedUser.passwordHash) {
+        updates.password = allowedUser.passwordHash;
+      }
+      if (
+        allowedUser.role &&
+        user.role?.toLowerCase() !== allowedUser.role.toLowerCase()
+      ) {
+        updates.role = allowedUser.role;
+      }
+      if (allowedUser.name && user.name !== allowedUser.name) {
+        updates.name = allowedUser.name;
+      }
+      if (Object.keys(updates).length > 0) {
+        updates.updatedAt = new Date();
+        await usersCollection.updateOne(
+          { _id: user._id },
+          { $set: updates }
+        );
+        user = { ...user, ...updates } as User;
+      }
+    }
+
+    if (!user) {
       return NextResponse.json(
         { message: "Invalid credentials" },
         { status: 401 }
@@ -47,7 +107,7 @@ export async function POST(req: Request) {
         email: user.email,
         role: user.role || "user"
       },
-      process.env.JWT_SECRET!,
+      env.JWT_SECRET,
       { expiresIn: "7d" }
     );
 

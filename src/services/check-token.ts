@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 import type { TokenPayload } from './types';
+import { env } from '@/config/env';
 
 /**
  * بررسی و decode کردن JWT token از cookies
@@ -17,7 +18,7 @@ export async function checkToken(): Promise<TokenPayload | null> {
 
     const decoded = jwt.verify(
       token,
-      process.env.JWT_SECRET!
+      env.JWT_SECRET
     ) as TokenPayload;
 
     return decoded;

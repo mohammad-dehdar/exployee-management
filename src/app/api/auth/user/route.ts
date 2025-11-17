@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { getUsersCollection } from "@/utils/db";
 import { ObjectId } from "mongodb";
+import { env } from "@/config/env";
 
 export async function GET(req: Request) {
   try {
@@ -11,16 +12,15 @@ export async function GET(req: Request) {
       return NextResponse.json({ user: null });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+    const decoded = jwt.verify(token, env.JWT_SECRET) as {
       id: string;
       email: string;
       role: string;
     };
 
     const usersCollection = await getUsersCollection();
-    const user = await usersCollection.findOne({
-      _id: new ObjectId(decoded.id),
-    } as any);
+    const userFilter: { _id: ObjectId } = { _id: new ObjectId(decoded.id) };
+    const user = await usersCollection.findOne(userFilter);
 
     if (!user) {
       return NextResponse.json({ user: null });
@@ -34,7 +34,7 @@ export async function GET(req: Request) {
         name: user.name,
       },
     });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json({ user: null });
   }
 }
