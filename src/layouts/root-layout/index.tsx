@@ -1,14 +1,22 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { dana, poppins } from '@/config/fonts/fonts';
 import { env } from '@/config/env';
 import { ThemeProvider } from 'next-themes';
 import { ToastProvider } from '@/components/feedback';
 import { QueryClientProviderWrapper } from '@/providers/QueryClientProviderWrapper';
 import { ThemeSwitcher } from '@/components/shared';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'Etmify',
   description: '',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  minimumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
@@ -24,20 +32,18 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <head>
-        {env.NODE_ENV === 'development' && (
-          <script crossOrigin="anonymous" src="//unpkg.com/react-scan/dist/auto.global.js" />
-        )}
-        <meta
-          name="viewport"
-          content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
-        />
-      </head>
       <body className="antialiased">
+        {env.NODE_ENV === 'development' && (
+          <Script
+            crossOrigin="anonymous"
+            src="//unpkg.com/react-scan/dist/auto.global.js"
+            strategy="afterInteractive"
+          />
+        )}
         <QueryClientProviderWrapper>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
-            <ThemeSwitcher variant='icon' className='absolute top-0  right-0' />
+            <ThemeSwitcher variant='icon' className='absolute top-0  left-0' />
             <ToastProvider />
           </ThemeProvider>
         </QueryClientProviderWrapper>

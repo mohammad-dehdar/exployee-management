@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { getUsersCollection } from "@/utils/db";
 import { signupSchema } from "@/schemas/auth.schema";
+import { logger } from "@/utils/logger";
+import { auditUserManagement, AuditAction, extractRequestMetadata } from "@/utils/audit-trail";
 
 export async function POST(req: Request) {
   try {
@@ -20,12 +22,17 @@ export async function POST(req: Request) {
     }
 
     const { email, password, name, role, phone } = validationResult.data;
+    const requestMetadata = extractRequestMetadata(req);
 
     const usersCollection = await getUsersCollection();
 
     // Check if user already exists
     const existingUser = await usersCollection.findOne({ email });
     if (existingUser) {
+      logger.warn('Signup attempt with existing email', {
+        email,
+        endpoint: '/api/auth/signup',
+      });
       return NextResponse.json(
         { message: "User already exists" },
         { status: 409 }
@@ -47,11 +54,28 @@ export async function POST(req: Request) {
       updatedAt: new Date(),
     });
 
+    const userId = result.insertedId.toString();
+
+    // Log successful signup
+    auditUserManagement(AuditAction.SIGNUP, userId, {
+      endpoint: '/api/auth/signup',
+      method: 'POST',
+      email,
+      role: role || "user",
+      ...requestMetadata,
+    });
+
+    logger.info('User created successfully', {
+      userId,
+      email,
+      role: role || "user",
+    });
+
     return NextResponse.json(
       {
         message: "User created successfully",
         user: {
-          id: result.insertedId.toString(),
+          id: userId,
           email,
           name: name || "",
           role: role || "user",
@@ -60,7 +84,12 @@ export async function POST(req: Request) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Signup error:", error);
+    logger.error("Signup error", error, {
+      endpoint: '/api/auth/signup',
+      method: 'POST',
+      ...extractRequestMetadata(req),
+    });
+
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }

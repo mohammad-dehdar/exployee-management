@@ -12,6 +12,26 @@ const meta: Meta<typeof Switch> = {
 export default meta;
 type Story = StoryObj<typeof Switch>;
 
+const SpecialCaseExample = () => {
+  const [isDark, setIsDark] = useState(false);
+
+  return (
+    <div className="flex items-center justify-center gap-4">
+      <Switch
+        checked={isDark}
+        onCheckedChange={setIsDark}
+        classNames={{
+          root: 'data-[state=checked]:bg-neutral-80',
+          thumb: 'text-neutral-90',
+        }}
+      >
+        {isDark ? <MoonIcon className="text-xs" /> : <SunIcon className="text-sm" />}
+      </Switch>
+      <span>{isDark ? 'Dark Mode' : 'Light Mode'}</span>
+    </div>
+  );
+};
+
 export const Basic: Story = {
   render: () => {
     return (
@@ -24,23 +44,5 @@ export const Basic: Story = {
 };
 
 export const SpecialCase: Story = {
-  render: () => {
-    const [isDark, setIsDark] = useState(false);
-
-    return (
-      <div className="flex items-center justify-center gap-4">
-        <Switch
-          checked={isDark}
-          onCheckedChange={setIsDark}
-          classNames={{
-            root: 'data-[state=checked]:bg-neutral-80',
-            thumb: 'text-neutral-90',
-          }}
-        >
-          {isDark ? <MoonIcon className="text-xs" /> : <SunIcon className="text-sm" />}
-        </Switch>
-        <span>{isDark ? 'Dark Mode' : 'Light Mode'}</span>
-      </div>
-    );
-  },
+  render: () => <SpecialCaseExample />,
 };
