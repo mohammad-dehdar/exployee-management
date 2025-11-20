@@ -15,7 +15,7 @@ export const ThemeSwitcher = ({ variant, className }: ThemeSwitcherProps) => {
         checked={!isDark}
         onCheckedChange={handleToggle}
         classNames={{
-          root: 'data-[state=checked]:bg-neutral-40 h-6 w-12 ',
+          root: 'data-[state=checked]:bg-neutral-40 h-6 w-10 ',
           thumb: 'text-neutral-90 size-5 rtl:data-[state=unchecked]:translate-x-6.5',
         }}
       >

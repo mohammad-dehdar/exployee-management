@@ -41,14 +41,62 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - Email: `test.admin@example.com`
 - Password: `Test@12345`
 
-## Environment
+## Environment Setup
 
-Copy `.env.example` to `.env.local` (or your preferred env file) and update the values as needed:
+### 1. Copy Environment File
 
+Copy `.env.example` to `.env.local` (or your preferred env file) and update the values:
+
+**Windows (PowerShell):**
+```powershell
+Copy-Item .env.example .env.local
 ```
+
+**Linux/Mac:**
+```bash
 cp .env.example .env.local
 ```
 
-- `NEXT_PUBLIC_API_URL`: Public base URL the frontend should use for API requests (defaults to `http://localhost:3000` in development).
-- `MONGODB_URI`: Connection string for MongoDB.
-- `JWT_SECRET`: Secret used to sign authentication tokens—*always* replace the default in production.
+### 2. Required Environment Variables
+
+Update the following variables in `.env.local`:
+
+- **`NEXT_PUBLIC_API_URL`**: Public base URL the frontend should use for API requests (defaults to `http://localhost:3000` in development).
+- **`MONGODB_URI`**: MongoDB connection string.
+  - Local: `mongodb://localhost:27017/employee-app`
+  - Atlas: `mongodb+srv://username:password@cluster.mongodb.net/employee-app`
+- **`JWT_SECRET`**: Secret key used to sign authentication tokens.
+  - **IMPORTANT**: Generate a strong random secret for production using:
+    ```bash
+    openssl rand -base64 32
+    ```
+  - Never use the default value in production!
+
+### 3. Setup MongoDB
+
+Make sure MongoDB is running locally or provide a MongoDB Atlas connection string.
+
+**Local MongoDB:**
+```bash
+# Install MongoDB locally or use Docker
+docker run -d -p 27017:27017 --name mongodb mongo:latest
+```
+
+### 4. Initialize Database Indexes
+
+After setting up MongoDB, you need to create indexes for optimal performance:
+
+```bash
+npm run db:setup
+```
+
+This will create the following indexes:
+- **users**: unique email, role, isActive
+- **employee_profiles**: unique userId, userEmail, orgEmail
+- **employees**: unique email, departmentId, status
+- **departments**: unique name, isActive
+
+**Note**: You can also setup indexes via API (Admin only):
+```bash
+POST /api/admin/db/setup
+```

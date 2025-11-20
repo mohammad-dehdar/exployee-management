@@ -1,10 +1,15 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 
 export function useThemeSwitcher() {
+  const [mounted, setMounted] = useState(false);
   const { theme, setTheme, resolvedTheme } = useTheme();
-  const mounted = typeof window !== 'undefined';
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   function handleToggle() {
     const currentTheme = theme === 'system' ? resolvedTheme : theme;

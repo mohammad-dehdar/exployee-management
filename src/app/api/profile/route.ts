@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import { env } from "@/config/env";
 import { getEmployeeProfilesCollection } from "@/utils/db";
 import { employeeProfileSchema, EmployeeProfileInput } from "@/schemas/employee-profile.schema";
+import { logger } from "@/utils/logger";
+import { auditDataModification, AuditAction, extractRequestMetadata } from "@/utils/audit-trail";
 import type { EmployeeProfile } from "@/models";
 
 function getAuthToken(req: Request): string | null {
@@ -71,7 +73,13 @@ export async function GET(req: Request) {
 
     return NextResponse.json({ profile: normalizedProfile });
   } catch (error) {
-    console.error("Profile GET error:", error);
+    logger.error("Profile GET error", error, {
+      endpoint: '/api/profile',
+      method: 'GET',
+      userId: auth?.id,
+      ...extractRequestMetadata(req),
+    });
+
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }
@@ -266,12 +274,32 @@ export async function PUT(req: Request) {
 
     const profile = await collection.findOne({ userId: auth.id });
 
+    // Log profile update
+    auditDataModification(AuditAction.PROFILE_UPDATED, auth.id, {
+      endpoint: '/api/profile',
+      method: 'PUT',
+      resourceType: 'employee_profile',
+      resourceId: auth.id,
+      ...extractRequestMetadata(req),
+    });
+
+    logger.info('Employee profile updated', {
+      userId: auth.id,
+      email: auth.email,
+    });
+
     return NextResponse.json({
       message: "Profile saved",
       profile,
     });
   } catch (error) {
-    console.error("Profile PUT error:", error);
+    logger.error("Profile PUT error", error, {
+      endpoint: '/api/profile',
+      method: 'PUT',
+      userId: auth?.id,
+      ...extractRequestMetadata(req),
+    });
+
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }
