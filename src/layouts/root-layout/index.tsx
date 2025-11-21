@@ -32,7 +32,7 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <body className="antialiased">
+      <body className="antialiased min-h-screen bg-gradient-to-br from-slate-50 via-sky-50 to-indigo-100 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
         {env.NODE_ENV === 'development' && (
           <Script
             crossOrigin="anonymous"
@@ -42,9 +42,17 @@ export default function RootLayout({
         )}
         <QueryClientProviderWrapper>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
-            <ThemeSwitcher variant='icon' className='absolute top-0  left-0' />
-            <ToastProvider />
+            <div className="relative min-h-screen overflow-hidden">
+              <div className="pointer-events-none absolute inset-0 opacity-60">
+                <div className="absolute -left-16 top-6 h-64 w-64 rounded-full bg-sky-300 blur-3xl dark:bg-sky-500/30" />
+                <div className="absolute bottom-10 right-0 h-72 w-72 rounded-full bg-indigo-300 blur-3xl dark:bg-indigo-500/30" />
+              </div>
+              <div className="relative z-10 pb-14">
+                {children}
+                <ThemeSwitcher variant='icon' className='fixed bottom-6 left-6 rounded-full bg-white/80 p-3 shadow-lg backdrop-blur dark:bg-slate-800/70' />
+                <ToastProvider />
+              </div>
+            </div>
           </ThemeProvider>
         </QueryClientProviderWrapper>
       </body>
