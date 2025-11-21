@@ -8,7 +8,7 @@ import { ThemeSwitcher } from '@/components/shared';
 import Script from 'next/script';
 
 export const metadata: Metadata = {
-  title: 'Etmify',
+  title: 'etmita-hr',
   description: '',
 };
 
