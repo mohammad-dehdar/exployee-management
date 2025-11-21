@@ -8,7 +8,7 @@ export const Card: React.FC<React.ComponentProps<'div'>> = ({ className, ...prop
 };
 
 export const CardHeader: React.FC<React.ComponentProps<'div'>> = ({ className, ...props }) => {
-  return <div data-slot="card-header" className={className} {...props} />;
+  return <div data-slot="card-header" className={cn('w-full', className)} {...props} />;
 };
 
 export const CardMedia: React.FC<React.ComponentProps<'div'>> = ({ className, ...props }) => {

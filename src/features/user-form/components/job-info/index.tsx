@@ -3,21 +3,25 @@
 import { useFormContext } from 'react-hook-form';
 import { TextInput } from '@/components/ui/text-input';
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '@/components/ui/card';
+// فرض بر این است که contractTypes و workLocations از './constants' دریافت می‌شوند
 import { contractTypes, workLocations } from './constants';
 
 export const JobInfo = () => {
     const { register } = useFormContext();
 
     return (
-        <Card className="rounded-3xl border border-border/60 bg-card/80 p-0 shadow-sm">
+        // ✨ استایل‌های جدید کارت: rounded-xl، border-2، border-primary/50، shadow-lg
+        <Card className="rounded-xl border-2 border-primary/50 bg-background p-0 shadow-lg">
             <CardHeader className="space-y-2 px-6 pt-6">
-                <CardTitle className="text-lg font-semibold text-foreground">اطلاعات شغلی</CardTitle>
-                <CardDescription className="text-xs text-muted-foreground">
+                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
+                    اطلاعات شغلی <span className="text-primary">💼</span>
+                </CardTitle>
+                <CardDescription className="text-sm text-muted-foreground">
                     جزئیات قرارداد و وضعیت همکاری خود را وارد کنید.
                 </CardDescription>
             </CardHeader>
 
-            <CardContent className="grid gap-4 px-6 pb-6 md:grid-cols-2">
+            <CardContent className="grid gap-6 px-6 pb-6 md:grid-cols-2">
 
                 <TextInput
                     fullWidth
@@ -25,12 +29,14 @@ export const JobInfo = () => {
                     variant="outline"
                     color="neutral"
                     {...register("job.position")}
+                    className="rounded-lg" // ✨ استایل جدید TextInput
                 />
 
                 <div className="flex flex-col space-y-2">
-                    <label className="text-xs font-medium text-muted-foreground">نوع قرارداد</label>
+                    <label className="text-sm font-medium text-foreground">نوع قرارداد</label> {/* بهبود استایل لیبل */}
                     <select
-                        className="rounded-2xl border border-border/40 bg-background/70 px-3 py-2 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+                        // ✨ استایل‌های جدید Select: rounded-lg، border-border/60، ring-primary
+                        className="rounded-lg border border-border/60 bg-background px-4 py-2.5 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                         {...register("job.contractType")}
                     >
                         <option value="">انتخاب کنید</option>
@@ -47,6 +53,7 @@ export const JobInfo = () => {
                     variant="outline"
                     color="neutral"
                     {...register("job.startDate")}
+                    className="rounded-lg" // ✨ استایل جدید TextInput
                 />
 
                 <TextInput
@@ -56,12 +63,14 @@ export const JobInfo = () => {
                     variant="outline"
                     color="neutral"
                     {...register("job.endDate")}
+                    className="rounded-lg" // ✨ استایل جدید TextInput
                 />
 
                 <div className="flex flex-col space-y-2">
-                    <label className="text-xs font-medium text-muted-foreground">لوکیشن کاری</label>
+                    <label className="text-sm font-medium text-foreground">لوکیشن کاری</label> {/* بهبود استایل لیبل */}
                     <select
-                        className="rounded-2xl border border-border/40 bg-background/70 px-3 py-2 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+                        // ✨ استایل‌های جدید Select: rounded-lg، border-border/60، ring-primary
+                        className="rounded-lg border border-border/60 bg-background px-4 py-2.5 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                         {...register("job.location")}
                     >
                         <option value="">انتخاب کنید</option>

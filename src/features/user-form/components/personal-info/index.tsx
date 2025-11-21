@@ -9,23 +9,26 @@ export const PersonalInfo = () => {
     const { register } = useFormContext();
 
     return (
-        <Card className="rounded-3xl border border-border/60 bg-card/80 p-0 shadow-sm">
+        // ✨ تغییرات: rounded-xl، border-2، border-primary/50، shadow-lg
+        <Card className="rounded-xl border-2 border-primary/50 bg-background p-0 shadow-lg">
             <CardHeader className="space-y-2 px-6 pt-6">
-                <CardTitle className="text-lg font-semibold text-foreground">اطلاعات شخصی</CardTitle>
-                <CardDescription className="text-xs text-muted-foreground">
+                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
+                    اطلاعات شخصی <span className="text-primary">👤</span>
+                </CardTitle>
+                <CardDescription className="text-sm text-muted-foreground">
                     مشخصات هویتی خود را دقیق و مطابق مدارک رسمی ثبت کنید.
                 </CardDescription>
             </CardHeader>
 
-            <CardContent className="grid gap-4 px-6 pb-6 md:grid-cols-2">
+            <CardContent className="grid gap-6 px-6 pb-6 md:grid-cols-2"> {/* فاصله بیشتر بین فیلدها */}
 
-                <TextInput label="نام" fullWidth variant="outline" color="neutral" {...register("personal.firstName")} />
+                <TextInput label="نام" fullWidth variant="outline" color="neutral" {...register("personal.firstName")} className="rounded-lg" />
 
-                <TextInput label="نام خانوادگی" fullWidth variant="outline" color="neutral" {...register("personal.lastName")} />
+                <TextInput label="نام خانوادگی" fullWidth variant="outline" color="neutral" {...register("personal.lastName")} className="rounded-lg" />
 
-                <TextInput label="نام پدر (اختیاری)" fullWidth variant="outline" color="neutral" {...register("personal.fatherName")} />
+                <TextInput label="نام پدر (اختیاری)" fullWidth variant="outline" color="neutral" {...register("personal.fatherName")} className="rounded-lg" />
 
-                <TextInput label="کد ملی / پاسپورت" fullWidth variant="outline" color="neutral" {...register("personal.nationalId")} />
+                <TextInput label="کد ملی / پاسپورت" fullWidth variant="outline" color="neutral" {...register("personal.nationalId")} className="rounded-lg" />
 
                 <TextInput
                     label="تاریخ تولد"
@@ -34,12 +37,14 @@ export const PersonalInfo = () => {
                     variant="outline"
                     color="neutral"
                     {...register("personal.birthDate")}
+                    className="rounded-lg"
                 />
 
                 <div className="flex flex-col space-y-2">
-                    <label className="text-xs font-medium text-muted-foreground">جنسیت</label>
+                    <label className="text-sm font-medium text-foreground">جنسیت</label> {/* بهبود استایل لیبل */}
                     <select
-                        className="rounded-2xl border border-border/40 bg-background/70 px-3 py-2 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+                        // ✨ تغییرات: rounded-lg، border-border/60، ring-primary
+                        className="rounded-lg border border-border/60 bg-background px-4 py-2.5 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                         {...register("personal.gender")}
                     >
                         <option value="">انتخاب کنید</option>

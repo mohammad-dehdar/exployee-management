@@ -14,7 +14,6 @@ import { useUserFormStore } from "./store";
 import { useAdminDashboardStore } from "@/features/admin-dashboard/store";
 import { PersonalInfo, ContactInfo, JobInfo } from "./components";
 
-
 interface UserFormData {
     personal: Record<string, unknown>;
     contact: Record<string, unknown>;
@@ -31,6 +30,7 @@ export default function UserFormFeature() {
         setJob,
         reset: resetStore,
     } = useUserFormStore();
+
     const { addUser } = useAdminDashboardStore();
 
     const initialValues = useMemo(
@@ -69,7 +69,7 @@ export default function UserFormFeature() {
         };
 
         addUser(newUser);
-        toastSuccess("اطلاعات کاربر در حافظه محلی ذخیره شد. این داده‌ها در داشبورد ادمین قابل مشاهده هستند.");
+        toastSuccess("اطلاعات شما با موفقیت ذخیره شد.");
     };
 
     const handleReset = () => {
@@ -83,56 +83,57 @@ export default function UserFormFeature() {
 
     return (
         <FormProvider {...methods}>
-            <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-5 py-8">
-                <Card className="rounded-3xl border border-border/60 bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white shadow-xl">
-                    <CardHeader className="space-y-4">
-                        <p className="text-sm text-white/70">فرم تکمیل پروفایل</p>
-                        <CardTitle className="text-3xl font-semibold leading-10">
-                            اطلاعات خود را با دقت وارد کنید تا پرونده منابع انسانی شما کامل شود.
+            <div className="mx-auto max-w-3xl w-full space-y-6 px-4 py-6">
+
+                {/* ✨ بهبود ظاهر کارت اصلی و نوار پیشرفت */}
+                <Card className="rounded-xl border shadow-lg p-4 bg-background">
+                    <CardHeader className="p-2 space-y-2">
+                        <p className="text-xs text-muted-foreground">فرم پروفایل</p>
+                        <CardTitle className="text-2xl font-bold text-foreground">
+                            تکمیل اطلاعات کاربری 📝
                         </CardTitle>
-                        <p className="text-sm text-white/70 leading-6">
-                            این اطلاعات بعداً به سیستم HR متصل می‌شود؛ فعلاً به‌صورت محلی ذخیره می‌شود اما
-                            دقت در ورود اطلاعات باعث می‌شود انتقال به سیستم اصلی سریع‌تر انجام شود.
-                        </p>
                     </CardHeader>
-                    <CardContent className="space-y-4">
+
+                    <CardContent className="space-y-3 p-2 pt-4">
                         <div>
-                            <div className="flex items-center justify-between text-xs text-white/70">
+                            <div className="flex items-center justify-between text-sm font-medium text-foreground">
                                 <span>درصد تکمیل</span>
-                                <span>%{completionPercent}</span>
+                                <span className="text-primary font-extrabold">%{completionPercent}</span>
                             </div>
-                            <div className="mt-2 h-2 rounded-full bg-white/15">
+
+                            <div className="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
                                 <div
-                                    className="h-full rounded-full bg-white transition-all"
-                                    style={{ width: `${Math.max(completionPercent, 5)}%` }}
+                                    // ✨ استفاده از رنگ Primary برای نوار پیشرفت
+                                    className="h-full bg-primary rounded-full transition-all duration-500 ease-out"
+                                    style={{ width: `${completionPercent}%` }}
                                 />
                             </div>
                         </div>
-                        <p className="text-xs text-white/70">
-                            پس از تکمیل هر بخش، اطلاعات به‌صورت خودکار ذخیره می‌شود و می‌توانید از طریق داشبورد کاربری وضعیت را مشاهده کنید.
-                        </p>
                     </CardContent>
                 </Card>
 
                 <form
                     onSubmit={methods.handleSubmit(onSubmit)}
-                    className="space-y-5"
+                    className="space-y-6" // فاصله بیشتر بین بخش‌ها
                 >
-                    <div className="space-y-5">
-                        <PersonalInfo />
-                        <ContactInfo />
-                        <JobInfo />
-                    </div>
+                    <PersonalInfo />
+                    <ContactInfo />
+                    <JobInfo />
 
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                        <Button type="submit" className="w-full rounded-2xl px-6 py-4 text-sm font-semibold text-white sm:w-auto">
-                            ذخیره اطلاعات
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center pt-2">
+                        {/* ✨ دکمه ذخیره با رنگ Primary و استایل برجسته‌تر */}
+                        <Button
+                            type="submit"
+                            className="w-full sm:w-auto rounded-lg text-base px-6 py-3 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                        >
+                            ذخیره و ارسال اطلاعات
                         </Button>
+
+                        {/* ✨ دکمه بازنشانی با استایل Outline هماهنگ */}
                         <Button
                             type="button"
                             variant="outline"
-                            color="neutral"
-                            className="w-full rounded-2xl px-6 py-4 text-sm font-semibold sm:w-auto"
+                            className="w-full sm:w-auto rounded-lg text-base px-6 py-3 border-border/80 text-muted-foreground hover:bg-accent hover:text-foreground"
                             onClick={handleReset}
                         >
                             بازنشانی فرم
