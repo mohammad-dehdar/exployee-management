@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { UserRecord } from "../../store";
 import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card";
+import type { UserRecord } from "@/types/user";
 
 export default function UserCard({ user }: { user: UserRecord }) {
     return (
@@ -11,13 +11,9 @@ export default function UserCard({ user }: { user: UserRecord }) {
                         {user.personal.firstName} {user.personal.lastName}
                     </h2>
 
-                    <p className="text-sm text-muted-foreground">
-                        {user.job.position}
-                    </p>
+                    <p className="text-sm text-muted-foreground">{user.job.position}</p>
 
-                    <p className="text-xs text-muted-foreground">
-                        {user.contact.orgEmail}
-                    </p>
+                    <p className="text-xs text-muted-foreground">{user.contact.orgEmail}</p>
                 </CardContent>
             </Card>
         </Link>

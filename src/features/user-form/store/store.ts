@@ -1,24 +1,22 @@
-import { create } from 'zustand';
+import { create } from "zustand";
+import type { ContactInfo, JobInfo, PersonalInfo } from "@/types/user";
 
-interface UserFormState {
-  personal: any;
-  contact: any;
-  job: any;
-
-  setPersonal: (v: any) => void;
-  setContact: (v: any) => void;
-  setJob: (v: any) => void;
-  reset: () => void;
+export interface UserFormState {
+    personal: Partial<PersonalInfo>;
+    contact: Partial<ContactInfo>;
+    job: Partial<JobInfo>;
+    setPersonal: (value: Partial<PersonalInfo>) => void;
+    setContact: (value: Partial<ContactInfo>) => void;
+    setJob: (value: Partial<JobInfo>) => void;
+    reset: () => void;
 }
 
 export const useUserFormStore = create<UserFormState>((set) => ({
-  personal: {},
-  contact: {},
-  job: {},
-
-  setPersonal: (v) => set({ personal: v }),
-  setContact: (v) => set({ contact: v }),
-  setJob: (v) => set({ job: v }),
-
-  reset: () => set({ personal: {}, contact: {}, job: {} }),
+    personal: {},
+    contact: {},
+    job: {},
+    setPersonal: (value) => set({ personal: value }),
+    setContact: (value) => set({ contact: value }),
+    setJob: (value) => set({ job: value }),
+    reset: () => set({ personal: {}, contact: {}, job: {} }),
 }));
