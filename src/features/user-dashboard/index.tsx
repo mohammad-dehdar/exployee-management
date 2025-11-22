@@ -5,21 +5,26 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/features/auth";
 import type { SummaryItem } from "./types";
 import {
-    HeroCard,
     StatusCard,
     ProfileSummaryCard,
-    NextStepsCard,
     RemindersCard,
     ChangePasswordCard,
+    HeroCard,
 } from "./components";
 
 export default function UserDashboardFeature() {
     const router = useRouter();
-    const { profiles, currentUserId, accounts } = useAuthStore();
-    const account = accounts.find((acc) => acc.id === currentUserId);
-    const profile = currentUserId
-        ? profiles[currentUserId] ?? { id: currentUserId, personal: {}, contact: {}, job: {} }
-        : undefined;
+    const { profiles, currentUserId, accounts, getCompletionPercent } = useAuthStore();
+    
+    const account = useMemo(
+        () => accounts.find((acc) => acc.id === currentUserId),
+        [accounts, currentUserId]
+    );
+    
+    const profile = useMemo(
+        () => currentUserId ? profiles[currentUserId] : undefined,
+        [profiles, currentUserId]
+    );
 
     useEffect(() => {
         if (!account || account.role !== "user") {
@@ -27,31 +32,26 @@ export default function UserDashboardFeature() {
         }
     }, [account, router]);
 
-    const safeProfile = profile ?? { 
-        id: account?.id ?? "pending", 
-        personal: {}, 
-        contact: {}, 
-        job: {},
-        financial: {},
-        education: {},
-        workHistory: [],
-        certificates: [],
-        attachments: {},
-        additional: {},
-    };
+    const safeProfile = useMemo(
+        () => profile ?? { 
+            id: account?.id ?? "pending", 
+            personal: {}, 
+            contact: {}, 
+            job: {},
+            financial: {},
+            education: {},
+            workHistory: [],
+            certificates: [],
+            attachments: {},
+            additional: {},
+        },
+        [profile, account]
+    );
 
-    const completionScore = [
-        Boolean(safeProfile.personal && Object.keys(safeProfile.personal).length),
-        Boolean(safeProfile.contact && Object.keys(safeProfile.contact).length),
-        Boolean(safeProfile.job && Object.keys(safeProfile.job).length),
-        Boolean(safeProfile.education && Object.keys(safeProfile.education).length),
-        Boolean(safeProfile.workHistory && safeProfile.workHistory.length > 0 && safeProfile.workHistory.some((item) => Boolean(item.company || item.role))),
-        Boolean(safeProfile.certificates && safeProfile.certificates.length > 0 && safeProfile.certificates.some((item) => Boolean(item.title || item.issuer))),
-        Boolean(safeProfile.attachments && Object.keys(safeProfile.attachments).length),
-        Boolean(safeProfile.additional && Object.keys(safeProfile.additional).length),
-    ].filter(Boolean).length;
-
-    const completionPercent = Math.round((completionScore / 8) * 100);
+    const completionPercent = useMemo(
+        () => currentUserId ? getCompletionPercent(currentUserId) : 0,
+        [currentUserId, getCompletionPercent]
+    );
 
     const profileSummary = useMemo<SummaryItem[]>(() => {
         const personal = safeProfile.personal as Record<string, unknown> | undefined;
@@ -78,7 +78,6 @@ export default function UserDashboardFeature() {
         ];
     }, [safeProfile, completionPercent, account?.email]);
 
-    
     if (!account || account.role !== "user") {
         return null;
     }

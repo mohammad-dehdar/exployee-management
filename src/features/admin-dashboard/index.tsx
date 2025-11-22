@@ -81,10 +81,10 @@ export default function AdminDashboardFeature() {
                             </span>
                         </div>
                     </div>
-                    <Card className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200/70 shadow-sm dark:border-slate-800/70 p-4">
+                    <Card className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200/70 shadow-sm dark:border-neutral-70/70 p-4 dark:bg-neutral-80/20">
                         <CardHeader className="pb-3">
                             <CardTitle className="text-base font-semibold">ساخت حساب کاربر</CardTitle>
-                            <p className="text-xs text-muted-foreground">ایمیل و رمز عبور را وارد کنید تا کاربر بتواند وارد شود.</p>
+                            <p className="text-xs text-muted-foreground mt-2">ایمیل و رمز عبور را وارد کنید تا کاربر بتواند وارد شود.</p>
                         </CardHeader>
                         <CardContent>
                             <form onSubmit={handleCreateUser} className="space-y-3">
@@ -93,6 +93,7 @@ export default function AdminDashboardFeature() {
                                     <TextInput
                                         id="displayName"
                                         value={displayName}
+                                        fullWidth
                                         onChange={(e) => setDisplayName(e.target.value)}
                                         placeholder="نام و نام خانوادگی"
                                     />
@@ -102,6 +103,7 @@ export default function AdminDashboardFeature() {
                                     <TextInput
                                         id="userEmail"
                                         type="email"
+                                        fullWidth
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         placeholder="user@example.com"
@@ -114,12 +116,13 @@ export default function AdminDashboardFeature() {
                                         id="userPassword"
                                         type="password"
                                         value={password}
+                                        fullWidth
                                         onChange={(e) => setPassword(e.target.value)}
                                         placeholder="حداقل ۶ کاراکتر"
                                         required
                                     />
                                 </div>
-                                <Button type="submit" className="w-full rounded-xl">ساخت حساب</Button>
+                                <Button type="submit" className="w-full mt-4">ساخت حساب</Button>
                             </form>
                         </CardContent>
                     </Card>

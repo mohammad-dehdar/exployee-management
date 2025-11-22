@@ -16,18 +16,27 @@ interface AuthState {
     accounts: Account[];
     profiles: Record<string, UserRecord>;
     currentUserId?: string;
+    
+    // Auth methods
     login: (email: string, password: string) => { success: boolean; role?: Role; message?: string };
     logout: () => void;
     registerUser: (payload: { email: string; password: string; displayName?: string }) => {
         success: boolean;
         message?: string;
     };
-    updateProfile: (userId: string, data: Partial<UserRecord>) => void;
-    getProfile: (userId: string) => UserRecord | undefined;
     changePassword: (
         userId: string,
         payload: { currentPassword: string; newPassword: string }
     ) => { success: boolean; message?: string };
+    
+    // Profile methods
+    updateProfile: (userId: string, data: Partial<UserRecord>) => void;
+    getProfile: (userId: string) => UserRecord | undefined;
+    getCurrentProfile: () => UserRecord | undefined;
+    
+    // Computed values
+    getCompletionPercent: (userId: string) => number;
+    isProfileComplete: (userId: string) => boolean;
 }
 
 const fallbackStorage: StateStorage = {
@@ -47,12 +56,26 @@ const defaultAdmin: Account = {
     displayName: "ادمین سیستم",
 };
 
+const createEmptyProfile = (userId: string, email?: string): UserRecord => ({
+    id: userId,
+    personal: {},
+    contact: { orgEmail: email },
+    job: {},
+    financial: {},
+    education: {},
+    workHistory: [],
+    certificates: [],
+    attachments: {},
+    additional: {},
+});
+
 export const useAuthStore = create<AuthState>()(
     persist(
         (set, get) => ({
             accounts: [defaultAdmin],
             profiles: {},
             currentUserId: undefined,
+            
             login: (email, password) => {
                 const normalizedEmail = email.trim().toLowerCase();
                 const account = get().accounts.find(
@@ -66,7 +89,9 @@ export const useAuthStore = create<AuthState>()(
                 set({ currentUserId: account.id });
                 return { success: true, role: account.role };
             },
+            
             logout: () => set({ currentUserId: undefined }),
+            
             registerUser: ({ email, password, displayName }) => {
                 const normalizedEmail = email.trim().toLowerCase();
                 const exists = get().accounts.some(
@@ -90,61 +115,13 @@ export const useAuthStore = create<AuthState>()(
                     accounts: [...state.accounts, newAccount],
                     profiles: {
                         ...state.profiles,
-                        [id]: {
-                            id,
-                            personal: {},
-                            contact: { orgEmail: normalizedEmail },
-                            job: {},
-                            financial: {},
-                            education: {},
-                            workHistory: [],
-                            certificates: [],
-                            attachments: {},
-                            additional: {},
-                        },
+                        [id]: createEmptyProfile(id, normalizedEmail),
                     },
                 }));
 
                 return { success: true };
             },
-            updateProfile: (userId, data) =>
-                set((state) => {
-                    const existing = state.profiles[userId] ?? {
-                        id: userId,
-                        personal: {},
-                        contact: {},
-                        job: {},
-                        financial: {},
-                        education: {},
-                        workHistory: [],
-                        certificates: [],
-                        attachments: {},
-                        additional: {},
-                    };
-
-                    return {
-                        profiles: {
-                            ...state.profiles,
-                            [userId]: {
-                                ...existing,
-                                personal: { ...existing.personal, ...data.personal },
-                                contact: { ...existing.contact, ...data.contact },
-                                job: { ...existing.job, ...data.job },
-                                financial: { ...existing.financial, ...data.financial },
-                                education: { ...existing.education, ...data.education },
-                                workHistory: data.workHistory ?? existing.workHistory,
-                                certificates: data.certificates ?? existing.certificates,
-                                attachments: { ...existing.attachments, ...data.attachments },
-                                additional: {
-                                    ...existing.additional,
-                                    ...data.additional,
-                                    skills: data.additional?.skills ?? existing.additional.skills,
-                                },
-                            },
-                        },
-                    };
-                }),
-            getProfile: (userId) => get().profiles[userId],
+            
             changePassword: (userId, { currentPassword, newPassword }) => {
                 const accounts = get().accounts;
                 const accountIndex = accounts.findIndex((acc) => acc.id === userId);
@@ -165,6 +142,88 @@ export const useAuthStore = create<AuthState>()(
 
                 set({ accounts: updatedAccounts });
                 return { success: true };
+            },
+            
+            updateProfile: (userId, data) =>
+                set((state) => {
+                    const account = state.accounts.find(acc => acc.id === userId);
+                    const existing = state.profiles[userId] ?? createEmptyProfile(userId, account?.email);
+
+                    // ✅ FIX: Safe merge for additional info with skills
+                    const mergedAdditional = data.additional 
+                        ? {
+                            ...existing.additional,
+                            ...data.additional,
+                            // Only override skills if explicitly provided
+                            skills: data.additional.skills !== undefined 
+                                ? data.additional.skills 
+                                : existing.additional?.skills
+                        }
+                        : existing.additional;
+
+                    return {
+                        profiles: {
+                            ...state.profiles,
+                            [userId]: {
+                                ...existing,
+                                personal: data.personal 
+                                    ? { ...existing.personal, ...data.personal }
+                                    : existing.personal,
+                                contact: data.contact
+                                    ? { ...existing.contact, ...data.contact }
+                                    : existing.contact,
+                                job: data.job
+                                    ? { ...existing.job, ...data.job }
+                                    : existing.job,
+                                financial: data.financial
+                                    ? { ...existing.financial, ...data.financial }
+                                    : existing.financial,
+                                education: data.education
+                                    ? { ...existing.education, ...data.education }
+                                    : existing.education,
+                                workHistory: data.workHistory !== undefined
+                                    ? data.workHistory
+                                    : existing.workHistory,
+                                certificates: data.certificates !== undefined
+                                    ? data.certificates
+                                    : existing.certificates,
+                                attachments: data.attachments
+                                    ? { ...existing.attachments, ...data.attachments }
+                                    : existing.attachments,
+                                additional: mergedAdditional,
+                            },
+                        },
+                    };
+                }),
+            
+            getProfile: (userId) => get().profiles[userId],
+            
+            getCurrentProfile: () => {
+                const userId = get().currentUserId;
+                if (!userId) return undefined;
+                return get().profiles[userId];
+            },
+            
+            getCompletionPercent: (userId) => {
+                const profile = get().profiles[userId];
+                if (!profile) return 0;
+
+                const scores = [
+                    Boolean(profile.personal && Object.keys(profile.personal).length),
+                    Boolean(profile.contact && Object.keys(profile.contact).length),
+                    Boolean(profile.job && Object.keys(profile.job).length),
+                    Boolean(profile.education && Object.keys(profile.education).length),
+                    Boolean(profile.workHistory?.length && profile.workHistory.some((item) => Boolean(item.company || item.role))),
+                    Boolean(profile.certificates?.length && profile.certificates.some((item) => Boolean(item.title || item.issuer))),
+                    Boolean(profile.attachments && Object.keys(profile.attachments).length),
+                    Boolean(profile.additional && Object.keys(profile.additional).length),
+                ];
+
+                return Math.round((scores.filter(Boolean).length / 8) * 100);
+            },
+            
+            isProfileComplete: (userId) => {
+                return get().getCompletionPercent(userId) === 100;
             },
         }),
         {

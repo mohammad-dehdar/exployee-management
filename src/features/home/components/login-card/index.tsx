@@ -5,7 +5,7 @@ import { LoginTypeSelector } from "../login-type-selector";
 import { LoginForm } from "../login-form";
 import { ResumeSection } from "../resume-section";
 import type { LoginCardProps } from "../../types";
-import { LOGIN_TITLES, LOGIN_DESCRIPTIONS, SELECT_LOGIN_TYPE_TITLE, SELECT_LOGIN_TYPE_DESCRIPTION } from "../../constants";
+import { LOGIN_TITLES, SELECT_LOGIN_TYPE_TITLE } from "../../constants";
 
 export function LoginCard({
     loginType,
@@ -21,21 +21,13 @@ export function LoginCard({
         if (loginType === null) return SELECT_LOGIN_TYPE_TITLE;
         return LOGIN_TITLES[loginType];
     };
-
-    const getDescription = () => {
-        if (loginType === null) return SELECT_LOGIN_TYPE_DESCRIPTION;
-        return LOGIN_DESCRIPTIONS[loginType];
-    };
-
+    
     return (
         <Card className="relative overflow-hidden rounded-xl shadow-xl border border-neutral-10 bg-neutral-90/5 backdrop-blur-3xl p-4 sm:p-5 md:p-6">
             <CardHeader className="flex flex-col justify-center items-center gap-2 mb-3 sm:mb-4 px-2 sm:px-0">
-                <CardTitle className="text-base sm:text-lg font-bold text-slate-900 text-center">
+                <CardTitle className="text-base sm:text-lg font-bold dark:text-neutral-10 text-neutral-90 text-center">
                     {getTitle()}
                 </CardTitle>
-                <p className="text-xs sm:text-sm text-slate-600 text-center">
-                    {getDescription()}
-                </p>
             </CardHeader>
             <CardContent className="px-2 sm:px-0">
                 {loginType === null ? (

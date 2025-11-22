@@ -57,7 +57,7 @@ export default function HomeFeature() {
     };
 
     return (
-        <main className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col gap-4 px-4 py-8 sm:gap-6 sm:px-6 sm:py-12 md:gap-8 md:pt-16 lg:pt-20">
+        <main className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col justify-center gap-4 px-4 py-8 sm:gap-6 sm:px-6 sm:py-12 md:gap-8 md:pt-16 lg:pt-20">
             <section className="relative overflow-hidden rounded-xl">
                 <div className="relative z-10 grid gap-4 sm:gap-6 lg:grid-cols-[1.2fr,1fr] lg:items-center">
                     {/* <HeroSection loginType={loginType} /> */}

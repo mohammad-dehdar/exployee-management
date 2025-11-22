@@ -3,7 +3,7 @@
 import { useFormContext } from "react-hook-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { TextInput } from "@/components/ui/text-input";
-import { genderOptions } from "./constants";
+import { GENDER_OPTIONS } from "@/schemas/user.schema";
 
 export const PersonalInfo = ({ editable = true }: { editable?: boolean }) => {
     const { register } = useFormContext();
@@ -79,7 +79,7 @@ export const PersonalInfo = ({ editable = true }: { editable?: boolean }) => {
                         disabled={!editable}
                     >
                         <option value="">انتخاب کنید</option>
-                        {genderOptions.map((option) => (
+                        {GENDER_OPTIONS.map((option) => (
                             <option key={option.value} value={option.value}>
                                 {option.label}
                             </option>
