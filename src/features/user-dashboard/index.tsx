@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { TextInput } from "@/components/ui/text-input";
 import { Label } from "@/components/ui/label";
 import { toastError, toastSuccess } from "@/components/feedback/toast-provider/toast-provider";
 import { useAuthStore } from "@/features/auth";
@@ -92,18 +92,15 @@ export default function UserDashboardFeature() {
         <main className="mx-auto flex min-h-[70vh] w-full max-w-5xl flex-col gap-6 px-5 py-10">
             <section className="flex items-center justify-between gap-4">
                 <div className="flex-1">
-                    <HeroCard completionPercent={completionPercent} />
+                    <HeroCard completionPercent={completionPercent} handleLogout={handleLogout} />
                 </div>
-                <Button variant="ghost" className="text-sm text-muted-foreground" onClick={handleLogout}>
-                    خروج از حساب
-                </Button>
             </section>
 
             <section className="grid gap-4 lg:grid-cols-[2fr,1fr]">
                 <StatusCard
-                    personal={safeProfile.personal}
-                    contact={safeProfile.contact}
-                    job={safeProfile.job}
+                    personal={safeProfile.personal as Record<string, unknown>}
+                    contact={safeProfile.contact as Record<string, unknown>}
+                    job={safeProfile.job as Record<string, unknown>}
                 />
                 <Card className="rounded-3xl border border-border/60 bg-card/80 shadow-sm backdrop-blur">
                     <CardHeader className="px-5 pt-5 pb-3">
@@ -116,7 +113,7 @@ export default function UserDashboardFeature() {
                                 <Label htmlFor="currentPassword" className="text-sm">
                                     رمز فعلی
                                 </Label>
-                                <Input
+                                <TextInput
                                     id="currentPassword"
                                     type="password"
                                     value={currentPassword}
@@ -128,7 +125,7 @@ export default function UserDashboardFeature() {
                                 <Label htmlFor="newPassword" className="text-sm">
                                     رمز جدید
                                 </Label>
-                                <Input
+                                <TextInput
                                     id="newPassword"
                                     type="password"
                                     value={newPassword}

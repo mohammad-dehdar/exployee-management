@@ -4,7 +4,7 @@ import { FormEvent, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { TextInput } from "@/components/ui/text-input";
 import { Label } from "@/components/ui/label";
 import { toastError, toastSuccess } from "@/components/feedback/toast-provider/toast-provider";
 import UserCard from "./components/user-card";
@@ -81,7 +81,7 @@ export default function AdminDashboardFeature() {
                             </span>
                         </div>
                     </div>
-                    <Card className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200/70 shadow-sm dark:border-slate-800/70">
+                    <Card className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200/70 shadow-sm dark:border-slate-800/70 p-4">
                         <CardHeader className="pb-3">
                             <CardTitle className="text-base font-semibold">ساخت حساب کاربر</CardTitle>
                             <p className="text-xs text-muted-foreground">ایمیل و رمز عبور را وارد کنید تا کاربر بتواند وارد شود.</p>
@@ -90,7 +90,7 @@ export default function AdminDashboardFeature() {
                             <form onSubmit={handleCreateUser} className="space-y-3">
                                 <div className="space-y-1">
                                     <Label htmlFor="displayName" className="text-sm">نام کاربر</Label>
-                                    <Input
+                                    <TextInput
                                         id="displayName"
                                         value={displayName}
                                         onChange={(e) => setDisplayName(e.target.value)}
@@ -99,7 +99,7 @@ export default function AdminDashboardFeature() {
                                 </div>
                                 <div className="space-y-1">
                                     <Label htmlFor="userEmail" className="text-sm">ایمیل</Label>
-                                    <Input
+                                    <TextInput
                                         id="userEmail"
                                         type="email"
                                         value={email}
@@ -110,7 +110,7 @@ export default function AdminDashboardFeature() {
                                 </div>
                                 <div className="space-y-1">
                                     <Label htmlFor="userPassword" className="text-sm">رمز عبور</Label>
-                                    <Input
+                                    <TextInput
                                         id="userPassword"
                                         type="password"
                                         value={password}

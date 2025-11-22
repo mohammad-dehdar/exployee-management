@@ -5,9 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface HeroCardProps {
   completionPercent: number;
+  handleLogout: () => void;
 }
 
-export function HeroCard({ completionPercent }: HeroCardProps) {
+
+export function HeroCard({ completionPercent, handleLogout }: HeroCardProps) {
   return (
     <Card className="relative overflow-hidden rounded-3xl border border-border/60 bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white shadow-xl">
       <div className="pointer-events-none absolute inset-0 opacity-20">
@@ -39,13 +41,18 @@ export function HeroCard({ completionPercent }: HeroCardProps) {
             />
           </div>
         </div>
-        <Button
-          as="link"
-          href="/user-dashboard/user-form"
-          className="w-full rounded-2xl bg-white/15 py-5 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/25"
-        >
-          تکمیل پروفایل کاربری
-        </Button>
+        <div className="flex items-center justify-between gap-4">
+          <Button
+            as="link"
+            href="/user-dashboard/user-form"
+            className="w-5/6 rounded-lg bg-white/15 py-5 text-sm font-semibold text-white backdrop-blur transition hover:bg-primary/25"
+          >
+            تکمیل پروفایل کاربری
+          </Button>
+          <Button variant="fill" color="error" className="w-1/6 py-5 bg-white/15 rounded-lg text-sm text-muted-foreground backdrop-blur hover:bg-error/25" onClick={handleLogout}>
+            خروج از حساب
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { TextInput } from "@/components/ui/text-input";
 import { Label } from "@/components/ui/label";
 import { toastError, toastSuccess } from "@/components/feedback/toast-provider/toast-provider";
 import { useAuthStore } from "@/features/auth";
@@ -64,7 +64,7 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <Card className="relative overflow-hidden rounded-2xl border border-white/40 bg-white/90 shadow-xl backdrop-blur">
+                    <Card className="relative overflow-hidden rounded-2xl border border-white/40 bg-white/90 shadow-xl backdrop-blur p-4">
                         <CardHeader>
                             <CardTitle className="text-lg font-bold text-slate-900">ورود</CardTitle>
                             <p className="text-sm text-slate-600">حساب ادمین یا کاربر را وارد کنید.</p>
@@ -75,7 +75,7 @@ export default function Home() {
                                     <Label className="text-sm" htmlFor="email">
                                         ایمیل
                                     </Label>
-                                    <Input
+                                    <TextInput
                                         id="email"
                                         type="email"
                                         value={email}
@@ -88,7 +88,7 @@ export default function Home() {
                                     <Label className="text-sm" htmlFor="password">
                                         رمز عبور
                                     </Label>
-                                    <Input
+                                    <TextInput
                                         id="password"
                                         type="password"
                                         value={password}
