@@ -2,12 +2,21 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAuthStore } from "@/features/auth";
+import { useRouter } from "next/navigation";
 
 interface HeroCardProps {
   completionPercent: number;
 }
 
+
 export function HeroCard({ completionPercent }: HeroCardProps) {
+  const router = useRouter();
+  const {logout} = useAuthStore();
+  const handleLogout = () => {
+    logout();
+    router.replace("/");
+  };
   return (
     <Card className="relative overflow-hidden rounded-3xl border border-border/60 bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white shadow-xl">
       <div className="pointer-events-none absolute inset-0 opacity-20">
@@ -39,13 +48,18 @@ export function HeroCard({ completionPercent }: HeroCardProps) {
             />
           </div>
         </div>
-        <Button
+       <div className="flex items-center justify-between gap-4">
+       <Button
           as="link"
           href="/user-dashboard/user-form"
-          className="w-full rounded-2xl bg-white/15 py-5 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/25"
+          className="w-5/6 rounded-2xl bg-white/15 py-5 text-sm font-semibold text-white backdrop-blur transition hover:bg-primary/25"
         >
           تکمیل پروفایل کاربری
         </Button>
+        <Button variant="fill" color="error" className="w-1/6 rounded-2xl bg-white/15 py-5 text-sm font-semibold text-white backdrop-blur transition hover:bg-error/25" onClick={handleLogout}>
+          خروج از حساب
+        </Button>
+       </div>
       </CardContent>
     </Card>
   );
