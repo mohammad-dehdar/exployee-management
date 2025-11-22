@@ -1,16 +1,14 @@
 'use client';
 
-import { useFormContext } from 'react-hook-form';
-import { TextInput } from '@/components/ui/text-input';
-import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '@/components/ui/card';
-// فرض بر این است که contractTypes و workLocations از './constants' دریافت می‌شوند
-import { contractTypes, workLocations } from './constants';
+import { useFormContext } from "react-hook-form";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { TextInput } from "@/components/ui/text-input";
+import { contractTypes, positions, workLocations } from "./constants";
 
-export const JobInfo = () => {
+export const JobInfo = ({ editable = true }: { editable?: boolean }) => {
     const { register } = useFormContext();
 
     return (
-        // ✨ استایل‌های جدید کارت: rounded-xl، border-2، border-primary/50، shadow-lg
         <Card className="rounded-xl border-2 border-primary/50 bg-background p-0 shadow-lg">
             <CardHeader className="space-y-2 px-6 pt-6">
                 <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
@@ -22,26 +20,34 @@ export const JobInfo = () => {
             </CardHeader>
 
             <CardContent className="grid gap-6 px-6 pb-6 md:grid-cols-2">
-
-                <TextInput
-                    fullWidth
-                    label="سمت شغلی"
-                    variant="outline"
-                    color="neutral"
-                    {...register("job.position")}
-                    className="rounded-lg" // ✨ استایل جدید TextInput
-                />
-
                 <div className="flex flex-col space-y-2">
-                    <label className="text-sm font-medium text-foreground">نوع قرارداد</label> {/* بهبود استایل لیبل */}
+                    <label className="text-sm font-medium text-foreground">سمت / عنوان شغلی</label>
                     <select
-                        // ✨ استایل‌های جدید Select: rounded-lg، border-border/60، ring-primary
                         className="rounded-lg border border-border/60 bg-background px-4 py-2.5 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-                        {...register("job.contractType")}
+                        {...register("job.position")}
+                        disabled={!editable}
                     >
                         <option value="">انتخاب کنید</option>
-                        {contractTypes.map((c) => (
-                            <option key={c.value} value={c.value}>{c.label}</option>
+                        {positions.map((position) => (
+                            <option key={position.value} value={position.label}>
+                                {position.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className="flex flex-col space-y-2">
+                    <label className="text-sm font-medium text-foreground">نوع قرارداد</label>
+                    <select
+                        className="rounded-lg border border-border/60 bg-background px-4 py-2.5 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                        {...register("job.contractType")}
+                        disabled={!editable}
+                    >
+                        <option value="">انتخاب کنید</option>
+                        {contractTypes.map((contract) => (
+                            <option key={contract.value} value={contract.value}>
+                                {contract.label}
+                            </option>
                         ))}
                     </select>
                 </div>
@@ -53,7 +59,8 @@ export const JobInfo = () => {
                     variant="outline"
                     color="neutral"
                     {...register("job.startDate")}
-                    className="rounded-lg" // ✨ استایل جدید TextInput
+                    disabled={!editable}
+                    className="rounded-lg"
                 />
 
                 <TextInput
@@ -63,24 +70,26 @@ export const JobInfo = () => {
                     variant="outline"
                     color="neutral"
                     {...register("job.endDate")}
-                    className="rounded-lg" // ✨ استایل جدید TextInput
+                    disabled={!editable}
+                    className="rounded-lg"
                 />
 
                 <div className="flex flex-col space-y-2">
-                    <label className="text-sm font-medium text-foreground">لوکیشن کاری</label> {/* بهبود استایل لیبل */}
+                    <label className="text-sm font-medium text-foreground">لوکیشن کاری</label>
                     <select
-                        // ✨ استایل‌های جدید Select: rounded-lg، border-border/60، ring-primary
                         className="rounded-lg border border-border/60 bg-background px-4 py-2.5 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                         {...register("job.location")}
+                        disabled={!editable}
                     >
                         <option value="">انتخاب کنید</option>
-                        {workLocations.map((l) => (
-                            <option key={l.value} value={l.value}>{l.label}</option>
+                        {workLocations.map((location) => (
+                            <option key={location.value} value={location.value}>
+                                {location.label}
+                            </option>
                         ))}
                     </select>
                 </div>
-
             </CardContent>
         </Card>
     );
-}
+};
