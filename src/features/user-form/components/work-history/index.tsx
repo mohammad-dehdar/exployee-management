@@ -85,7 +85,7 @@ export const WorkHistory = ({ editable = true }: { editable?: boolean }) => {
 
                         {editable && fields.length > 1 && (
                             <div className="flex justify-end">
-                                <Button variant="ghost" size="sm" onClick={() => remove(index)}>
+                                <Button variant="ghost" onClick={() => remove(index)}>
                                     حذف سابقه
                                 </Button>
                             </div>

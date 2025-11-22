@@ -1,6 +1,4 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
-import { withTests } from '@storybook/addon-jest';
-import results from '~/.jest-test-results.json';
 import { Label } from './label';
 import { TextInput } from '@/components/ui/text-input';
 
@@ -22,7 +20,6 @@ export const Tests: Story = {
   },
   render: (args: Story['args']) => <Label {...args}>آدرس ایمیل</Label>,
 };
-Tests.decorators = [withTests({ results })];
 
 export const Basic: Story = {
   render: () => (

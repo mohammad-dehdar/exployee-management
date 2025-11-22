@@ -1,8 +1,6 @@
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/nextjs';
 import { TextInput } from './text-input';
-import { withTests } from '@storybook/addon-jest';
-import results from '~/.jest-test-results.json';
 import { SearchIcon } from '@/components/shared/icons';
 import { Button } from '@/components/ui/button';
 
@@ -24,7 +22,6 @@ export const Tests: Story = {
   },
   render: (args: Story['args']) => <TextInput {...args} />,
 };
-Tests.decorators = [withTests({ results })];
 
 export const Basic: Story = {
   render: () => <TextInput placeholder="جستجو..." />,

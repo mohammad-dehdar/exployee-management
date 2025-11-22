@@ -10,8 +10,6 @@ import {
   CardTitle,
 } from './card';
 import { Button } from '@/components/ui';
-import { withTests } from '@storybook/addon-jest';
-import results from '~/.jest-test-results.json';
 import Image from 'next/image';
 
 const meta: Meta = {
@@ -31,7 +29,6 @@ export const Tests: Story = {
   render: (args) => <Card {...args}>{args.children}</Card>,
 };
 
-Tests.decorators = [withTests({ results })];
 
 export const Basic: Story = {
   render: () => (

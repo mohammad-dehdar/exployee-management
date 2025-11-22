@@ -16,7 +16,7 @@ import {
     PersonalInfo as PersonalInfoFields,
     WorkHistory,
 } from "@/features/user-form/components";
-import type { UserRecord } from "@/types/user";
+import type { UserRecord } from "@/schemas/user.schema";
 
 export default function UserDetails({ user }: { user: UserRecord }) {
     const router = useRouter();

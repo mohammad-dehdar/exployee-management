@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
-import type { UserRecord } from "@/types/user";
+import type { UserRecord } from "@/schemas/user.schema";
 
 export default function UserCard({ user }: { user: UserRecord }) {
     return (

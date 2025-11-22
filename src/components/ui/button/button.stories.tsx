@@ -32,8 +32,6 @@ export const Basic: Story = {
   render: (args) => <Button {...args}>{args.children}</Button>,
 };
 
-Basic.decorators = [withTests({ results })];
-
 export const Variants: Story = {
   render: () => (
     <div className="flex flex-wrap gap-4">

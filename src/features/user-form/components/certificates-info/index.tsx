@@ -68,7 +68,7 @@ export const CertificatesInfo = ({ editable = true }: { editable?: boolean }) =>
                         </div>
                         {editable && fields.length > 1 && (
                             <div className="flex justify-end">
-                                <Button variant="ghost" size="sm" onClick={() => remove(index)}>
+                                <Button variant="ghost"  onClick={() => remove(index)}>
                                     حذف دوره
                                 </Button>
                             </div>

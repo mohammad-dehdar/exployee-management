@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { createJSONStorage, persist, StateStorage } from "zustand/middleware";
-import type { UserRecord } from "@/types/user";
+import type { UserRecord } from "@/schemas/user.schema";
 
 type Role = "admin" | "user";
 
@@ -150,16 +150,17 @@ export const useAuthStore = create<AuthState>()(
                     const existing = state.profiles[userId] ?? createEmptyProfile(userId, account?.email);
 
                     // ✅ FIX: Safe merge for additional info with skills
+                    const existingAdditional = existing.additional || {};
                     const mergedAdditional = data.additional 
                         ? {
-                            ...existing.additional,
+                            ...existingAdditional,
                             ...data.additional,
                             // Only override skills if explicitly provided
                             skills: data.additional.skills !== undefined 
                                 ? data.additional.skills 
-                                : existing.additional?.skills
+                                : (existingAdditional.skills || [])
                         }
-                        : existing.additional;
+                        : existingAdditional;
 
                     return {
                         profiles: {
@@ -213,8 +214,8 @@ export const useAuthStore = create<AuthState>()(
                     Boolean(profile.contact && Object.keys(profile.contact).length),
                     Boolean(profile.job && Object.keys(profile.job).length),
                     Boolean(profile.education && Object.keys(profile.education).length),
-                    Boolean(profile.workHistory?.length && profile.workHistory.some((item) => Boolean(item.company || item.role))),
-                    Boolean(profile.certificates?.length && profile.certificates.some((item) => Boolean(item.title || item.issuer))),
+                    Boolean(profile.workHistory?.length && profile.workHistory.some((item: { company?: string; role?: string }) => Boolean(item.company || item.role))),
+                    Boolean(profile.certificates?.length && profile.certificates.some((item: { title?: string; issuer?: string }) => Boolean(item.title || item.issuer))),
                     Boolean(profile.attachments && Object.keys(profile.attachments).length),
                     Boolean(profile.additional && Object.keys(profile.additional).length),
                 ];
@@ -228,7 +229,7 @@ export const useAuthStore = create<AuthState>()(
         }),
         {
             name: "auth-store",
-            storage: clientStorage,
+            storage: clientStorage as any,
             merge: (persisted, current) => {
                 const nextState = {
                     ...current,

@@ -7,9 +7,7 @@ import { useRouter } from "next/navigation";
 
 interface HeroCardProps {
   completionPercent: number;
-  handleLogout: () => void;
 }
-
 
 export function HeroCard({ completionPercent }: HeroCardProps) {
   const router = useRouter();
