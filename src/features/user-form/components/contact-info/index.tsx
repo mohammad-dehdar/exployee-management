@@ -1,14 +1,13 @@
 'use client';
 
-import { useFormContext } from 'react-hook-form';
-import { TextInput } from '@/components/ui/text-input';
-import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '@/components/ui/card';
+import { useFormContext } from "react-hook-form";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { TextInput } from "@/components/ui/text-input";
 
 export const ContactInfo = () => {
     const { register } = useFormContext();
 
     return (
-        // ✨ استایل‌های جدید کارت: rounded-xl، border-2، border-primary/50، shadow-lg
         <Card className="rounded-xl border-2 border-primary/50 bg-background p-0 shadow-lg">
             <CardHeader className="space-y-2 px-6 pt-6">
                 <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
@@ -20,14 +19,13 @@ export const ContactInfo = () => {
             </CardHeader>
 
             <CardContent className="grid gap-6 px-6 pb-6 md:grid-cols-2">
-
                 <TextInput
                     fullWidth
                     label="شماره موبایل"
                     variant="outline"
                     color="neutral"
                     {...register("contact.phone")}
-                    className="rounded-lg" // ✨ استایل جدید TextInput
+                    className="rounded-lg"
                 />
 
                 <TextInput
@@ -36,7 +34,7 @@ export const ContactInfo = () => {
                     variant="outline"
                     color="neutral"
                     {...register("contact.emergencyPhone")}
-                    className="rounded-lg" // ✨ استایل جدید TextInput
+                    className="rounded-lg"
                 />
 
                 <TextInput
@@ -46,7 +44,7 @@ export const ContactInfo = () => {
                     variant="outline"
                     color="neutral"
                     {...register("contact.orgEmail")}
-                    className="rounded-lg" // ✨ استایل جدید TextInput
+                    className="rounded-lg"
                 />
 
                 <TextInput
@@ -55,7 +53,7 @@ export const ContactInfo = () => {
                     variant="outline"
                     color="neutral"
                     {...register("contact.personalEmail")}
-                    className="rounded-lg" // ✨ استایل جدید TextInput
+                    className="rounded-lg"
                 />
 
                 <TextInput
@@ -64,7 +62,7 @@ export const ContactInfo = () => {
                     variant="outline"
                     color="neutral"
                     {...register("contact.address")}
-                    className="rounded-lg" // ✨ استایل جدید TextInput
+                    className="rounded-lg"
                 />
 
                 <TextInput
@@ -73,10 +71,9 @@ export const ContactInfo = () => {
                     variant="outline"
                     color="neutral"
                     {...register("contact.city")}
-                    className="rounded-lg" // ✨ استایل جدید TextInput
+                    className="rounded-lg"
                 />
-
             </CardContent>
         </Card>
     );
-}
+};

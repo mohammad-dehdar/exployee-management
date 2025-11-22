@@ -1,15 +1,14 @@
 'use client';
 
-import { useFormContext } from 'react-hook-form';
-import { TextInput } from '@/components/ui/text-input';
-import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '@/components/ui/card';
-import { genderOptions } from './constants';
+import { useFormContext } from "react-hook-form";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { TextInput } from "@/components/ui/text-input";
+import { genderOptions } from "./constants";
 
 export const PersonalInfo = () => {
     const { register } = useFormContext();
 
     return (
-        // ✨ تغییرات: rounded-xl، border-2، border-primary/50، shadow-lg
         <Card className="rounded-xl border-2 border-primary/50 bg-background p-0 shadow-lg">
             <CardHeader className="space-y-2 px-6 pt-6">
                 <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
@@ -20,15 +19,42 @@ export const PersonalInfo = () => {
                 </CardDescription>
             </CardHeader>
 
-            <CardContent className="grid gap-6 px-6 pb-6 md:grid-cols-2"> {/* فاصله بیشتر بین فیلدها */}
+            <CardContent className="grid gap-6 px-6 pb-6 md:grid-cols-2">
+                <TextInput
+                    label="نام"
+                    fullWidth
+                    variant="outline"
+                    color="neutral"
+                    {...register("personal.firstName")}
+                    className="rounded-lg"
+                />
 
-                <TextInput label="نام" fullWidth variant="outline" color="neutral" {...register("personal.firstName")} className="rounded-lg" />
+                <TextInput
+                    label="نام خانوادگی"
+                    fullWidth
+                    variant="outline"
+                    color="neutral"
+                    {...register("personal.lastName")}
+                    className="rounded-lg"
+                />
 
-                <TextInput label="نام خانوادگی" fullWidth variant="outline" color="neutral" {...register("personal.lastName")} className="rounded-lg" />
+                <TextInput
+                    label="نام پدر (اختیاری)"
+                    fullWidth
+                    variant="outline"
+                    color="neutral"
+                    {...register("personal.fatherName")}
+                    className="rounded-lg"
+                />
 
-                <TextInput label="نام پدر (اختیاری)" fullWidth variant="outline" color="neutral" {...register("personal.fatherName")} className="rounded-lg" />
-
-                <TextInput label="کد ملی / پاسپورت" fullWidth variant="outline" color="neutral" {...register("personal.nationalId")} className="rounded-lg" />
+                <TextInput
+                    label="کد ملی / پاسپورت"
+                    fullWidth
+                    variant="outline"
+                    color="neutral"
+                    {...register("personal.nationalId")}
+                    className="rounded-lg"
+                />
 
                 <TextInput
                     label="تاریخ تولد"
@@ -41,20 +67,20 @@ export const PersonalInfo = () => {
                 />
 
                 <div className="flex flex-col space-y-2">
-                    <label className="text-sm font-medium text-foreground">جنسیت</label> {/* بهبود استایل لیبل */}
+                    <label className="text-sm font-medium text-foreground">جنسیت</label>
                     <select
-                        // ✨ تغییرات: rounded-lg، border-border/60، ring-primary
                         className="rounded-lg border border-border/60 bg-background px-4 py-2.5 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                         {...register("personal.gender")}
                     >
                         <option value="">انتخاب کنید</option>
-                        {genderOptions.map((o) => (
-                            <option key={o.value} value={o.value}>{o.label}</option>
+                        {genderOptions.map((option) => (
+                            <option key={option.value} value={option.value}>
+                                {option.label}
+                            </option>
                         ))}
                     </select>
                 </div>
-
             </CardContent>
         </Card>
     );
-}
+};
