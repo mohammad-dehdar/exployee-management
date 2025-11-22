@@ -3,9 +3,9 @@
 import { useFormContext } from "react-hook-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { TextInput } from "@/components/ui/text-input";
-import { contractTypes, workLocations } from "./constants";
+import { contractTypes, positions, workLocations } from "./constants";
 
-export const JobInfo = () => {
+export const JobInfo = ({ editable = true }: { editable?: boolean }) => {
     const { register } = useFormContext();
 
     return (
@@ -20,20 +20,28 @@ export const JobInfo = () => {
             </CardHeader>
 
             <CardContent className="grid gap-6 px-6 pb-6 md:grid-cols-2">
-                <TextInput
-                    fullWidth
-                    label="سمت شغلی"
-                    variant="outline"
-                    color="neutral"
-                    {...register("job.position")}
-                    className="rounded-lg"
-                />
+                <div className="flex flex-col space-y-2">
+                    <label className="text-sm font-medium text-foreground">سمت / عنوان شغلی</label>
+                    <select
+                        className="rounded-lg border border-border/60 bg-background px-4 py-2.5 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                        {...register("job.position")}
+                        disabled={!editable}
+                    >
+                        <option value="">انتخاب کنید</option>
+                        {positions.map((position) => (
+                            <option key={position.value} value={position.label}>
+                                {position.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
                 <div className="flex flex-col space-y-2">
                     <label className="text-sm font-medium text-foreground">نوع قرارداد</label>
                     <select
                         className="rounded-lg border border-border/60 bg-background px-4 py-2.5 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                         {...register("job.contractType")}
+                        disabled={!editable}
                     >
                         <option value="">انتخاب کنید</option>
                         {contractTypes.map((contract) => (
@@ -51,6 +59,7 @@ export const JobInfo = () => {
                     variant="outline"
                     color="neutral"
                     {...register("job.startDate")}
+                    disabled={!editable}
                     className="rounded-lg"
                 />
 
@@ -61,6 +70,7 @@ export const JobInfo = () => {
                     variant="outline"
                     color="neutral"
                     {...register("job.endDate")}
+                    disabled={!editable}
                     className="rounded-lg"
                 />
 
@@ -69,6 +79,7 @@ export const JobInfo = () => {
                     <select
                         className="rounded-lg border border-border/60 bg-background px-4 py-2.5 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                         {...register("job.location")}
+                        disabled={!editable}
                     >
                         <option value="">انتخاب کنید</option>
                         {workLocations.map((location) => (

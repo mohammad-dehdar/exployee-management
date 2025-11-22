@@ -95,6 +95,12 @@ export const useAuthStore = create<AuthState>()(
                             personal: {},
                             contact: { orgEmail: normalizedEmail },
                             job: {},
+                            financial: {},
+                            education: {},
+                            workHistory: [],
+                            certificates: [],
+                            attachments: {},
+                            additional: {},
                         },
                     },
                 }));
@@ -108,6 +114,12 @@ export const useAuthStore = create<AuthState>()(
                         personal: {},
                         contact: {},
                         job: {},
+                        financial: {},
+                        education: {},
+                        workHistory: [],
+                        certificates: [],
+                        attachments: {},
+                        additional: {},
                     };
 
                     return {
@@ -118,6 +130,16 @@ export const useAuthStore = create<AuthState>()(
                                 personal: { ...existing.personal, ...data.personal },
                                 contact: { ...existing.contact, ...data.contact },
                                 job: { ...existing.job, ...data.job },
+                                financial: { ...existing.financial, ...data.financial },
+                                education: { ...existing.education, ...data.education },
+                                workHistory: data.workHistory ?? existing.workHistory,
+                                certificates: data.certificates ?? existing.certificates,
+                                attachments: { ...existing.attachments, ...data.attachments },
+                                additional: {
+                                    ...existing.additional,
+                                    ...data.additional,
+                                    skills: data.additional?.skills ?? existing.additional.skills,
+                                },
                             },
                         },
                     };

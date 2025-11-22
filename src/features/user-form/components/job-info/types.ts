@@ -12,4 +12,4 @@ export interface JobInfoValues {
   }
 
 export type ContractTypeValue = 'fulltime' | 'parttime' | 'freelancer' | 'project' | 'hourly';
-export type WorkLocationValue = 'tehran' | 'remote';
+export type WorkLocationValue = 'tehran' | 'mashhad' | 'remote' | 'other';

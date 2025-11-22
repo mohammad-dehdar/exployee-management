@@ -4,79 +4,69 @@ import { useFormContext } from "react-hook-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { TextInput } from "@/components/ui/text-input";
 
-export const ContactInfo = ({ editable = true }: { editable?: boolean }) => {
+export const AttachmentsInfo = ({ editable = true }: { editable?: boolean }) => {
     const { register } = useFormContext();
 
     return (
         <Card className="rounded-xl border-2 border-primary/50 bg-background p-0 shadow-lg">
             <CardHeader className="space-y-2 px-6 pt-6">
                 <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                    اطلاعات تماس <span className="text-primary">📞</span>
+                    فایل‌های ضمیمه <span className="text-primary">📎</span>
                 </CardTitle>
                 <CardDescription className="text-sm text-muted-foreground">
-                    راه‌های ارتباطی که HR از آن‌ها استفاده می‌کند را ثبت کنید.
+                    لینک یا نام فایل‌های آپلود شده را وارد کنید (PDF یا تصویر).
                 </CardDescription>
             </CardHeader>
 
             <CardContent className="grid gap-6 px-6 pb-6 md:grid-cols-2">
                 <TextInput
                     fullWidth
-                    label="شماره موبایل"
+                    label="رزومه (PDF)"
                     variant="outline"
                     color="neutral"
-                    {...register("contact.phone")}
-                    disabled={!editable}
+                    {...register("attachments.resume")}
                     className="rounded-lg"
+                    disabled={!editable}
                 />
 
                 <TextInput
                     fullWidth
-                    label="تماس اضطراری"
+                    label="اسکن کارت ملی / پاسپورت"
                     variant="outline"
                     color="neutral"
-                    {...register("contact.emergencyPhone")}
-                    disabled={!editable}
+                    {...register("attachments.idScan")}
                     className="rounded-lg"
+                    disabled={!editable}
                 />
 
                 <TextInput
                     fullWidth
-                    label="ایمیل سازمانی"
-                    disabled
+                    label="عکس پرسنلی"
                     variant="outline"
                     color="neutral"
-                    {...register("contact.orgEmail")}
+                    {...register("attachments.avatar")}
                     className="rounded-lg"
+                    disabled={!editable}
                 />
 
                 <TextInput
                     fullWidth
-                    label="ایمیل شخصی"
+                    label="مدارک تحصیلی"
                     variant="outline"
                     color="neutral"
-                    {...register("contact.personalEmail")}
-                    disabled={!editable}
+                    {...register("attachments.educationDocs")}
                     className="rounded-lg"
+                    disabled={!editable}
                 />
 
                 <TextInput
                     fullWidth
-                    label="آدرس"
+                    label="گواهینامه‌ها و دوره‌ها"
                     variant="outline"
                     color="neutral"
-                    {...register("contact.address")}
-                    disabled={!editable}
+                    {...register("attachments.certificates")}
                     className="rounded-lg"
-                />
-
-                <TextInput
-                    fullWidth
-                    label="شهر/استان"
-                    variant="outline"
-                    color="neutral"
-                    {...register("contact.city")}
                     disabled={!editable}
-                    className="rounded-lg"
                 />
             </CardContent>
         </Card>

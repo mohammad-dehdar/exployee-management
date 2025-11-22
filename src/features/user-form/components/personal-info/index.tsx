@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { TextInput } from "@/components/ui/text-input";
 import { genderOptions } from "./constants";
 
-export const PersonalInfo = () => {
+export const PersonalInfo = ({ editable = true }: { editable?: boolean }) => {
     const { register } = useFormContext();
 
     return (
@@ -27,6 +27,7 @@ export const PersonalInfo = () => {
                     color="neutral"
                     {...register("personal.firstName")}
                     className="rounded-lg"
+                    disabled={!editable}
                 />
 
                 <TextInput
@@ -36,6 +37,7 @@ export const PersonalInfo = () => {
                     color="neutral"
                     {...register("personal.lastName")}
                     className="rounded-lg"
+                    disabled={!editable}
                 />
 
                 <TextInput
@@ -45,6 +47,7 @@ export const PersonalInfo = () => {
                     color="neutral"
                     {...register("personal.fatherName")}
                     className="rounded-lg"
+                    disabled={!editable}
                 />
 
                 <TextInput
@@ -54,6 +57,7 @@ export const PersonalInfo = () => {
                     color="neutral"
                     {...register("personal.nationalId")}
                     className="rounded-lg"
+                    disabled={!editable}
                 />
 
                 <TextInput
@@ -63,6 +67,7 @@ export const PersonalInfo = () => {
                     variant="outline"
                     color="neutral"
                     {...register("personal.birthDate")}
+                    disabled={!editable}
                     className="rounded-lg"
                 />
 
@@ -71,6 +76,7 @@ export const PersonalInfo = () => {
                     <select
                         className="rounded-lg border border-border/60 bg-background px-4 py-2.5 text-sm text-foreground shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                         {...register("personal.gender")}
+                        disabled={!editable}
                     >
                         <option value="">انتخاب کنید</option>
                         {genderOptions.map((option) => (
