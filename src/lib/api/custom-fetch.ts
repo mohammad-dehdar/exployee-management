@@ -1,9 +1,9 @@
 import Cookies from 'js-cookie';
-import { ensureValidToken, getAccessToken, refreshAccessToken } from './auth-service';
-import { env } from '@/config/env';
+import { ensureValidToken, getAccessToken, refreshAccessToken } from '../auth/tokens';
+import { getApiUrl } from './endpoints';
 
 interface CustomFetchOptions extends RequestInit {
-  body?: any;
+  body?: unknown;
   requiresAuth?: boolean;
 }
 
@@ -11,23 +11,14 @@ export class ApiError extends Error {
   constructor(
     public status: number,
     message: string,
-    public data?: any,
+    public data?: unknown,
   ) {
     super(message);
     this.name = 'ApiError';
   }
 }
 
-/**
- * Helper function to construct full URL from relative path
- */
-export function getApiUrl(path: string): string {
-  return path.startsWith('http://') || path.startsWith('https://')
-    ? path
-    : `${env.API_URL}${path.startsWith('/') ? '' : '/'}${path}`;
-}
-
-export async function customFetch<T = any>(
+export async function customFetch<T = unknown>(
   url: string,
   options: CustomFetchOptions = {},
 ): Promise<T> {
@@ -68,7 +59,7 @@ export async function customFetch<T = any>(
   try {
     const response = await fetch(BASE_URL, config);
 
-    let data;
+    let data: unknown;
     const contentType = response.headers.get('content-type');
 
     if (contentType?.includes('application/json')) {
@@ -90,9 +81,14 @@ export async function customFetch<T = any>(
         }
       }
 
+      const parsed =
+        typeof data === 'object' && data !== null
+          ? (data as { detail?: string; message?: string })
+          : undefined;
+
       throw new ApiError(
         response.status,
-        data?.detail || data?.message || 'خطا در ارتباط با سرور',
+        parsed?.detail || parsed?.message || 'خطا در ارتباط با سرور',
         data,
       );
     }

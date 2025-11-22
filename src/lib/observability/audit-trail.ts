@@ -8,7 +8,7 @@
  * - Administrative actions
  */
 
-import { logger, logAudit } from './logger';
+import { logAudit } from './logger';
 import type { LogContext } from './logger';
 
 export enum AuditAction {
