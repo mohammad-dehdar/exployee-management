@@ -149,13 +149,15 @@
     },
     "createUser": {
       "title": "ساخت حساب کاربر",
-      "description": "ایمیل و رمز عبور را وارد کنید تا کاربر بتواند وارد شود.",
+      "description": "ایمیل شخصی و رمز عبور را وارد کنید تا کاربر بتواند وارد شود.",
       "displayName": "نام کاربر",
-      "email": "ایمیل",
+      "personalEmail": "ایمیل شخصی",
+      "orgEmail": "ایمیل سازمانی (اختیاری)",
       "password": "رمز عبور",
       "placeholders": {
         "displayName": "نام و نام خانوادگی",
-        "email": "user@example.com",
+        "personalEmail": "user@example.com",
+        "orgEmail": "user@company.com",
         "password": "حداقل ۶ کاراکتر"
       },
       "button": "ساخت حساب",

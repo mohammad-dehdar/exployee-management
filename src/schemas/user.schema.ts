@@ -219,11 +219,14 @@ export function validateUserUpdate(data: unknown): {
 }
 
 // Create empty profile with defaults
-export function createEmptyProfile(userId: string, email?: string, displayName?: string): UserRecord {
+export function createEmptyProfile(userId: string, email?: string, displayName?: string, orgEmail?: string): UserRecord {
     return {
         id: userId,
         personal: { username: displayName },
-        contact: { personalEmail: email },
+        contact: { 
+            personalEmail: email,
+            orgEmail: orgEmail 
+        },
         job: {},
         financial: {},
         education: {},

@@ -149,13 +149,15 @@
     },
     "createUser": {
       "title": "Benutzerkonto erstellen",
-      "description": "Geben Sie E-Mail und Passwort ein, damit der Benutzer sich anmelden kann.",
+      "description": "Geben Sie persönliche E-Mail und Passwort ein, damit der Benutzer sich anmelden kann.",
       "displayName": "Benutzername",
-      "email": "E-Mail",
+      "personalEmail": "Persönliche E-Mail",
+      "orgEmail": "Organisatorische E-Mail (Optional)",
       "password": "Passwort",
       "placeholders": {
         "displayName": "Vollständiger Name",
-        "email": "user@example.com",
+        "personalEmail": "user@example.com",
+        "orgEmail": "user@company.com",
         "password": "Mindestens 6 Zeichen"
       },
       "button": "Konto erstellen",

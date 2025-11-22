@@ -149,13 +149,15 @@
     },
     "createUser": {
       "title": "Create User Account",
-      "description": "Enter email and password so the user can log in.",
+      "description": "Enter personal email and password so the user can log in.",
       "displayName": "User Name",
-      "email": "Email",
+      "personalEmail": "Personal Email",
+      "orgEmail": "Organizational Email (Optional)",
       "password": "Password",
       "placeholders": {
         "displayName": "Full Name",
-        "email": "user@example.com",
+        "personalEmail": "user@example.com",
+        "orgEmail": "user@company.com",
         "password": "At least 6 characters"
       },
       "button": "Create Account",

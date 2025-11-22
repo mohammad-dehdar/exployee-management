@@ -17,6 +17,7 @@ export default function AdminDashboardFeature() {
     const router = useRouter();
     const { accounts, profiles, registerUser, logout, currentUserId } = useAuthStore();
     const [email, setEmail] = useState("");
+    const [orgEmail, setOrgEmail] = useState("");
     const [password, setPassword] = useState("");
     const [displayName, setDisplayName] = useState("");
 
@@ -43,7 +44,7 @@ export default function AdminDashboardFeature() {
 
     const handleCreateUser = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const result = registerUser({ email, password, displayName });
+        const result = registerUser({ email, password, displayName, orgEmail });
 
         if (!result.success) {
             toastError(result.message ?? t('adminDashboard.createUser.error'));
@@ -52,6 +53,7 @@ export default function AdminDashboardFeature() {
 
         toastSuccess(t('adminDashboard.createUser.success'));
         setEmail("");
+        setOrgEmail("");
         setPassword("");
         setDisplayName("");
     };
@@ -102,15 +104,26 @@ export default function AdminDashboardFeature() {
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <Label htmlFor="userEmail" className="text-sm">{t('adminDashboard.createUser.email')}</Label>
+                                    <Label htmlFor="userEmail" className="text-sm">{t('adminDashboard.createUser.personalEmail')}</Label>
                                     <TextInput
                                         id="userEmail"
                                         type="email"
                                         fullWidth
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        placeholder={t('adminDashboard.createUser.placeholders.email')}
+                                        placeholder={t('adminDashboard.createUser.placeholders.personalEmail')}
                                         required
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <Label htmlFor="orgEmail" className="text-sm">{t('adminDashboard.createUser.orgEmail')}</Label>
+                                    <TextInput
+                                        id="orgEmail"
+                                        type="email"
+                                        fullWidth
+                                        value={orgEmail}
+                                        onChange={(e) => setOrgEmail(e.target.value)}
+                                        placeholder={t('adminDashboard.createUser.placeholders.orgEmail')}
                                     />
                                 </div>
                                 <div className="space-y-1">

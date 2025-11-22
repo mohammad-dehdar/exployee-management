@@ -20,10 +20,10 @@ interface AuthState {
     // Auth methods
     login: (email: string, password: string) => { success: boolean; role?: Role; message?: string };
     logout: () => void;
-    registerUser: (payload: { email: string; password: string; displayName?: string }) => {
-        success: boolean;
-        message?: string;
-    };
+            registerUser: (payload: { email: string; password: string; displayName?: string; orgEmail?: string }) => {
+                success: boolean;
+                message?: string;
+            };
     changePassword: (
         userId: string,
         payload: { currentPassword: string; newPassword: string }
@@ -56,10 +56,13 @@ const defaultAdmin: Account = {
     displayName: "ادمین سیستم",
 };
 
-const createEmptyProfile = (userId: string, email?: string, displayName?: string): UserRecord => ({
+const createEmptyProfile = (userId: string, email?: string, displayName?: string, orgEmail?: string): UserRecord => ({
     id: userId,
     personal: { username: displayName },
-    contact: { personalEmail: email },
+    contact: { 
+        personalEmail: email,
+        orgEmail: orgEmail 
+    },
     job: {},
     financial: {},
     education: {},
@@ -92,8 +95,9 @@ export const useAuthStore = create<AuthState>()(
             
             logout: () => set({ currentUserId: undefined }),
             
-            registerUser: ({ email, password, displayName }) => {
+            registerUser: ({ email, password, displayName, orgEmail }) => {
                 const normalizedEmail = email.trim().toLowerCase();
+                const normalizedOrgEmail = orgEmail?.trim().toLowerCase();
                 const exists = get().accounts.some(
                     (acc) => acc.email.toLowerCase() === normalizedEmail
                 );
@@ -115,7 +119,7 @@ export const useAuthStore = create<AuthState>()(
                     accounts: [...state.accounts, newAccount],
                     profiles: {
                         ...state.profiles,
-                        [id]: createEmptyProfile(id, normalizedEmail, displayName),
+                        [id]: createEmptyProfile(id, normalizedEmail, displayName, normalizedOrgEmail),
                     },
                 }));
 
