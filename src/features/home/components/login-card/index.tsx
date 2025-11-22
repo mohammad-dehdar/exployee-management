@@ -1,11 +1,11 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LoginTypeSelector } from "../login-type-selector";
 import { LoginForm } from "../login-form";
 import { ResumeSection } from "../resume-section";
 import type { LoginCardProps } from "../../types";
-import { LOGIN_TITLES, SELECT_LOGIN_TYPE_TITLE } from "../../constants";
 
 export function LoginCard({
     loginType,
@@ -17,9 +17,11 @@ export function LoginCard({
     onSubmit,
     onBack,
 }: LoginCardProps) {
+    const t = useTranslations();
+    
     const getTitle = () => {
-        if (loginType === null) return SELECT_LOGIN_TYPE_TITLE;
-        return LOGIN_TITLES[loginType];
+        if (loginType === null) return t('home.login.selectType.title');
+        return t(`home.login.titles.${loginType}`);
     };
     
     return (

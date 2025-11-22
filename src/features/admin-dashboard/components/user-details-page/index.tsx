@@ -1,7 +1,7 @@
 'use client';
 
-import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { Link, useRouter } from "@/i18n/routing";
+import { useParams } from "next/navigation";
 import UserDetails from "@/features/admin-dashboard/components/user-details";
 import { useAuthStore } from "@/features/auth";
 

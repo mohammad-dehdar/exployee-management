@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuthStore } from "@/features/auth";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 
 interface HeroCardProps {
   completionPercent: number;

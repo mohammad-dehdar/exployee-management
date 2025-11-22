@@ -1,34 +1,28 @@
-import type { Metadata, Viewport } from 'next';
+'use client';
+
 import { dana, poppins } from '@/config/fonts/fonts';
 import { env } from '@/config/env';
 import { ThemeProvider } from 'next-themes';
 import { ToastProvider } from '@/components/feedback';
 import { QueryClientProviderWrapper } from '@/providers/QueryClientProviderWrapper';
-import { ThemeSwitcher } from '@/components/shared';
+import { ThemeSwitcher, LanguageSwitcher } from '@/components/shared';
 import Script from 'next/script';
-
-export const metadata: Metadata = {
-  title: 'etmita-hr',
-  description: '',
-};
-
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  minimumScale: 1,
-  userScalable: false,
-};
+import { PropsWithChildren } from '@/types/children';
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+  locale = 'fa',
+}: PropsWithChildren & {
+  locale?: string;
+}) {
+  const isRTL = locale === 'fa';
+  const lang = locale;
+
   return (
     <html
       className={` ${dana.variable} ${poppins.variable} `}
-      lang="fa"
-      dir="rtl"
+      lang={lang}
+      dir={isRTL ? 'rtl' : 'ltr'}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
@@ -49,7 +43,10 @@ export default function RootLayout({
               </div>
               <div className="relative z-10 pb-14">
                 {children}
-                <ThemeSwitcher variant='icon' className='fixed bottom-6 left-6 rounded-full bg-white/80 p-3 shadow-lg backdrop-blur dark:bg-slate-800/70' />
+                <div className='fixed bottom-6 right-6 flex items-baseline gap-3'>
+                  <LanguageSwitcher />
+                  <ThemeSwitcher variant='icon' className='rounded-full bg-white/80 shadow-lg backdrop-blur dark:bg-slate-800/70' />
+                </div>
                 <ToastProvider />
               </div>
             </div>

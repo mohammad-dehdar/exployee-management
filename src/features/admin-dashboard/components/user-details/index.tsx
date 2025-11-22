@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useEffect, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { FormProvider, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { toastSuccess } from "@/components/feedback";

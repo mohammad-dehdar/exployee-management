@@ -1,6 +1,7 @@
 'use client';
 
 import { FormEvent, useMemo, useState } from "react";
+import { useTranslations } from 'next-intl';
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,8 +10,10 @@ import { Label } from "@/components/ui/label";
 import { toastError, toastSuccess } from "@/components/feedback/toast-provider/toast-provider";
 import UserCard from "./components/user-card";
 import { useAuthStore } from "@/features/auth";
+import { DEFAULT_ADMIN_EMAIL, DEFAULT_ADMIN_PASSWORD } from "@/features/home/constants";
 
 export default function AdminDashboardFeature() {
+    const t = useTranslations();
     const router = useRouter();
     const { accounts, profiles, registerUser, logout, currentUserId } = useAuthStore();
     const [email, setEmail] = useState("");
@@ -32,7 +35,7 @@ export default function AdminDashboardFeature() {
     const users = userAccounts.map((account) =>
         profiles[account.id] ?? {
             id: account.id,
-            personal: { firstName: account.displayName ?? "نام" },
+            personal: { firstName: account.displayName ?? t('common.name') },
             contact: { orgEmail: account.email },
             job: {},
         }
@@ -43,11 +46,11 @@ export default function AdminDashboardFeature() {
         const result = registerUser({ email, password, displayName });
 
         if (!result.success) {
-            toastError(result.message ?? "ساخت حساب با خطا مواجه شد");
+            toastError(result.message ?? t('adminDashboard.createUser.error'));
             return;
         }
 
-        toastSuccess("حساب کاربر ساخته شد");
+        toastSuccess(t('adminDashboard.createUser.success'));
         setEmail("");
         setPassword("");
         setDisplayName("");
@@ -67,78 +70,78 @@ export default function AdminDashboardFeature() {
                 </div>
                 <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
                     <div className="space-y-3">
-                        <p className="text-sm font-semibold text-indigo-600 dark:text-indigo-300">داشبورد ادمین</p>
-                        <h1 className="text-3xl font-bold leading-tight">ساخت حساب و مشاهده پروفایل‌ها</h1>
+                        <p className="text-sm font-semibold text-indigo-600 dark:text-indigo-300">{t('adminDashboard.title')}</p>
+                        <h1 className="text-3xl font-bold leading-tight">{t('adminDashboard.subtitle')}</h1>
                         <p className="text-sm text-muted-foreground leading-6">
-                            از اینجا اکانت جدید بسازید و وضعیت اطلاعات هر کاربر را ببینید.
+                            {t('adminDashboard.description')}
                         </p>
                         <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
                             <span className="rounded-full bg-indigo-50 px-3 py-1 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-100">
-                                کاربران ساخته‌شده: {userAccounts.length}
+                                {t('adminDashboard.stats.usersCreated', { count: userAccounts.length })}
                             </span>
                             <span className="rounded-full bg-emerald-50 px-3 py-1 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-100">
-                                ادمین: admin@company.com / admin123
+                                {t('adminDashboard.stats.adminHint', { email: DEFAULT_ADMIN_EMAIL, password: DEFAULT_ADMIN_PASSWORD })}
                             </span>
                         </div>
                     </div>
                     <Card className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200/70 shadow-sm dark:border-neutral-70/70 p-4 dark:bg-neutral-80/20">
                         <CardHeader className="pb-3">
-                            <CardTitle className="text-base font-semibold">ساخت حساب کاربر</CardTitle>
-                            <p className="text-xs text-muted-foreground mt-2">ایمیل و رمز عبور را وارد کنید تا کاربر بتواند وارد شود.</p>
+                            <CardTitle className="text-base font-semibold">{t('adminDashboard.createUser.title')}</CardTitle>
+                            <p className="text-xs text-muted-foreground mt-2">{t('adminDashboard.createUser.description')}</p>
                         </CardHeader>
                         <CardContent>
                             <form onSubmit={handleCreateUser} className="space-y-3">
                                 <div className="space-y-1">
-                                    <Label htmlFor="displayName" className="text-sm">نام کاربر</Label>
+                                    <Label htmlFor="displayName" className="text-sm">{t('adminDashboard.createUser.displayName')}</Label>
                                     <TextInput
                                         id="displayName"
                                         value={displayName}
                                         fullWidth
                                         onChange={(e) => setDisplayName(e.target.value)}
-                                        placeholder="نام و نام خانوادگی"
+                                        placeholder={t('adminDashboard.createUser.placeholders.displayName')}
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <Label htmlFor="userEmail" className="text-sm">ایمیل</Label>
+                                    <Label htmlFor="userEmail" className="text-sm">{t('adminDashboard.createUser.email')}</Label>
                                     <TextInput
                                         id="userEmail"
                                         type="email"
                                         fullWidth
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        placeholder="user@example.com"
+                                        placeholder={t('adminDashboard.createUser.placeholders.email')}
                                         required
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <Label htmlFor="userPassword" className="text-sm">رمز عبور</Label>
+                                    <Label htmlFor="userPassword" className="text-sm">{t('adminDashboard.createUser.password')}</Label>
                                     <TextInput
                                         id="userPassword"
                                         type="password"
                                         value={password}
                                         fullWidth
                                         onChange={(e) => setPassword(e.target.value)}
-                                        placeholder="حداقل ۶ کاراکتر"
+                                        placeholder={t('adminDashboard.createUser.placeholders.password')}
                                         required
                                     />
                                 </div>
-                                <Button type="submit" className="w-full mt-4">ساخت حساب</Button>
+                                <Button type="submit" className="w-full mt-4">{t('adminDashboard.createUser.button')}</Button>
                             </form>
                         </CardContent>
                     </Card>
                 </div>
                 <div className="relative z-10 mt-4 flex justify-end">
                     <Button variant="ghost" className="text-sm text-muted-foreground" onClick={handleLogout}>
-                        خروج از حساب
+                        {t('common.logout')}
                     </Button>
                 </div>
             </section>
 
             {users.length === 0 ? (
                 <div className="rounded-2xl border border-dashed border-slate-300/80 bg-white/70 p-10 text-center text-muted-foreground shadow-lg backdrop-blur dark:border-slate-700/70 dark:bg-slate-900/70">
-                    <h2 className="text-xl font-semibold text-foreground">هنوز کاربری ثبت نشده است</h2>
+                    <h2 className="text-xl font-semibold text-foreground">{t('adminDashboard.emptyState.title')}</h2>
                     <p className="mt-2 text-sm text-muted-foreground">
-                        برای شروع، در بالا یک حساب بسازید و اطلاعات او بعد از ورود تکمیل می‌شود.
+                        {t('adminDashboard.emptyState.description')}
                     </p>
                 </div>
             ) : (

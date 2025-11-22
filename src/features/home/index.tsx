@@ -1,14 +1,16 @@
 'use client';
 
 import { FormEvent, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useTranslations } from 'next-intl';
+import { useRouter } from "@/i18n/routing";
 import { toastError, toastSuccess } from "@/components/feedback/toast-provider/toast-provider";
 import { useAuthStore } from "@/features/auth";
 import { LoginCard } from "./components";
 import type { LoginType } from "./types";
-import { ERROR_MESSAGES, SUCCESS_MESSAGES, ROUTES } from "./constants";
+import { ROUTES } from "./constants";
 
 export default function HomeFeature() {
+    const t = useTranslations();
     const router = useRouter();
     const [loginType, setLoginType] = useState<LoginType>(null);
     const [email, setEmail] = useState("");
@@ -21,7 +23,7 @@ export default function HomeFeature() {
         if (!currentUserId) return;
         const account = accounts.find((acc) => acc.id === currentUserId);
         if (!account) return;
-        router.replace(account.role === "admin" ? ROUTES.ADMIN_DASHBOARD : ROUTES.USER_DASHBOARD);
+        router.push(account.role === "admin" ? ROUTES.ADMIN_DASHBOARD : ROUTES.USER_DASHBOARD);
     }, [accounts, currentUserId, router]);
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -29,21 +31,21 @@ export default function HomeFeature() {
         const result = login(email, password);
 
         if (!result.success) {
-            toastError(result.message ?? ERROR_MESSAGES.LOGIN_FAILED);
+            toastError(result.message ?? t('home.errors.loginFailed'));
             return;
         }
 
         if (loginType === 'admin' && result.role !== 'admin') {
-            toastError(ERROR_MESSAGES.NOT_ADMIN);
+            toastError(t('home.errors.notAdmin'));
             return;
         }
         if (loginType === 'user' && result.role !== 'user') {
-            toastError(ERROR_MESSAGES.NOT_USER);
+            toastError(t('home.errors.notUser'));
             return;
         }
 
-        toastSuccess(SUCCESS_MESSAGES.WELCOME);
-        router.replace(result.role === "admin" ? ROUTES.ADMIN_DASHBOARD : ROUTES.USER_DASHBOARD);
+        toastSuccess(t('home.success.welcome'));
+        router.push(result.role === "admin" ? ROUTES.ADMIN_DASHBOARD : ROUTES.USER_DASHBOARD);
     };
 
     const handleBack = () => {

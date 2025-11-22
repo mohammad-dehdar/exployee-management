@@ -1,0 +1,369 @@
+{
+  "common": {
+    "email": "ایمیل",
+    "password": "رمز عبور",
+    "login": "ورود",
+    "logout": "خروج از حساب",
+    "back": "بازگشت",
+    "submit": "ارسال",
+    "save": "ذخیره",
+    "cancel": "لغو",
+    "edit": "ویرایش",
+    "delete": "حذف",
+    "search": "جستجو",
+    "select": "انتخاب کنید",
+    "loading": "در حال بارگذاری...",
+    "error": "خطا",
+    "success": "موفق",
+    "name": "نام",
+    "fullName": "نام و نام خانوادگی",
+    "firstName": "نام",
+    "lastName": "نام خانوادگی",
+    "phone": "شماره موبایل",
+    "address": "آدرس",
+    "city": "شهر/استان",
+    "date": "تاریخ",
+    "status": "وضعیت",
+    "notRegistered": "ثبت نشده",
+    "unknown": "نامشخص"
+  },
+  "home": {
+    "hero": {
+      "subtitle": "ورود به سامانه",
+      "title": "مدیریت پرسنل با حساب‌های امن",
+      "description": "نوع ورود خود را انتخاب کنید و با ایمیل و رمز عبور وارد شوید."
+    },
+    "login": {
+      "selectType": {
+        "title": "انتخاب نوع ورود",
+        "description": "لطفاً نوع ورود خود را انتخاب کنید"
+      },
+      "types": {
+        "user": "عضو اتمیتا هستم",
+        "admin": "ادمین",
+        "resume": "ارسال رزومه",
+        "resumeDeveloping": "( در حال توسعه ... )"
+      },
+      "titles": {
+        "user": "ورود",
+        "admin": "ورود",
+        "resume": "ارسال رزومه"
+      },
+      "descriptions": {
+        "user": "ایمیل و رمز عبور خود را وارد کنید",
+        "admin": "ایمیل و رمز عبور خود را وارد کنید",
+        "resume": "این بخش به زودی فعال می‌شود"
+      },
+      "hints": {
+        "admin": "ادمین پیش‌فرض: {email} / {password}",
+        "user": "ایمیل و رمز عبور خود را وارد کنید"
+      },
+      "placeholders": {
+        "email": "you@example.com",
+        "password": "••••••••"
+      },
+      "resumeMessage": "این بخش در حال توسعه است و به زودی فعال می‌شود."
+    },
+    "errors": {
+      "loginFailed": "ورود ناموفق بود",
+      "notAdmin": "این حساب کاربری ادمین نیست",
+      "notUser": "این حساب کاربری عضو اتمیتا نیست"
+    },
+    "success": {
+      "welcome": "خوش آمدید!"
+    }
+  },
+  "userDashboard": {
+    "title": "داشبورد کاربر",
+    "profile": {
+      "complete": "اطلاعات شما کامل است.",
+      "incomplete": "پروفایل شما در انتظار تکمیل است."
+    },
+    "sections": {
+      "personal": {
+        "title": "اطلاعات شخصی",
+        "description": "نام، کدملی، تاریخ تولد و جنسیت را وارد کنید."
+      },
+      "contact": {
+        "title": "اطلاعات تماس",
+        "description": "شماره موبایل، ایمیل سازمانی و آدرس محل سکونت."
+      },
+      "job": {
+        "title": "اطلاعات شغلی",
+        "description": "سمت، نوع قرارداد، تاریخ شروع و محل استقرار."
+      },
+      "education": {
+        "title": "اطلاعات تحصیلی",
+        "description": "مدرک تحصیلی، رشته، دانشگاه و سال فارغ‌التحصیلی."
+      },
+      "workHistory": {
+        "title": "سابقه کار",
+        "description": "شرکت‌های قبلی، سمت‌ها و تجربیات کاری."
+      },
+      "certificates": {
+        "title": "گواهینامه‌ها",
+        "description": "گواهینامه‌ها و مدارک تخصصی."
+      },
+      "attachments": {
+        "title": "ضمایم",
+        "description": "رزومه، کارت ملی، عکس و مدارک."
+      },
+      "additional": {
+        "title": "اطلاعات تکمیلی",
+        "description": "مهارت‌ها، لینکدین، گیت‌هاب و سایر اطلاعات."
+      }
+    },
+    "info": {
+      "fullName": "نام و نام خانوادگی",
+      "nationalId": "کد ملی",
+      "phone": "شماره موبایل",
+      "orgEmail": "ایمیل سازمانی",
+      "position": "سمت شغلی",
+      "fileStatus": {
+        "ready": "آماده ارسال",
+        "pending": "در انتظار تکمیل"
+      }
+    },
+    "reminders": {
+      "prepareDocs": {
+        "title": "آماده‌سازی مدارک",
+        "value": "کارت ملی، شناسنامه، آخرین حکم کارگزینی"
+      },
+      "uploadDocs": {
+        "title": "آپلود مستندات",
+        "value": "امکان بارگذاری مدارک به‌زودی فعال می‌شود."
+      },
+      "hrSupport": {
+        "title": "پشتیبانی منابع انسانی",
+        "value": "در صورت نیاز با بخش HR تماس بگیرید."
+      }
+    }
+  },
+  "adminDashboard": {
+    "title": "داشبورد ادمین",
+    "subtitle": "ساخت حساب و مشاهده پروفایل‌ها",
+    "description": "از اینجا اکانت جدید بسازید و وضعیت اطلاعات هر کاربر را ببینید.",
+    "stats": {
+      "usersCreated": "کاربران ساخته‌شده: {count}",
+      "adminHint": "ادمین: {email} / {password}"
+    },
+    "createUser": {
+      "title": "ساخت حساب کاربر",
+      "description": "ایمیل و رمز عبور را وارد کنید تا کاربر بتواند وارد شود.",
+      "displayName": "نام کاربر",
+      "email": "ایمیل",
+      "password": "رمز عبور",
+      "placeholders": {
+        "displayName": "نام و نام خانوادگی",
+        "email": "user@example.com",
+        "password": "حداقل ۶ کاراکتر"
+      },
+      "button": "ساخت حساب",
+      "success": "حساب کاربر ساخته شد",
+      "error": "ساخت حساب با خطا مواجه شد"
+    },
+    "emptyState": {
+      "title": "هنوز کاربری ثبت نشده است",
+      "description": "برای شروع، در بالا یک حساب بسازید و اطلاعات او بعد از ورود تکمیل می‌شود."
+    },
+    "userCard": {
+      "contract": "قرارداد",
+      "position": "سمت نامشخص",
+      "orgEmail": "ایمیل ثبت نشده",
+      "phone": "شماره نامشخص"
+    },
+    "userDetails": {
+      "name": "نام",
+      "lastName": "نام خانوادگی",
+      "position": "سمت مشخص نشده",
+      "contract": "نوع قرارداد نامشخص",
+      "updateSuccess": "پروفایل کاربر با موفقیت به‌روزرسانی شد."
+    }
+  },
+  "userForm": {
+    "sections": {
+      "personal": {
+        "title": "اطلاعات شخصی",
+        "description": "مشخصات هویتی خود را دقیق و مطابق مدارک رسمی ثبت کنید.",
+        "fields": {
+          "firstName": "نام",
+          "lastName": "نام خانوادگی",
+          "fatherName": "نام پدر (اختیاری)",
+          "nationalId": "کد ملی / پاسپورت",
+          "birthDate": "تاریخ تولد",
+          "gender": "جنسیت"
+        }
+      },
+      "contact": {
+        "title": "اطلاعات تماس",
+        "description": "راه‌های ارتباطی که HR از آن‌ها استفاده می‌کند را ثبت کنید.",
+        "fields": {
+          "phone": "شماره موبایل",
+          "emergencyPhone": "تماس اضطراری",
+          "orgEmail": "ایمیل سازمانی",
+          "personalEmail": "ایمیل شخصی",
+          "address": "آدرس",
+          "city": "شهر/استان"
+        }
+      },
+      "job": {
+        "title": "اطلاعات شغلی",
+        "description": "جزئیات قرارداد و وضعیت همکاری خود را وارد کنید.",
+        "fields": {
+          "position": "سمت / عنوان شغلی",
+          "contractType": "نوع قرارداد",
+          "startDate": "شروع همکاری",
+          "endDate": "پایان همکاری",
+          "location": "لوکیشن کاری"
+        }
+      },
+      "education": {
+        "title": "اطلاعات تحصیلی",
+        "description": "مدرک تحصیلی، رشته، دانشگاه و سال فارغ‌التحصیلی.",
+        "fields": {
+          "degree": "مدرک تحصیلی",
+          "major": "رشته تحصیلی",
+          "university": "نام دانشگاه / مؤسسه",
+          "graduationYear": "سال فارغ‌التحصیلی"
+        }
+      },
+      "workHistory": {
+        "title": "سابقه کار",
+        "description": "شرکت‌های قبلی، سمت‌ها و تجربیات کاری.",
+        "fields": {
+          "company": "نام شرکت",
+          "role": "سمت",
+          "description": "توضیحات وظایف (اختیاری)",
+          "startDate": "تاریخ شروع",
+          "endDate": "تاریخ پایان"
+        }
+      },
+      "certificates": {
+        "title": "گواهینامه‌ها",
+        "description": "گواهینامه‌ها و مدارک تخصصی.",
+        "fields": {
+          "title": "عنوان دوره / گواهینامه",
+          "issuer": "صادرکننده",
+          "issueDate": "تاریخ دریافت",
+          "duration": "مدت زمان دوره (اختیاری)"
+        }
+      },
+      "attachments": {
+        "title": "ضمایم",
+        "description": "رزومه، کارت ملی، عکس و مدارک.",
+        "fields": {
+          "resume": "رزومه (PDF)",
+          "idScan": "اسکن کارت ملی / پاسپورت",
+          "avatar": "عکس پرسنلی",
+          "educationDocs": "مدارک تحصیلی",
+          "certificates": "گواهینامه‌ها و دوره‌ها"
+        }
+      },
+      "financial": {
+        "title": "اطلاعات مالی",
+        "description": "جزئیات حقوق و مزایا.",
+        "fields": {
+          "baseSalary": "حقوق پایه",
+          "benefits": "مزایا",
+          "commission": "پورسانت",
+          "overtimeRate": "نرخ اضافه‌کاری"
+        }
+      },
+      "additional": {
+        "title": "اطلاعات تکمیلی",
+        "description": "مهارت‌ها، لینکدین، گیت‌هاب و سایر اطلاعات.",
+        "fields": {
+          "skills": "مهارت‌ها",
+          "linkedin": "لینکدین",
+          "github": "گیت‌هاب",
+          "website": "وب‌سایت",
+          "maritalStatus": "وضعیت تأهل",
+          "notes": "یادداشت‌ها"
+        }
+      }
+    },
+    "messages": {
+      "validationError": "لطفاً فیلدها را به درستی پر کنید",
+      "saveSuccess": "اطلاعات شما با موفقیت ذخیره شد."
+    }
+  },
+  "validation": {
+    "firstName": {
+      "min": "نام باید حداقل ۲ کاراکتر باشد"
+    },
+    "lastName": {
+      "min": "نام خانوادگی باید حداقل ۲ کاراکتر باشد"
+    },
+    "nationalId": {
+      "regex": "کد ملی باید ۱۰ رقم باشد"
+    },
+    "phone": {
+      "regex": "شماره موبایل نامعتبر است"
+    },
+    "email": {
+      "invalid": "ایمیل نامعتبر است"
+    },
+    "url": {
+      "invalid": "لینک نامعتبر است",
+      "linkedin": "لینک لینکدین نامعتبر است",
+      "github": "لینک گیت‌هاب نامعتبر است",
+      "website": "آدرس وب‌سایت نامعتبر است"
+    }
+  },
+  "options": {
+    "gender": {
+      "male": "مرد",
+      "female": "زن",
+      "none": "ترجیح می‌دهم نگویم"
+    },
+    "contractType": {
+      "fulltime": "تمام‌وقت",
+      "parttime": "پاره‌وقت",
+      "freelancer": "فریلنسر",
+      "project": "پروژه‌ای",
+      "hourly": "ساعتی"
+    },
+    "location": {
+      "tehran": "دفتر تهران",
+      "mashhad": "دفتر مشهد",
+      "remote": "ریموت",
+      "other": "سایر"
+    },
+    "position": {
+      "frontend": "فرانت‌اند دولوپر",
+      "backend": "بک‌اند دولوپر",
+      "designer": "دیزاینر",
+      "other": "محصول / سایر"
+    },
+    "degree": {
+      "diploma": "دیپلم",
+      "associate": "فوق‌دیپلم",
+      "bachelor": "لیسانس",
+      "master": "فوق‌لیسانس",
+      "phd": "دکتری"
+    },
+    "maritalStatus": {
+      "single": "مجرد",
+      "married": "متاهل",
+      "other": "سایر"
+    }
+  },
+  "auth": {
+    "errors": {
+      "invalidCredentials": "ایمیل یا پسورد نادرست است",
+      "emailExists": "برای این ایمیل قبلاً حساب ساخته شده است",
+      "userNotFound": "کاربر یافت نشد",
+      "wrongPassword": "رمز فعلی صحیح نیست"
+    },
+    "displayName": {
+      "admin": "ادمین سیستم"
+    }
+  },
+  "api": {
+    "errors": {
+      "serverError": "خطا در ارتباط با سرور",
+      "connectionError": "خطا در برقراری ارتباط با سرور"
+    }
+  }
+}
+
