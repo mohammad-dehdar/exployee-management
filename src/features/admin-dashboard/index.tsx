@@ -35,8 +35,8 @@ export default function AdminDashboardFeature() {
     const users = userAccounts.map((account) =>
         profiles[account.id] ?? {
             id: account.id,
-            personal: { firstName: account.displayName ?? t('common.name') },
-            contact: { orgEmail: account.email },
+            personal: { username: account.displayName ?? t('common.name') },
+            contact: { personalEmail: account.email },
             job: {},
         }
     );

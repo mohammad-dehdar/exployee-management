@@ -186,6 +186,7 @@
         "title": "Personal Information",
         "description": "Register your identity details accurately and according to official documents.",
         "fields": {
+          "username": "Username",
           "firstName": "First Name",
           "lastName": "Last Name",
           "fatherName": "Father's Name (Optional)",

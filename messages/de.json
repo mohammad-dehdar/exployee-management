@@ -186,6 +186,7 @@
         "title": "Persönliche Informationen",
         "description": "Registrieren Sie Ihre Identitätsdaten genau und gemäß offiziellen Dokumenten.",
         "fields": {
+          "username": "Benutzername",
           "firstName": "Vorname",
           "lastName": "Nachname",
           "fatherName": "Vatersname (Optional)",

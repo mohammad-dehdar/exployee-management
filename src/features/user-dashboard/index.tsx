@@ -69,7 +69,7 @@ export default function UserDashboardFeature() {
             { label: "نام و نام خانوادگی", value: fullName },
             { label: "کد ملی", value: (personal?.nationalId as string | undefined) ?? "ثبت نشده" },
             { label: "شماره موبایل", value: (contact?.phone as string | undefined) ?? "ثبت نشده" },
-            { label: "ایمیل سازمانی", value: (contact?.orgEmail as string | undefined) ?? account?.email ?? "" },
+            { label: "ایمیل شخصی", value: (contact?.personalEmail as string | undefined) ?? account?.email ?? "" },
             { label: "سمت شغلی", value: (job?.position as string | undefined) ?? "ثبت نشده" },
             {
                 label: "وضعیت پرونده",

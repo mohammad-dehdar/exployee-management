@@ -49,8 +49,8 @@ export default function UserFormFeature() {
         () =>
             profile ?? {
                 id: account?.id ?? "pending",
-                personal: {},
-                contact: { orgEmail: account?.email },
+                personal: { username: account?.displayName },
+                contact: { personalEmail: account?.email },
                 job: {},
                 financial: {},
                 education: {},
@@ -95,8 +95,8 @@ export default function UserFormFeature() {
 
     const handleReset = () => {
         methods.reset({
-            personal: {},
-            contact: { orgEmail: account?.email },
+            personal: { username: account?.displayName },
+            contact: { personalEmail: account?.email },
             job: {},
             financial: {},
             education: {},

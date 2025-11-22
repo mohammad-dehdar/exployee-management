@@ -20,7 +20,7 @@ export default function UserCard({ user }: { user: UserRecord }) {
                     <p className="text-sm text-muted-foreground">{user.job.position || "سمت نامشخص"}</p>
 
                     <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span>{user.contact.orgEmail || "ایمیل ثبت نشده"}</span>
+                        <span>{user.contact.personalEmail || "ایمیل ثبت نشده"}</span>
                         <span>{user.contact.phone || "شماره نامشخص"}</span>
                     </div>
                 </CardContent>

@@ -56,10 +56,10 @@ const defaultAdmin: Account = {
     displayName: "ادمین سیستم",
 };
 
-const createEmptyProfile = (userId: string, email?: string): UserRecord => ({
+const createEmptyProfile = (userId: string, email?: string, displayName?: string): UserRecord => ({
     id: userId,
-    personal: {},
-    contact: { orgEmail: email },
+    personal: { username: displayName },
+    contact: { personalEmail: email },
     job: {},
     financial: {},
     education: {},
@@ -115,7 +115,7 @@ export const useAuthStore = create<AuthState>()(
                     accounts: [...state.accounts, newAccount],
                     profiles: {
                         ...state.profiles,
-                        [id]: createEmptyProfile(id, normalizedEmail),
+                        [id]: createEmptyProfile(id, normalizedEmail, displayName),
                     },
                 }));
 
@@ -147,7 +147,7 @@ export const useAuthStore = create<AuthState>()(
             updateProfile: (userId, data) =>
                 set((state) => {
                     const account = state.accounts.find(acc => acc.id === userId);
-                    const existing = state.profiles[userId] ?? createEmptyProfile(userId, account?.email);
+                    const existing = state.profiles[userId] ?? createEmptyProfile(userId, account?.email, account?.displayName);
 
                     // ✅ FIX: Safe merge for additional info with skills
                     const existingAdditional = existing.additional || {};

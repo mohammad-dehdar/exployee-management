@@ -1,27 +1,29 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useFormContext } from "react-hook-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { TextInput } from "@/components/ui/text-input";
 
 export const ContactInfo = ({ editable = true }: { editable?: boolean }) => {
     const { register } = useFormContext();
+    const t = useTranslations();
 
     return (
         <Card className="rounded-xl border-2 border-primary/50 bg-background p-0 shadow-lg">
             <CardHeader className="space-y-2 px-6 pt-6">
                 <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                    اطلاعات تماس <span className="text-primary">📞</span>
+                    {t('userForm.sections.contact.title')} <span className="text-primary">📞</span>
                 </CardTitle>
                 <CardDescription className="text-sm text-muted-foreground">
-                    راه‌های ارتباطی که HR از آن‌ها استفاده می‌کند را ثبت کنید.
+                    {t('userForm.sections.contact.description')}
                 </CardDescription>
             </CardHeader>
 
             <CardContent className="grid gap-6 px-6 pb-6 md:grid-cols-2">
                 <TextInput
                     fullWidth
-                    label="شماره موبایل"
+                    label={t('userForm.sections.contact.fields.phone')}
                     variant="outline"
                     color="neutral"
                     {...register("contact.phone")}
@@ -31,7 +33,7 @@ export const ContactInfo = ({ editable = true }: { editable?: boolean }) => {
 
                 <TextInput
                     fullWidth
-                    label="تماس اضطراری"
+                    label={t('userForm.sections.contact.fields.emergencyPhone')}
                     variant="outline"
                     color="neutral"
                     {...register("contact.emergencyPhone")}
@@ -41,17 +43,17 @@ export const ContactInfo = ({ editable = true }: { editable?: boolean }) => {
 
                 <TextInput
                     fullWidth
-                    label="ایمیل سازمانی"
-                    disabled
+                    label={t('userForm.sections.contact.fields.orgEmail')}
                     variant="outline"
                     color="neutral"
                     {...register("contact.orgEmail")}
+                    disabled={!editable}
                     className="rounded-lg"
                 />
 
                 <TextInput
                     fullWidth
-                    label="ایمیل شخصی"
+                    label={t('userForm.sections.contact.fields.personalEmail')}
                     variant="outline"
                     color="neutral"
                     {...register("contact.personalEmail")}
@@ -61,7 +63,7 @@ export const ContactInfo = ({ editable = true }: { editable?: boolean }) => {
 
                 <TextInput
                     fullWidth
-                    label="آدرس"
+                    label={t('userForm.sections.contact.fields.address')}
                     variant="outline"
                     color="neutral"
                     {...register("contact.address")}
@@ -71,7 +73,7 @@ export const ContactInfo = ({ editable = true }: { editable?: boolean }) => {
 
                 <TextInput
                     fullWidth
-                    label="شهر/استان"
+                    label={t('userForm.sections.contact.fields.city')}
                     variant="outline"
                     color="neutral"
                     {...register("contact.city")}

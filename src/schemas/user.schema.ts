@@ -8,6 +8,7 @@ import { z } from 'zod';
 
 // Personal Info Schema
 export const personalInfoSchema = z.object({
+    username: z.string().min(2, 'نام کاربری باید حداقل ۲ کاراکتر باشد').optional(),
     firstName: z.string().min(2, 'نام باید حداقل ۲ کاراکتر باشد').optional(),
     lastName: z.string().min(2, 'نام خانوادگی باید حداقل ۲ کاراکتر باشد').optional(),
     fatherName: z.string().optional(),
@@ -218,11 +219,11 @@ export function validateUserUpdate(data: unknown): {
 }
 
 // Create empty profile with defaults
-export function createEmptyProfile(userId: string, email?: string): UserRecord {
+export function createEmptyProfile(userId: string, email?: string, displayName?: string): UserRecord {
     return {
         id: userId,
-        personal: {},
-        contact: { orgEmail: email },
+        personal: { username: displayName },
+        contact: { personalEmail: email },
         job: {},
         financial: {},
         education: {},
