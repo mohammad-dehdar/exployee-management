@@ -1,0 +1,54 @@
+{
+  "title": "Administrator-Dashboard",
+  "subtitle": "Konten erstellen und Profile anzeigen",
+  "description": "Erstellen Sie hier neue Konten und sehen Sie den Informationsstatus jedes Benutzers.",
+  "stats": {
+    "usersCreated": "Erstellte Benutzer: {count}",
+    "adminHint": "Administrator: {email} / {password}"
+  },
+  "createUser": {
+    "title": "Benutzerkonto erstellen",
+    "description": "Geben Sie persönliche E-Mail und Passwort ein, damit der Benutzer sich anmelden kann.",
+    "displayName": "Benutzername",
+    "personalEmail": "Persönliche E-Mail",
+    "orgEmail": "Organisatorische E-Mail (Optional)",
+    "password": "Passwort",
+    "placeholders": {
+      "displayName": "Vollständiger Name",
+      "personalEmail": "user@example.com",
+      "orgEmail": "user@company.com",
+      "password": "Mindestens 6 Zeichen"
+    },
+    "button": "Konto erstellen",
+    "success": "Benutzerkonto erstellt",
+    "error": "Kontoerstellung fehlgeschlagen"
+  },
+  "emptyState": {
+    "title": "Noch keine Benutzer registriert",
+    "description": "Erstellen Sie oben ein Konto, um zu beginnen, und ihre Informationen werden nach der Anmeldung vervollständigt."
+  },
+  "userCard": {
+    "contract": "Vertrag",
+    "position": "Position unbekannt",
+    "orgEmail": "E-Mail nicht registriert",
+    "phone": "Telefon unbekannt"
+  },
+  "userDetails": {
+    "profileTitle": "Benutzerprofil",
+    "name": "Name",
+    "lastName": "Nachname",
+    "position": "Position nicht angegeben",
+    "contract": "Vertragstyp unbekannt",
+    "backToList": "Zurück zur Benutzerliste",
+    "back": "Zurück",
+    "saveChanges": "Änderungen speichern",
+    "reset": "Zurücksetzen",
+    "updateSuccess": "Benutzerprofil erfolgreich aktualisiert."
+  },
+  "userDetailsPage": {
+    "userNotFound": "Benutzer nicht gefunden",
+    "userNotFoundDescription": "Ein Benutzer mit der eingegebenen ID ist nicht in der Liste registriert.",
+    "backToAdminDashboard": "Zurück zum Administrator-Dashboard"
+  }
+}
+

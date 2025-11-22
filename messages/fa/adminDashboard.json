@@ -1,0 +1,54 @@
+{
+  "title": "داشبورد ادمین",
+  "subtitle": "ساخت حساب و مشاهده پروفایل‌ها",
+  "description": "از اینجا اکانت جدید بسازید و وضعیت اطلاعات هر کاربر را ببینید.",
+  "stats": {
+    "usersCreated": "کاربران ساخته‌شده: {count}",
+    "adminHint": "ادمین: {email} / {password}"
+  },
+  "createUser": {
+    "title": "ساخت حساب کاربر",
+    "description": "ایمیل شخصی و رمز عبور را وارد کنید تا کاربر بتواند وارد شود.",
+    "displayName": "نام کاربر",
+    "personalEmail": "ایمیل شخصی",
+    "orgEmail": "ایمیل سازمانی (اختیاری)",
+    "password": "رمز عبور",
+    "placeholders": {
+      "displayName": "نام و نام خانوادگی",
+      "personalEmail": "user@example.com",
+      "orgEmail": "user@company.com",
+      "password": "حداقل ۶ کاراکتر"
+    },
+    "button": "ساخت حساب",
+    "success": "حساب کاربر ساخته شد",
+    "error": "ساخت حساب با خطا مواجه شد"
+  },
+  "emptyState": {
+    "title": "هنوز کاربری ثبت نشده است",
+    "description": "برای شروع، در بالا یک حساب بسازید و اطلاعات او بعد از ورود تکمیل می‌شود."
+  },
+  "userCard": {
+    "contract": "قرارداد",
+    "position": "سمت نامشخص",
+    "orgEmail": "ایمیل ثبت نشده",
+    "phone": "شماره نامشخص"
+  },
+  "userDetails": {
+    "profileTitle": "پروفایل کاربر",
+    "name": "نام",
+    "lastName": "نام خانوادگی",
+    "position": "سمت مشخص نشده",
+    "contract": "نوع قرارداد نامشخص",
+    "backToList": "بازگشت به لیست کاربران",
+    "back": "بازگشت",
+    "saveChanges": "ذخیره تغییرات",
+    "reset": "بازنشانی",
+    "updateSuccess": "پروفایل کاربر با موفقیت به‌روزرسانی شد."
+  },
+  "userDetailsPage": {
+    "userNotFound": "کاربر پیدا نشد",
+    "userNotFoundDescription": "کاربری با شناسه وارد شده در لیست ثبت نشده است.",
+    "backToAdminDashboard": "بازگشت به داشبورد ادمین"
+  }
+}
+

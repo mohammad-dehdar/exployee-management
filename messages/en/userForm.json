@@ -1,0 +1,117 @@
+{
+  "sections": {
+    "personal": {
+      "title": "Personal Information",
+      "description": "Register your identity details accurately and according to official documents.",
+      "fields": {
+        "username": "Username",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "fatherName": "Father's Name (Optional)",
+        "nationalId": "National ID / Passport",
+        "birthDate": "Date of Birth",
+        "gender": "Gender"
+      }
+    },
+    "contact": {
+      "title": "Contact Information",
+      "description": "Register the contact methods that HR uses.",
+      "fields": {
+        "phone": "Mobile Number",
+        "emergencyPhone": "Emergency Contact",
+        "orgEmail": "Organizational Email",
+        "personalEmail": "Personal Email",
+        "address": "Address",
+        "city": "City/Province"
+      }
+    },
+    "job": {
+      "title": "Job Information",
+      "description": "Enter your contract details and collaboration status.",
+      "fields": {
+        "position": "Position / Job Title",
+        "contractType": "Contract Type",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "location": "Work Location"
+      }
+    },
+    "education": {
+      "title": "Educational Information",
+      "description": "Enter your latest degree, major, and university.",
+      "fields": {
+        "degree": "Latest Degree",
+        "major": "Major",
+        "university": "University / Institution Name",
+        "graduationYear": "Graduation Year"
+      }
+    },
+    "workHistory": {
+      "title": "Work History",
+      "description": "Register at least one work experience. Add more if needed.",
+      "fields": {
+        "company": "Company Name",
+        "role": "Position",
+        "description": "Job Description (Optional)",
+        "startDate": "Start Date",
+        "endDate": "End Date"
+      },
+      "addNew": "Add New Work History"
+    },
+    "certificates": {
+      "title": "Certificates and Courses",
+      "description": "Enter completed courses or certificates as a list.",
+      "fields": {
+        "title": "Course / Certificate Title",
+        "issuer": "Issuer",
+        "issueDate": "Issue Date",
+        "duration": "Course Duration (Optional)"
+      },
+      "addNew": "Add New Course",
+      "remove": "Remove Course"
+    },
+    "attachments": {
+      "title": "Attachment Files",
+      "description": "Enter links or names of uploaded files (PDF or image).",
+      "fields": {
+        "resume": "Resume (PDF)",
+        "idScan": "National ID / Passport Scan",
+        "avatar": "Personal Photo",
+        "educationDocs": "Educational Documents",
+        "certificates": "Certificates and Courses"
+      }
+    },
+    "financial": {
+      "title": "Financial Information",
+      "description": "Only admin can edit this section. It is view-only for employees.",
+      "fields": {
+        "baseSalary": "Base Salary",
+        "benefits": "Benefits",
+        "commission": "Commission",
+        "overtimeRate": "Overtime Rate"
+      }
+    },
+    "additional": {
+      "title": "Additional Information",
+      "description": "Enter your skills, links, and additional notes.",
+      "fields": {
+        "skills": "Skills (separate with commas)",
+        "linkedin": "LinkedIn",
+        "github": "GitHub",
+        "website": "Personal Website",
+        "maritalStatus": "Marital Status (Optional)",
+        "notes": "Additional Notes"
+      }
+    }
+  },
+  "profileForm": "Profile Form",
+  "completeProfile": "Complete User Information",
+  "completionPercent": "Completion Percentage",
+  "saveAndSubmit": "Save and Submit Information",
+  "resetForm": "Reset Form",
+  "messages": {
+    "validationError": "Please fill in the fields correctly",
+    "saveSuccess": "Your information has been saved successfully."
+  }
+}
+

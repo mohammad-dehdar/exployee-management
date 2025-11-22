@@ -1,0 +1,7 @@
+{
+  "errors": {
+    "serverError": "Error connecting to server",
+    "connectionError": "Error establishing connection to server"
+  }
+}
+

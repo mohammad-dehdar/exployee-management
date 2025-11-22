@@ -1,0 +1,117 @@
+{
+  "sections": {
+    "personal": {
+      "title": "Persönliche Informationen",
+      "description": "Registrieren Sie Ihre Identitätsdaten genau und gemäß offiziellen Dokumenten.",
+      "fields": {
+        "username": "Benutzername",
+        "firstName": "Vorname",
+        "lastName": "Nachname",
+        "fatherName": "Vatersname (Optional)",
+        "nationalId": "Personalausweisnummer / Reisepass",
+        "birthDate": "Geburtsdatum",
+        "gender": "Geschlecht"
+      }
+    },
+    "contact": {
+      "title": "Kontaktinformationen",
+      "description": "Registrieren Sie die Kontaktmethoden, die HR verwendet.",
+      "fields": {
+        "phone": "Handynummer",
+        "emergencyPhone": "Notfallkontakt",
+        "orgEmail": "Organisatorische E-Mail",
+        "personalEmail": "Persönliche E-Mail",
+        "address": "Adresse",
+        "city": "Stadt/Provinz"
+      }
+    },
+    "job": {
+      "title": "Berufsinformationen",
+      "description": "Geben Sie Ihre Vertragsdetails und Zusammenarbeitsstatus ein.",
+      "fields": {
+        "position": "Position / Berufsbezeichnung",
+        "contractType": "Vertragstyp",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "location": "Arbeitsort"
+      }
+    },
+    "education": {
+      "title": "Bildungsinformationen",
+      "description": "Geben Sie Ihren letzten Abschluss, Hauptfach und Universität ein.",
+      "fields": {
+        "degree": "Letzter Abschluss",
+        "major": "Hauptfach",
+        "university": "Universität / Institution Name",
+        "graduationYear": "Abschlussjahr"
+      }
+    },
+    "workHistory": {
+      "title": "Berufserfahrung",
+      "description": "Registrieren Sie mindestens eine Berufserfahrung. Fügen Sie bei Bedarf weitere hinzu.",
+      "fields": {
+        "company": "Firmenname",
+        "role": "Position",
+        "description": "Stellenbeschreibung (Optional)",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum"
+      },
+      "addNew": "Neue Berufserfahrung hinzufügen"
+    },
+    "certificates": {
+      "title": "Zertifikate und Kurse",
+      "description": "Geben Sie abgeschlossene Kurse oder Zertifikate als Liste ein.",
+      "fields": {
+        "title": "Kurs- / Zertifikatstitel",
+        "issuer": "Aussteller",
+        "issueDate": "Ausstellungsdatum",
+        "duration": "Kursdauer (Optional)"
+      },
+      "addNew": "Neuen Kurs hinzufügen",
+      "remove": "Kurs entfernen"
+    },
+    "attachments": {
+      "title": "Anhangdateien",
+      "description": "Geben Sie Links oder Namen hochgeladener Dateien ein (PDF oder Bild).",
+      "fields": {
+        "resume": "Lebenslauf (PDF)",
+        "idScan": "Personalausweis / Reisepass-Scan",
+        "avatar": "Persönliches Foto",
+        "educationDocs": "Bildungsdokumente",
+        "certificates": "Zertifikate und Kurse"
+      }
+    },
+    "financial": {
+      "title": "Finanzielle Informationen",
+      "description": "Nur der Administrator kann diesen Abschnitt bearbeiten. Für Mitarbeiter ist er nur zur Ansicht.",
+      "fields": {
+        "baseSalary": "Grundgehalt",
+        "benefits": "Leistungen",
+        "commission": "Provision",
+        "overtimeRate": "Überstundensatz"
+      }
+    },
+    "additional": {
+      "title": "Zusätzliche Informationen",
+      "description": "Geben Sie Ihre Fähigkeiten, Links und zusätzliche Notizen ein.",
+      "fields": {
+        "skills": "Fähigkeiten (mit Komma trennen)",
+        "linkedin": "LinkedIn",
+        "github": "GitHub",
+        "website": "Persönliche Website",
+        "maritalStatus": "Familienstand (Optional)",
+        "notes": "Zusätzliche Notizen"
+      }
+    }
+  },
+  "profileForm": "Profilformular",
+  "completeProfile": "Benutzerinformationen vervollständigen",
+  "completionPercent": "Vervollständigungsprozentsatz",
+  "saveAndSubmit": "Informationen speichern und senden",
+  "resetForm": "Formular zurücksetzen",
+  "messages": {
+    "validationError": "Bitte füllen Sie die Felder korrekt aus",
+    "saveSuccess": "Ihre Informationen wurden erfolgreich gespeichert."
+  }
+}
+

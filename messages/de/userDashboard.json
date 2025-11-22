@@ -1,0 +1,67 @@
+{
+  "title": "Benutzer-Dashboard",
+  "profile": {
+    "complete": "Ihre Informationen sind vollständig.",
+    "incomplete": "Ihr Profil wartet auf Vervollständigung."
+  },
+  "sections": {
+    "personal": {
+      "title": "Persönliche Informationen",
+      "description": "Geben Sie Ihren Namen, Personalausweisnummer, Geburtsdatum und Geschlecht ein."
+    },
+    "contact": {
+      "title": "Kontaktinformationen",
+      "description": "Handynummer, organisatorische E-Mail und Wohnadresse."
+    },
+    "job": {
+      "title": "Berufsinformationen",
+      "description": "Position, Vertragstyp, Startdatum und Standort."
+    },
+    "education": {
+      "title": "Bildungsinformationen",
+      "description": "Abschluss, Hauptfach, Universität und Abschlussjahr."
+    },
+    "workHistory": {
+      "title": "Berufserfahrung",
+      "description": "Vorherige Unternehmen, Positionen und Berufserfahrungen."
+    },
+    "certificates": {
+      "title": "Zertifikate",
+      "description": "Zertifikate und berufliche Dokumente."
+    },
+    "attachments": {
+      "title": "Anhänge",
+      "description": "Lebenslauf, Personalausweis, Foto und Dokumente."
+    },
+    "additional": {
+      "title": "Zusätzliche Informationen",
+      "description": "Fähigkeiten, LinkedIn, GitHub und andere Informationen."
+    }
+  },
+  "info": {
+    "fullName": "Vollständiger Name",
+    "nationalId": "Personalausweisnummer",
+    "phone": "Handynummer",
+    "orgEmail": "Organisatorische E-Mail",
+    "position": "Berufsposition",
+    "fileStatus": {
+      "ready": "Bereit zum Einreichen",
+      "pending": "Wartet auf Vervollständigung"
+    }
+  },
+  "reminders": {
+    "prepareDocs": {
+      "title": "Dokumente vorbereiten",
+      "value": "Personalausweis, Geburtsurkunde, letztes HR-Dekret"
+    },
+    "uploadDocs": {
+      "title": "Dokumente hochladen",
+      "value": "Die Funktion zum Hochladen von Dokumenten wird bald verfügbar sein."
+    },
+    "hrSupport": {
+      "title": "HR-Unterstützung",
+      "value": "Kontaktieren Sie bei Bedarf die Personalabteilung."
+    }
+  }
+}
+

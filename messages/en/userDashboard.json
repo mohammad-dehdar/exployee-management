@@ -1,0 +1,67 @@
+{
+  "title": "User Dashboard",
+  "profile": {
+    "complete": "Your information is complete.",
+    "incomplete": "Your profile is pending completion."
+  },
+  "sections": {
+    "personal": {
+      "title": "Personal Information",
+      "description": "Enter your name, national ID, date of birth, and gender."
+    },
+    "contact": {
+      "title": "Contact Information",
+      "description": "Mobile number, organizational email, and residential address."
+    },
+    "job": {
+      "title": "Job Information",
+      "description": "Position, contract type, start date, and location."
+    },
+    "education": {
+      "title": "Educational Information",
+      "description": "Degree, major, university, and graduation year."
+    },
+    "workHistory": {
+      "title": "Work History",
+      "description": "Previous companies, positions, and work experiences."
+    },
+    "certificates": {
+      "title": "Certificates",
+      "description": "Certificates and professional documents."
+    },
+    "attachments": {
+      "title": "Attachments",
+      "description": "Resume, national ID card, photo, and documents."
+    },
+    "additional": {
+      "title": "Additional Information",
+      "description": "Skills, LinkedIn, GitHub, and other information."
+    }
+  },
+  "info": {
+    "fullName": "Full Name",
+    "nationalId": "National ID",
+    "phone": "Mobile Number",
+    "orgEmail": "Organizational Email",
+    "position": "Job Position",
+    "fileStatus": {
+      "ready": "Ready to Submit",
+      "pending": "Pending Completion"
+    }
+  },
+  "reminders": {
+    "prepareDocs": {
+      "title": "Prepare Documents",
+      "value": "National ID card, birth certificate, latest HR decree"
+    },
+    "uploadDocs": {
+      "title": "Upload Documents",
+      "value": "Document upload feature will be available soon."
+    },
+    "hrSupport": {
+      "title": "HR Support",
+      "value": "Contact the HR department if needed."
+    }
+  }
+}
+

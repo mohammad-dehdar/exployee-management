@@ -1,0 +1,7 @@
+{
+  "errors": {
+    "serverError": "Fehler beim Verbinden mit dem Server",
+    "connectionError": "Fehler beim Herstellen der Verbindung zum Server"
+  }
+}
+

@@ -1,0 +1,47 @@
+{
+  "hero": {
+    "subtitle": "System Login",
+    "title": "Personnel Management with Secure Accounts",
+    "description": "Select your login type and enter with your email and password."
+  },
+  "login": {
+    "selectType": {
+      "title": "Select Login Type",
+      "description": "Please select your login type"
+    },
+    "types": {
+      "user": "I am an Etmita member",
+      "admin": "Admin",
+      "resume": "Submit Resume",
+      "resumeDeveloping": "( Under development ... )"
+    },
+    "titles": {
+      "user": "Login",
+      "admin": "Login",
+      "resume": "Submit Resume"
+    },
+    "descriptions": {
+      "user": "Enter your email and password",
+      "admin": "Enter your email and password",
+      "resume": "This section will be available soon"
+    },
+    "hints": {
+      "admin": "Default admin: {email} / {password}",
+      "user": "Enter your email and password"
+    },
+    "placeholders": {
+      "email": "you@example.com",
+      "password": "••••••••"
+    },
+    "resumeMessage": "This section is under development and will be available soon."
+  },
+  "errors": {
+    "loginFailed": "Login failed",
+    "notAdmin": "This account is not an admin account",
+    "notUser": "This account is not an etmita member"
+  },
+  "success": {
+    "welcome": "Welcome!"
+  }
+}
+

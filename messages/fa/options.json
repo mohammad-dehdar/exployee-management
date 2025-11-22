@@ -1,0 +1,39 @@
+{
+  "gender": {
+    "male": "مرد",
+    "female": "زن",
+    "none": "ترجیح می‌دهم نگویم"
+  },
+  "contractType": {
+    "fulltime": "تمام‌وقت",
+    "parttime": "پاره‌وقت",
+    "freelancer": "فریلنسر",
+    "project": "پروژه‌ای",
+    "hourly": "ساعتی"
+  },
+  "location": {
+    "tehran": "دفتر تهران",
+    "mashhad": "دفتر مشهد",
+    "remote": "ریموت",
+    "other": "سایر"
+  },
+  "position": {
+    "frontend": "فرانت‌اند دولوپر",
+    "backend": "بک‌اند دولوپر",
+    "designer": "دیزاینر",
+    "other": "محصول / سایر"
+  },
+  "degree": {
+    "diploma": "دیپلم",
+    "associate": "فوق‌دیپلم",
+    "bachelor": "لیسانس",
+    "master": "فوق‌لیسانس",
+    "phd": "دکتری"
+  },
+  "maritalStatus": {
+    "single": "مجرد",
+    "married": "متاهل",
+    "other": "سایر"
+  }
+}
+

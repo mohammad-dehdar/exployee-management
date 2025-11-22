@@ -1,0 +1,54 @@
+{
+  "title": "Admin Dashboard",
+  "subtitle": "Create Accounts and View Profiles",
+  "description": "Create new accounts here and view each user's information status.",
+  "stats": {
+    "usersCreated": "Users Created: {count}",
+    "adminHint": "Admin: {email} / {password}"
+  },
+  "createUser": {
+    "title": "Create User Account",
+    "description": "Enter personal email and password so the user can log in.",
+    "displayName": "User Name",
+    "personalEmail": "Personal Email",
+    "orgEmail": "Organizational Email (Optional)",
+    "password": "Password",
+    "placeholders": {
+      "displayName": "Full Name",
+      "personalEmail": "user@example.com",
+      "orgEmail": "user@company.com",
+      "password": "At least 6 characters"
+    },
+    "button": "Create Account",
+    "success": "User account created",
+    "error": "Account creation failed"
+  },
+  "emptyState": {
+    "title": "No users registered yet",
+    "description": "To get started, create an account above and their information will be completed after login."
+  },
+  "userCard": {
+    "contract": "Contract",
+    "position": "Position Unknown",
+    "orgEmail": "Email Not Registered",
+    "phone": "Phone Unknown"
+  },
+  "userDetails": {
+    "profileTitle": "User Profile",
+    "name": "Name",
+    "lastName": "Last Name",
+    "position": "Position Not Specified",
+    "contract": "Contract Type Unknown",
+    "backToList": "Back to User List",
+    "back": "Back",
+    "saveChanges": "Save Changes",
+    "reset": "Reset",
+    "updateSuccess": "User profile updated successfully."
+  },
+  "userDetailsPage": {
+    "userNotFound": "User Not Found",
+    "userNotFoundDescription": "A user with the entered ID is not registered in the list.",
+    "backToAdminDashboard": "Back to Admin Dashboard"
+  }
+}
+

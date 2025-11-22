@@ -1,0 +1,24 @@
+{
+  "firstName": {
+    "min": "First name must be at least 2 characters"
+  },
+  "lastName": {
+    "min": "Last name must be at least 2 characters"
+  },
+  "nationalId": {
+    "regex": "National ID must be 10 digits"
+  },
+  "phone": {
+    "regex": "Invalid mobile number"
+  },
+  "email": {
+    "invalid": "Invalid email"
+  },
+  "url": {
+    "invalid": "Invalid link",
+    "linkedin": "Invalid LinkedIn link",
+    "github": "Invalid GitHub link",
+    "website": "Invalid website address"
+  }
+}
+

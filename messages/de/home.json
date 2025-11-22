@@ -1,0 +1,47 @@
+{
+  "hero": {
+    "subtitle": "System-Anmeldung",
+    "title": "Personalverwaltung mit sicheren Konten",
+    "description": "Wählen Sie Ihren Anmeldetyp und geben Sie Ihre E-Mail und Ihr Passwort ein."
+  },
+  "login": {
+    "selectType": {
+      "title": "Anmeldetyp auswählen",
+      "description": "Bitte wählen Sie Ihren Anmeldetyp"
+    },
+    "types": {
+      "user": "Ich bin ein Etmita-Mitglied",
+      "admin": "Administrator",
+      "resume": "Lebenslauf einreichen",
+      "resumeDeveloping": "( In Entwicklung ... )"
+    },
+    "titles": {
+      "user": "Anmelden",
+      "admin": "Anmelden",
+      "resume": "Lebenslauf einreichen"
+    },
+    "descriptions": {
+      "user": "Geben Sie Ihre E-Mail und Ihr Passwort ein",
+      "admin": "Geben Sie Ihre E-Mail und Ihr Passwort ein",
+      "resume": "Dieser Bereich wird bald verfügbar sein"
+    },
+    "hints": {
+      "admin": "Standard-Administrator: {email} / {password}",
+      "user": "Geben Sie Ihre E-Mail und Ihr Passwort ein"
+    },
+    "placeholders": {
+      "email": "you@example.com",
+      "password": "••••••••"
+    },
+    "resumeMessage": "Dieser Bereich befindet sich in der Entwicklung und wird bald verfügbar sein."
+  },
+  "errors": {
+    "loginFailed": "Anmeldung fehlgeschlagen",
+    "notAdmin": "Dieses Konto ist kein Administrator-Konto",
+    "notUser": "Dieses Konto ist kein Etmita-Mitglied"
+  },
+  "success": {
+    "welcome": "Willkommen!"
+  }
+}
+

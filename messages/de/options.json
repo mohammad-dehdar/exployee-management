@@ -1,0 +1,39 @@
+{
+  "gender": {
+    "male": "Männlich",
+    "female": "Weiblich",
+    "none": "Möchte ich nicht sagen"
+  },
+  "contractType": {
+    "fulltime": "Vollzeit",
+    "parttime": "Teilzeit",
+    "freelancer": "Freiberufler",
+    "project": "Projektbasiert",
+    "hourly": "Stundenweise"
+  },
+  "location": {
+    "tehran": "Büro Teheran",
+    "mashhad": "Büro Maschhad",
+    "remote": "Remote",
+    "other": "Andere"
+  },
+  "position": {
+    "frontend": "Frontend-Entwickler",
+    "backend": "Backend-Entwickler",
+    "designer": "Designer",
+    "other": "Produkt / Andere"
+  },
+  "degree": {
+    "diploma": "Diplom",
+    "associate": "Associate",
+    "bachelor": "Bachelor",
+    "master": "Master",
+    "phd": "Promotion"
+  },
+  "maritalStatus": {
+    "single": "Ledig",
+    "married": "Verheiratet",
+    "other": "Andere"
+  }
+}
+

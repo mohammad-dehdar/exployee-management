@@ -1,0 +1,24 @@
+{
+  "firstName": {
+    "min": "Der Vorname muss mindestens 2 Zeichen lang sein"
+  },
+  "lastName": {
+    "min": "Der Nachname muss mindestens 2 Zeichen lang sein"
+  },
+  "nationalId": {
+    "regex": "Die Personalausweisnummer muss 10 Ziffern haben"
+  },
+  "phone": {
+    "regex": "Ungültige Handynummer"
+  },
+  "email": {
+    "invalid": "Ungültige E-Mail"
+  },
+  "url": {
+    "invalid": "Ungültiger Link",
+    "linkedin": "Ungültiger LinkedIn-Link",
+    "github": "Ungültiger GitHub-Link",
+    "website": "Ungültige Website-Adresse"
+  }
+}
+
