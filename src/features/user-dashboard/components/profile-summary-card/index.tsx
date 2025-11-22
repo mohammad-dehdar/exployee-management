@@ -11,7 +11,7 @@ export function ProfileSummaryCard({ summary }: ProfileSummaryCardProps) {
   return (
     <Card className="rounded-3xl border border-border/60 bg-card/80 shadow-sm backdrop-blur">
       <CardHeader className="px-6 pt-6">
-        <CardTitle className="text-lg font-semibold text-foreground">
+        <CardTitle className="text-lg font-semibold text-foreground mb-4">
           خلاصه اطلاعات ثبت‌شده
         </CardTitle>
       </CardHeader>

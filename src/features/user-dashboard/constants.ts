@@ -16,6 +16,31 @@ export const profileSections: ProfileSection[] = [
     description: "سمت، نوع قرارداد، تاریخ شروع و محل استقرار.",
     path: "/user-dashboard/user-form?section=job",
   },
+  {
+    title: "اطلاعات تحصیلی",
+    description: "مدرک تحصیلی، رشته، دانشگاه و سال فارغ‌التحصیلی.",
+    path: "/user-dashboard/user-form?section=education",
+  },
+  {
+    title: "سابقه کار",
+    description: "شرکت‌های قبلی، سمت‌ها و تجربیات کاری.",
+    path: "/user-dashboard/user-form?section=workHistory",
+  },
+  {
+    title: "گواهینامه‌ها",
+    description: "گواهینامه‌ها و مدارک تخصصی.",
+    path: "/user-dashboard/user-form?section=certificates",
+  },
+  {
+    title: "ضمایم",
+    description: "رزومه، کارت ملی، عکس و مدارک.",
+    path: "/user-dashboard/user-form?section=attachments",
+  },
+  {
+    title: "اطلاعات تکمیلی",
+    description: "مهارت‌ها، لینکدین، گیت‌هاب و سایر اطلاعات.",
+    path: "/user-dashboard/user-form?section=additional",
+  },
 ];
 
 export const reminders: ReminderItem[] = [

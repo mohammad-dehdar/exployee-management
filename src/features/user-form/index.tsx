@@ -151,8 +151,9 @@ export default function UserFormFeature() {
     }
 
     return (
-        <FormProvider {...methods}>
-            <div className="mx-auto max-w-3xl w-full space-y-6 px-4 py-6">
+        <main className="mx-auto flex min-h-[60vh] max-w-4xl flex-col gap-6 px-6 py-10">
+            <FormProvider {...methods}>
+                <div className="mx-auto max-w-3xl w-full space-y-6">
                 <Card className="rounded-xl border shadow-lg p-4 bg-background">
                     <CardHeader className="p-2 space-y-2">
                         <p className="text-xs text-muted-foreground">فرم پروفایل</p>
@@ -189,6 +190,14 @@ export default function UserFormFeature() {
 
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-center pt-2">
                         <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => router.push("/user-dashboard")}
+                            className="w-full sm:w-auto rounded-lg text-base px-6 py-3 border-border/80 text-muted-foreground hover:bg-accent hover:text-foreground"
+                        >
+                            بازگشت
+                        </Button>
+                        <Button
                             type="submit"
                             className="w-full sm:w-auto rounded-lg text-base px-6 py-3 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
                         >
@@ -205,7 +214,8 @@ export default function UserFormFeature() {
                         </Button>
                     </div>
                 </form>
-            </div>
-        </FormProvider>
+                </div>
+            </FormProvider>
+        </main>
     );
 }

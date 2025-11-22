@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useEffect, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,6 +20,7 @@ import {
 import type { UserRecord } from "@/types/user";
 
 export default function UserDetails({ user }: { user: UserRecord }) {
+    const router = useRouter();
     const { updateProfile } = useAuthStore();
     const defaults = useMemo(
         () => ({
@@ -106,6 +108,14 @@ export default function UserDetails({ user }: { user: UserRecord }) {
                     <AdditionalInfo />
 
                     <div className="flex items-center gap-3">
+                        <Button 
+                            type="button" 
+                            variant="outline"
+                            onClick={() => router.push("/admin-dashboard")}
+                            className="rounded-xl"
+                        >
+                            بازگشت
+                        </Button>
                         <Button type="submit" className="rounded-xl">
                             ذخیره تغییرات
                         </Button>
