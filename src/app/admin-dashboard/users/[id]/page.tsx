@@ -1,16 +1,23 @@
 'use client';
 
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import UserDetails from "@/features/admin-dashboard/components/user-details";
-import { useAdminDashboardStore } from "@/features/admin-dashboard/store";
+import { useAuthStore } from "@/features/auth";
 
 export default function AdminUserDetailsPage() {
     const params = useParams();
+    const router = useRouter();
     const userId = Array.isArray(params.id) ? params.id[0] : params.id;
-    const user = useAdminDashboardStore((state) =>
-        userId ? state.getUserById(userId) : undefined
-    );
+    const { profiles, accounts, currentUserId } = useAuthStore();
+    const currentAccount = accounts.find((acc) => acc.id === currentUserId);
+
+    if (!currentAccount || currentAccount.role !== "admin") {
+        router.replace("/");
+        return null;
+    }
+
+    const user = userId ? profiles[userId] : undefined;
 
     if (!user) {
         return (

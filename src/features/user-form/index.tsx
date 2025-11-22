@@ -1,13 +1,13 @@
 'use client';
 
 import { useEffect, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toastSuccess } from "@/components/feedback";
-import { useAdminDashboardStore } from "@/features/admin-dashboard/store";
-import { useUserFormStore } from "./store";
-import { ContactInfo, JobInfo, PersonalInfo, UserRecord } from "@/types/user";
+import { useAuthStore } from "@/features/auth";
+import { ContactInfo, JobInfo, PersonalInfo } from "@/types/user";
 import { ContactInfo as ContactInfoFields, JobInfo as JobInfoFields, PersonalInfo as PersonalInfoFields } from "./components";
 
 interface UserFormData {
@@ -17,16 +17,31 @@ interface UserFormData {
 }
 
 export default function UserFormFeature() {
-    const { personal, contact, job, setPersonal, setContact, setJob, reset: resetStore } = useUserFormStore();
-    const { addUser } = useAdminDashboardStore();
+    const router = useRouter();
+    const { profiles, updateProfile, currentUserId, accounts } = useAuthStore();
+    const account = accounts.find((acc) => acc.id === currentUserId);
+    const profile = currentUserId
+        ? profiles[currentUserId] ?? { id: currentUserId, personal: {}, contact: {}, job: {} }
+        : undefined;
+
+    useEffect(() => {
+        if (!account || account.role !== "user") {
+            router.replace("/");
+        }
+    }, [account, router]);
+
+    const safeProfile = useMemo(
+        () => profile ?? { id: account?.id ?? "pending", personal: {}, contact: {}, job: {} },
+        [account?.id, profile]
+    );
 
     const initialValues = useMemo(
         () => ({
-            personal: personal ?? {},
-            contact: contact ?? {},
-            job: job ?? {},
+            personal: { ...safeProfile.personal },
+            contact: { ...safeProfile.contact },
+            job: { ...safeProfile.job },
         }),
-        [personal, contact, job]
+        [safeProfile]
     );
 
     const methods = useForm<UserFormData>({ defaultValues: initialValues });
@@ -44,25 +59,19 @@ export default function UserFormFeature() {
     const completionPercent = Math.round((completionScore / 3) * 100);
 
     const onSubmit = (data: UserFormData) => {
-        setPersonal(data.personal);
-        setContact(data.contact);
-        setJob(data.job);
+        if (!account) return;
 
-        const newUser: UserRecord = {
-            id: crypto.randomUUID(),
-            personal: data.personal,
-            contact: data.contact,
-            job: data.job,
-        };
-
-        addUser(newUser);
+        updateProfile(account.id, data);
         toastSuccess("اطلاعات شما با موفقیت ذخیره شد.");
     };
 
     const handleReset = () => {
-        resetStore();
         methods.reset({ personal: {}, contact: {}, job: {} });
     };
+
+    if (!account || account.role !== "user") {
+        return null;
+    }
 
     return (
         <FormProvider {...methods}>

@@ -1,94 +1,130 @@
-import Link from "next/link";
+'use client';
 
-const links = [
-    { href: "/user-dashboard", label: "داشبورد کاربر", description: "نمای کلی پرونده و وضعیت تکمیل" },
-    { href: "/user-dashboard/user-form", label: "فرم تکمیل اطلاعات", description: "ویرایش و ارسال جزئیات شخصی و شغلی" },
-    { href: "/admin-dashboard", label: "داشبورد ادمین", description: "مشاهده و بررسی پروفایل تمام کاربران" },
+import { FormEvent, useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toastError, toastSuccess } from "@/components/feedback/toast-provider/toast-provider";
+import { useAuthStore } from "@/features/auth";
+
+const helpfulLinks = [
+    { href: "/user-dashboard", label: "داشبورد کاربر", description: "بعد از ورود به عنوان کاربر" },
+    { href: "/user-dashboard/user-form", label: "فرم اطلاعات", description: "تکمیل یا ویرایش اطلاعات" },
+    { href: "/admin-dashboard", label: "داشبورد ادمین", description: "مشاهده کاربران ساخته‌شده" },
 ];
 
 export default function Home() {
-    return (
-        <main className="mx-auto flex min-h-[80vh] max-w-6xl flex-col gap-10 px-6 py-12">
-            <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-sky-600 via-indigo-600 to-indigo-800 p-10 text-white shadow-2xl">
-                <div className="pointer-events-none absolute inset-0 opacity-25">
-                    <div className="absolute -left-16 top-0 h-52 w-52 rounded-full bg-white blur-3xl" />
-                    <div className="absolute bottom-6 right-10 h-64 w-64 rounded-full bg-emerald-300 blur-3xl" />
-                </div>
-                <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-                    <div className="space-y-3 lg:max-w-2xl">
-                        <p className="text-sm font-semibold uppercase tracking-wide text-white/80">سیستم مدیریت سرمایه انسانی</p>
-                        <h1 className="text-3xl font-bold leading-tight sm:text-4xl">
-                            یک داشبورد مدرن برای پیگیری اطلاعات پرسنل، بدون سردرگمی.
-                        </h1>
-                        <p className="text-base text-white/80 leading-7">
-                            همه مسیرها از اینجا شروع می‌شود؛ فرم خود را کامل کنید یا پرونده‌ها را بررسی کنید.
-                        </p>
-                        <div className="flex flex-wrap gap-3">
-                            <Link
-                                href="/user-dashboard/user-form"
-                                className="rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-indigo-700 shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl"
-                            >
-                                شروع تکمیل اطلاعات
-                            </Link>
-                            <Link
-                                href="/admin-dashboard"
-                                className="rounded-2xl border border-white/30 bg-white/10 px-4 py-3 text-sm font-semibold text-white backdrop-blur transition hover:-translate-y-0.5 hover:border-white/60"
-                            >
-                                مشاهده داشبورد ادمین
-                            </Link>
-                        </div>
-                    </div>
-                    <div className="grid w-full max-w-xs grid-cols-2 gap-3 rounded-2xl bg-white/10 p-4 text-sm font-semibold text-white backdrop-blur lg:max-w-sm">
-                        <div className="rounded-xl bg-white/15 p-4 text-center">
-                            <p className="text-2xl font-bold">۳ مرحله</p>
-                            <p className="text-xs text-white/80">برای تکمیل پروفایل</p>
-                        </div>
-                        <div className="rounded-xl bg-white/15 p-4 text-center">
-                            <p className="text-2xl font-bold">۲ داشبورد</p>
-                            <p className="text-xs text-white/80">نمای کلی و جزئیات</p>
-                        </div>
-                        <div className="col-span-2 rounded-xl bg-white/20 p-4 text-center">
-                            <p className="text-base">دسترسی سریع به کارها و پرونده‌ها</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+    const router = useRouter();
+    const [email, setEmail] = useState("admin@company.com");
+    const [password, setPassword] = useState("admin123");
+    const login = useAuthStore((state) => state.login);
+    const currentUserId = useAuthStore((state) => state.currentUserId);
+    const accounts = useAuthStore((state) => state.accounts);
 
-            <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {links.map((link) => (
-                    <Link
-                        key={link.href}
-                        href={link.href}
-                        className="group relative overflow-hidden rounded-2xl border border-slate-100 bg-white/80 p-6 shadow-lg backdrop-blur transition hover:-translate-y-1 hover:border-indigo-200 hover:shadow-2xl dark:border-slate-800/60 dark:bg-slate-900/70"
-                    >
-                        <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-transparent to-sky-50 opacity-0 transition group-hover:opacity-100 dark:from-indigo-500/10 dark:to-sky-500/10" />
-                        <div className="relative space-y-3">
-                            <p className="text-sm font-semibold text-indigo-600 dark:text-indigo-300">{link.href}</p>
-                            <p className="text-lg font-bold text-foreground">{link.label}</p>
-                            <p className="text-sm text-muted-foreground leading-6">{link.description}</p>
+    useEffect(() => {
+        if (!currentUserId) return;
+        const account = accounts.find((acc) => acc.id === currentUserId);
+        if (!account) return;
+        router.replace(account.role === "admin" ? "/admin-dashboard" : "/user-dashboard");
+    }, [accounts, currentUserId, router]);
+
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const result = login(email, password);
+
+        if (!result.success) {
+            toastError(result.message ?? "ورود ناموفق بود");
+            return;
+        }
+
+        toastSuccess("خوش آمدید!");
+        router.replace(result.role === "admin" ? "/admin-dashboard" : "/user-dashboard");
+    };
+
+    return (
+        <main className="mx-auto flex min-h-[80vh] max-w-5xl flex-col gap-8 px-6 py-12">
+            <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-600 via-sky-600 to-emerald-500 p-8 text-white shadow-2xl">
+                <div className="pointer-events-none absolute inset-0 opacity-30">
+                    <div className="absolute -left-16 top-0 h-56 w-56 rounded-full bg-white blur-3xl" />
+                    <div className="absolute bottom-10 right-10 h-64 w-64 rounded-full bg-amber-300 blur-3xl" />
+                </div>
+                <div className="relative z-10 grid gap-6 lg:grid-cols-[1.2fr,1fr] lg:items-center">
+                    <div className="space-y-4">
+                        <p className="text-sm font-semibold uppercase tracking-wide text-white/80">ورود به سامانه</p>
+                        <h1 className="text-3xl font-bold leading-tight sm:text-4xl">مدیریت پرسنل با حساب‌های امن</h1>
+                        <p className="text-base text-white/85 leading-7">
+                            با ایمیل و رمز عبور وارد شوید. ادمین می‌تواند حساب کاربری بسازد و کاربران پس از ورود فرم خود را کامل کنند.
+                        </p>
+                        <div className="flex flex-wrap gap-3 text-xs text-white/80">
+                            <span className="rounded-full bg-white/15 px-3 py-1">ادمین پیش‌فرض: admin@company.com / admin123</span>
+                            <span className="rounded-full bg-white/15 px-3 py-1">حساب کاربر بعد از ساخت ادمین فعال می‌شود</span>
                         </div>
-                    </Link>
-                ))}
+                    </div>
+
+                    <Card className="relative overflow-hidden rounded-2xl border border-white/40 bg-white/90 shadow-xl backdrop-blur">
+                        <CardHeader>
+                            <CardTitle className="text-lg font-bold text-slate-900">ورود</CardTitle>
+                            <p className="text-sm text-slate-600">حساب ادمین یا کاربر را وارد کنید.</p>
+                        </CardHeader>
+                        <CardContent>
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                <div className="space-y-2">
+                                    <Label className="text-sm" htmlFor="email">
+                                        ایمیل
+                                    </Label>
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        placeholder="you@example.com"
+                                        required
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label className="text-sm" htmlFor="password">
+                                        رمز عبور
+                                    </Label>
+                                    <Input
+                                        id="password"
+                                        type="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        placeholder="••••••••"
+                                        required
+                                    />
+                                </div>
+                                <Button type="submit" className="w-full rounded-xl bg-indigo-600 text-white hover:bg-indigo-700">
+                                    ورود به سامانه
+                                </Button>
+                            </form>
+                        </CardContent>
+                    </Card>
+                </div>
             </section>
 
             <section className="grid gap-4 rounded-2xl border border-slate-200/70 bg-white/80 p-6 shadow-lg backdrop-blur lg:grid-cols-3 dark:border-slate-800/60 dark:bg-slate-900/70">
-                <div className="space-y-2">
-                    <p className="text-xs uppercase tracking-wide text-indigo-600 dark:text-indigo-300">چرا اینجا؟</p>
-                    <h2 className="text-xl font-bold">تجربه‌ای دلنشین برای تیم و ادمین</h2>
+                <div className="space-y-2 lg:col-span-2">
+                    <p className="text-xs uppercase tracking-wide text-indigo-600 dark:text-indigo-300">مسیر‌ها</p>
+                    <h2 className="text-xl font-bold">بعد از ورود به کجا می‌روید؟</h2>
                     <p className="text-sm text-muted-foreground leading-6">
-                        مسیر تکمیل اطلاعات و بررسی پرونده‌ها با کارت‌های زیبا و وضعیت‌های واضح، سریع‌تر و لذت‌بخش‌تر می‌شود.
+                        ادمین می‌تواند حساب بسازد و پروفایل‌ها را ببیند. کاربران تنها به فرم و داشبورد شخصی دسترسی دارند.
                     </p>
                 </div>
-                <div className="grid gap-3 sm:grid-cols-2 lg:col-span-2">
-                    {["کارت‌های گرافیکی با جزئیات کامل", "وضعیت شفاف هر مرحله", "دسترسی سریع به فرم‌ها و داشبورد"]
-                        .map((item) => (
-                            <div
-                                key={item}
-                                className="rounded-2xl border border-slate-100/70 bg-gradient-to-br from-slate-50 to-white p-4 text-sm font-medium shadow-sm dark:border-slate-800/60 dark:from-slate-800/70 dark:to-slate-900"
-                            >
-                                {item}
-                            </div>
-                        ))}
+                <div className="grid gap-3 sm:grid-cols-2 lg:col-span-1">
+                    {helpfulLinks.map((link) => (
+                        <Link
+                            key={link.href}
+                            href={link.href}
+                            className="rounded-2xl border border-slate-100/80 bg-gradient-to-br from-slate-50 to-white p-4 text-sm font-semibold shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-slate-800/60 dark:from-slate-800/70 dark:to-slate-900"
+                        >
+                            <p className="text-indigo-600 dark:text-indigo-300">{link.label}</p>
+                            <p className="text-xs text-muted-foreground">{link.description}</p>
+                        </Link>
+                    ))}
                 </div>
             </section>
         </main>
