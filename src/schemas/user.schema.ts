@@ -55,7 +55,7 @@ export const financialInfoSchema = z.object({
 // Education Info Schema
 export const educationInfoSchema = z.object({
     degree: z
-        .enum(['دیپلم', 'فوق‌دیپلم', 'لیسانس', 'فوق‌لیسانس', 'دکتری'])
+        .enum(['diploma', 'associate', 'bachelor', 'master', 'phd'])
         .optional(),
     major: z.string().optional(),
     university: z.string().optional(),
@@ -94,7 +94,7 @@ export const additionalInfoSchema = z.object({
     linkedin: z.string().url('لینک لینکدین نامعتبر است').optional(),
     github: z.string().url('لینک گیت‌هاب نامعتبر است').optional(),
     website: z.string().url('آدرس وب‌سایت نامعتبر است').optional(),
-    maritalStatus: z.enum(['مجرد', 'متاهل', 'سایر']).optional(),
+    maritalStatus: z.enum(['single', 'married', 'other']).optional(),
     notes: z.string().optional(),
 });
 
@@ -164,14 +164,14 @@ export const POSITIONS = [
 ] as const;
 
 export const DEGREE_LEVELS = [
-    'دیپلم',
-    'فوق‌دیپلم',
-    'لیسانس',
-    'فوق‌لیسانس',
-    'دکتری',
+    'diploma',
+    'associate',
+    'bachelor',
+    'master',
+    'phd',
 ] as const;
 
-export const MARITAL_STATUSES = ['مجرد', 'متاهل', 'سایر'] as const;
+export const MARITAL_STATUSES = ['single', 'married', 'other'] as const;
 
 /**
  * ======================

@@ -72,16 +72,13 @@ export function StatusCard({
               >
                 <div className="relative">
                   <div>
+                    <div className="flex items-center justify-between gap-2">
                     <p className="text-sm font-medium text-foreground">
                       {t(`sections.${section.key}.title`)}
                     </p>
-                    <p className="text-xs text-muted-foreground">
-                      {t(`sections.${section.key}.description`)}
-                    </p>
-                  </div>
                   <span
                     className={cn(
-                      "absolute -top-1 left-0 rounded-sm md:px-3 md:py-1 text-xs px-2 py-1 text-[8px] md:text-xs font-semibold",
+                      "rounded-sm md:px-2 md:py-0.5 text-xs px-2 py-1 text-[8px] md:text-xs font-semibold",
                       isDone
                         ? "bg-success-20 text-success-40 dark:bg-success-50/20"
                         : "bg-warning-20 text-warning-40",
@@ -90,6 +87,11 @@ export function StatusCard({
                   >
                     {isDone ? t('statusCard.completed') : t('statusCard.pending')}
                   </span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      {t(`sections.${section.key}.description`)}
+                    </p>
+                  </div>
                 </div>
               </div>
             );
