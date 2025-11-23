@@ -2,30 +2,19 @@
 
 import { useTranslations } from 'next-intl';
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/ui/text-input";
+import { FormSectionWrapper } from "@/components/shared";
 
 export const CertificatesInfo = ({ editable = true }: { editable?: boolean }) => {
     const { control, register } = useFormContext();
     const { fields, append, remove } = useFieldArray({ control, name: "certificates" });
     const t = useTranslations('userForm.sections.certificates');
-    const tCommon = useTranslations('common');
 
     const handleAdd = () => append({ title: "", issuer: "", issueDate: "", duration: "" });
 
     return (
-        <Card className="rounded-xl border-2 border-primary/50 bg-background p-0 shadow-lg">
-            <CardHeader className="space-y-2 px-6 pt-6">
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                    {t('title')} <span className="text-primary">📜</span>
-                </CardTitle>
-                <CardDescription className="text-sm text-muted-foreground">
-                    {t('description')}
-                </CardDescription>
-            </CardHeader>
-
-            <CardContent className="space-y-6 px-6 pb-6">
+        <FormSectionWrapper sectionKey="certificates" emoji="📜" contentLayout="stack">
                 {fields.map((field, index) => (
                     <div key={field.id} className="grid gap-4 rounded-lg border border-border/60 bg-muted/30 p-4">
                         <div className="grid gap-4 md:grid-cols-2">
@@ -89,7 +78,6 @@ export const CertificatesInfo = ({ editable = true }: { editable?: boolean }) =>
                         </Button>
                     </div>
                 )}
-            </CardContent>
-        </Card>
+        </FormSectionWrapper>
     );
 };

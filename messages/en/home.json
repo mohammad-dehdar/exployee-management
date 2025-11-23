@@ -5,6 +5,7 @@
     "description": "Select your login type and enter with your email and password."
   },
   "login": {
+    "title": "Login",
     "selectType": {
       "title": "Select Login Type",
       "description": "Please select your login type"

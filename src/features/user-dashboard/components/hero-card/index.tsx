@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAuthStore } from "@/features/auth";
+import { useAuthStore } from "@/store/store";
 import { useRouter } from "@/i18n/routing";
 
 interface HeroCardProps {

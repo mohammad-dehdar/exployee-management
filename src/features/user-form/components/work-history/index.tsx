@@ -2,9 +2,9 @@
 
 import { useTranslations } from 'next-intl';
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/ui/text-input";
+import { FormSectionWrapper } from "@/components/shared";
 
 export const WorkHistory = ({ editable = true }: { editable?: boolean }) => {
     const { control, register } = useFormContext();
@@ -16,17 +16,7 @@ export const WorkHistory = ({ editable = true }: { editable?: boolean }) => {
         append({ company: "", role: "", description: "", startDate: "", endDate: "" });
 
     return (
-        <Card className="rounded-xl border-2 border-primary/50 bg-background p-0 shadow-lg">
-            <CardHeader className="space-y-2 px-6 pt-6">
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                    {t('title')} <span className="text-primary">📂</span>
-                </CardTitle>
-                <CardDescription className="text-sm text-muted-foreground">
-                    {t('description')}
-                </CardDescription>
-            </CardHeader>
-
-            <CardContent className="space-y-6 px-6 pb-6">
+        <FormSectionWrapper sectionKey="workHistory" emoji="📂" contentLayout="stack">
                 {fields.map((field, index) => (
                     <div
                         key={field.id}
@@ -106,7 +96,6 @@ export const WorkHistory = ({ editable = true }: { editable?: boolean }) => {
                         </Button>
                     </div>
                 )}
-            </CardContent>
-        </Card>
+        </FormSectionWrapper>
     );
 };

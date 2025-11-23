@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { cva } from 'class-variance-authority';
+import { useLocale } from 'next-intl';
 import { cn } from '@/utils/ui';
 import { TextInputProps } from './types';
 import { Label } from '@/components/ui/label';
@@ -44,7 +45,7 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       fullWidth = false,
       placeholder,
       value,
-      dir = 'rtl',
+      dir,
       onValueChange,
       onBlur,
       startIcon,
@@ -58,7 +59,12 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     },
     ref,
   ) => {
+    const locale = useLocale();
     const stateColor = state || color;
+
+    // Determine direction based on locale: fa = rtl, en/de = ltr
+    // If dir is explicitly provided, use it; otherwise use locale-based direction
+    const textDirection = dir ?? (locale === 'fa' ? 'rtl' : 'ltr');
 
     // Extract placeholder from props to avoid duplication
     const { placeholder: propsPlaceholder, ...restProps } = props;
@@ -81,23 +87,23 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     const finalPlaceholder = placeholder ?? propsPlaceholder;
 
     return (
-      <div className={cn('flex flex-col items-start', fullWidth ? 'w-full' : 'w-fit')} dir={dir}>
+      <div className={cn('flex flex-col items-start', fullWidth ? 'w-full' : 'w-fit')} dir={textDirection}>
         {hasLabel && (
           <Label
             className={cn(classNames?.label, 'textInputLabel')}
             htmlFor={inputId}
             color={stateColor}
             {...labelProps}
-            dir={dir}
+            dir={textDirection}
           >
             {label}
           </Label>
         )}
-        <div className={inputClasses} dir={dir}>
+        <div className={inputClasses} dir={textDirection}>
           {startIcon && startIcon}
           <input
             id={inputId}
-            dir={dir}
+            dir={textDirection}
             type={restProps.type}
             ref={ref}
             data-slot="input"
@@ -117,7 +123,7 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             htmlFor={inputId}
             color={stateColor}
             {...labelProps}
-            dir={dir}
+            dir={textDirection}
           >
             {inputMessage}
           </Label>

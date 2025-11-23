@@ -3,7 +3,7 @@
 import { useEffect, useMemo } from "react";
 import { useTranslations } from 'next-intl';
 import { useRouter } from "@/i18n/routing";
-import { useAuthStore } from "@/features/auth";
+import { useAuthStore } from "@/store/store";
 import type { SummaryItem } from "./types";
 import {
     StatusCard,

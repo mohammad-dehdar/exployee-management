@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toastError, toastSuccess } from "@/components/feedback";
-import { useAuthStore } from "@/features/auth";
+import { useAuthStore } from "@/store/store";
 import { 
     userRecordSchema, 
     type UserRecord,
@@ -65,7 +65,6 @@ export default function UserFormFeature() {
         [profile, account]
     );
 
-    // ✅ با Zod Validation
     const methods = useForm<UserRecord>({ 
         defaultValues: safeProfile,
         resolver: zodResolver(userRecordSchema),
@@ -84,7 +83,6 @@ export default function UserFormFeature() {
     const onSubmit = (data: UserRecord) => {
         if (!account) return;
         
-        // Validation قبل از ارسال
         const validation = userRecordSchema.safeParse(data);
         if (!validation.success) {
             toastError(t('messages.validationError'));

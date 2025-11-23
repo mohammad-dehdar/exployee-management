@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import * as LabelPrimitive from '@radix-ui/react-label';
+import { useLocale } from 'next-intl';
 import { LabelProps, LabelRef } from './types';
 import { cn } from '@/utils/ui';
 import { cva } from 'class-variance-authority';
@@ -39,15 +40,22 @@ export const labelVariants = cva('label', {
 });
 
 export const Label = React.forwardRef<LabelRef, LabelProps>(
-  ({ className, color, size, align, htmlFor, ...props }, ref) => (
-    <LabelPrimitive.Root
-      ref={ref}
-      data-slot="label"
-      htmlFor={htmlFor}
-      className={cn(labelVariants({ color, size, align }), className)}
-      {...props}
-    />
-  ),
+  ({ className, color, size, align, htmlFor, dir, ...props }, ref) => {
+    const locale = useLocale();
+    // Determine direction: if dir is explicitly provided, use it; otherwise use locale-based direction
+    const textDirection = dir ?? (locale === 'fa' ? 'rtl' : 'ltr');
+    
+    return (
+      <LabelPrimitive.Root
+        ref={ref}
+        data-slot="label"
+        htmlFor={htmlFor}
+        dir={textDirection}
+        className={cn(labelVariants({ color, size, align }), className)}
+        {...props}
+      />
+    );
+  },
 );
 
 Label.displayName = 'Label';

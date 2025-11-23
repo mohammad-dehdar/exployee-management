@@ -5,6 +5,7 @@
     "description": "Wählen Sie Ihren Anmeldetyp und geben Sie Ihre E-Mail und Ihr Passwort ein."
   },
   "login": {
+    "title": "Anmelden",
     "selectType": {
       "title": "Anmeldetyp auswählen",
       "description": "Bitte wählen Sie Ihren Anmeldetyp"

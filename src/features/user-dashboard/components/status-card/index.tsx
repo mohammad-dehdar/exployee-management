@@ -84,7 +84,8 @@ export function StatusCard({
                       "absolute -top-1 left-0 rounded-sm md:px-3 md:py-1 text-xs px-2 py-1 text-[8px] md:text-xs font-semibold",
                       isDone
                         ? "bg-success-20 text-success-40 dark:bg-success-50/20"
-                        : "bg-warning-20 text-warning-40"
+                        : "bg-warning-20 text-warning-40",
+                        
                     )}
                   >
                     {isDone ? t('statusCard.completed') : t('statusCard.pending')}
