@@ -1,13 +1,14 @@
 'use client';
 
 import Link from "next/link";
-import { useCallback, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useTranslations } from 'next-intl';
 import { useRouter } from "@/i18n/routing";
 import { FormProvider, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { toastSuccess } from "@/components/feedback";
 import { useAuthStore } from "@/store/store";
+import { translateOption } from "@/utils/option-helpers";
 import {
     AdditionalInfo,
     AttachmentsInfo,
@@ -51,36 +52,17 @@ export default function UserDetails({ user }: { user: UserRecord }) {
         methods.reset(defaults);
     }, [defaults, methods]);
 
-    // Helper functions to translate position and contractType
-    const getPositionText = useCallback((position?: string) => {
-        if (!position) return t('position');
-        const positionKey = position as 'frontend' | 'backend' | 'designer' | 'other';
-        if (['frontend', 'backend', 'designer', 'other'].includes(position)) {
-            return tOptions(`position.${positionKey}`);
-        }
-        return position;
-    }, [t, tOptions]);
-
-    const getContractTypeText = useCallback((contractType?: string) => {
-        if (!contractType) return t('contract');
-        const contractKey = contractType as 'fulltime' | 'parttime' | 'freelancer' | 'project' | 'hourly';
-        if (['fulltime', 'parttime', 'freelancer', 'project', 'hourly'].includes(contractType)) {
-            return tOptions(`contractType.${contractKey}`);
-        }
-        return contractType;
-    }, [t, tOptions]);
-
     const header = useMemo(
         () => ({
             name: `${defaults.personal.firstName || t('name')} ${defaults.personal.lastName || t('lastName')}`.trim(),
-            position: getPositionText(defaults.job.position),
-            contract: getContractTypeText(defaults.job.contractType),
+            position: translateOption('position', defaults.job.position, tOptions, t('position')),
+            contract: translateOption('contractType', defaults.job.contractType, tOptions, t('contract')),
         }),
-        [defaults.personal.firstName, defaults.personal.lastName, defaults.job.position, defaults.job.contractType, getPositionText, getContractTypeText, t]
+        [defaults.personal.firstName, defaults.personal.lastName, defaults.job.position, defaults.job.contractType, t, tOptions]
     );
 
-    const onSubmit = (values: UserRecord) => {
-        updateProfile(user.id, values);
+    const onSubmit = async (values: UserRecord) => {
+        await updateProfile(user.id, values);
         toastSuccess(t('updateSuccess'));
     };
 

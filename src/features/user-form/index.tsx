@@ -1,19 +1,11 @@
 'use client';
 
-import { useEffect, useMemo } from "react";
 import { useTranslations } from 'next-intl';
 import { useRouter } from "@/i18n/routing";
-import { FormProvider, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { FormProvider } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { toastError, toastSuccess } from "@/components/feedback";
-import { useAuthStore } from "@/store/store";
-import { 
-    userRecordSchema, 
-    type UserRecord,
-    calculateCompletionPercent 
-} from "@/schemas/user.schema";
+import { useUserForm } from "./hooks/useUserForm";
 import {
     AdditionalInfo,
     AttachmentsInfo,
@@ -30,92 +22,15 @@ export default function UserFormFeature() {
     const t = useTranslations('userForm');
     const tCommon = useTranslations('common');
     const router = useRouter();
-    const { profiles, updateProfile, currentUserId, accounts } = useAuthStore();
-    
-    const account = useMemo(
-        () => accounts.find((acc) => acc.id === currentUserId),
-        [accounts, currentUserId]
-    );
-    
-    const profile = useMemo(
-        () => currentUserId ? profiles[currentUserId] : undefined,
-        [profiles, currentUserId]
-    );
+    const { methods, onSubmit, handleReset, completionPercent, account } = useUserForm();
 
-    useEffect(() => {
-        if (!account || account.role !== "user") {
-            router.replace("/");
-        }
-    }, [account, router]);
-
-    const safeProfile = useMemo(
-        () =>
-            profile ?? {
-                id: account?.id ?? "pending",
-                personal: { username: account?.displayName },
-                contact: { personalEmail: account?.email },
-                job: {},
-                financial: {},
-                education: {},
-                workHistory: [{ company: "", role: "", description: "", startDate: "", endDate: "" }],
-                certificates: [{ title: "", issuer: "", issueDate: "", duration: "" }],
-                attachments: {},
-                additional: {},
-            },
-        [profile, account]
-    );
-
-    const methods = useForm<UserRecord>({ 
-        defaultValues: safeProfile,
-        resolver: zodResolver(userRecordSchema),
-        mode: 'onBlur', // Validate on blur
-    });
-
-    useEffect(() => {
-        methods.reset(safeProfile);
-    }, [safeProfile, methods]);
-
-    const completionPercent = useMemo(
-        () => calculateCompletionPercent(safeProfile),
-        [safeProfile]
-    );
-
-    const onSubmit = (data: UserRecord) => {
-        if (!account) return;
-        
-        const validation = userRecordSchema.safeParse(data);
-        if (!validation.success) {
-            toastError(t('messages.validationError'));
-            console.error(validation.error);
-            return;
-        }
-        
-        updateProfile(account.id, data);
-        toastSuccess(t('messages.saveSuccess'));
-    };
-
-    const handleReset = () => {
-        methods.reset({
-            personal: { username: account?.displayName },
-            contact: { personalEmail: account?.email },
-            job: {},
-            financial: {},
-            education: {},
-            workHistory: [{ company: "", role: "", description: "", startDate: "", endDate: "" }],
-            certificates: [{ title: "", issuer: "", issueDate: "", duration: "" }],
-            attachments: {},
-            additional: {},
-        });
-    };
-
-    if (!account || account.role !== "user") {
+    if (!account) {
         return null;
     }
 
     return (
-        <main className="mx-auto flex min-h-[60vh] max-w-4xl flex-col gap-6 px-6 py-10">
-            <FormProvider {...methods}>
-                <div className="mx-auto max-w-3xl w-full space-y-6">
+        <FormProvider {...methods}>
+            <div className="mx-auto max-w-3xl w-full space-y-6">
                     <Card className="rounded-xl border shadow-lg p-4 bg-background">
                         <CardHeader className="p-2 space-y-2">
                             <p className="text-xs text-muted-foreground">{t('profileForm')}</p>
@@ -175,8 +90,7 @@ export default function UserFormFeature() {
                             </Button>
                         </div>
                     </form>
-                </div>
-            </FormProvider>
-        </main>
+            </div>
+        </FormProvider>
     );
 }

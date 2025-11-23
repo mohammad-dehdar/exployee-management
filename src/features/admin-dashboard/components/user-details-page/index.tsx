@@ -1,21 +1,20 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { Link, useRouter } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 import { useParams } from "next/navigation";
 import UserDetails from "@/features/admin-dashboard/components/user-details";
 import { useAuthStore } from "@/store/store";
+import { useRequireAuth } from "@/utils/route-guards";
 
 export default function AdminUserDetailsPageFeature() {
     const t = useTranslations('adminDashboard.userDetailsPage');
     const params = useParams();
-    const router = useRouter();
     const userId = Array.isArray(params.id) ? params.id[0] : params.id;
-    const { profiles, accounts, currentUserId } = useAuthStore();
-    const currentAccount = accounts.find((acc) => acc.id === currentUserId);
+    const { profiles } = useAuthStore();
+    const { currentAccount } = useRequireAuth('admin');
 
-    if (!currentAccount || currentAccount.role !== "admin") {
-        router.replace("/");
+    if (!currentAccount) {
         return null;
     }
 

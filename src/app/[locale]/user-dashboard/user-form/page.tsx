@@ -1,6 +1,11 @@
 import UserFormFeature from "@/features/user-form";
+import DashboardLayout from "@/layouts/dashboard-layout";
 
 export default function UserFormPage() {
-    return <UserFormFeature />;
+    return (
+        <DashboardLayout>
+            <UserFormFeature />
+        </DashboardLayout>
+    );
 }
 

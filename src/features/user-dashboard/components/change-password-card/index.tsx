@@ -17,11 +17,11 @@ export function ChangePasswordCard() {
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
 
-    const handlePasswordChange = (event: React.FormEvent<HTMLFormElement>) => {
+    const handlePasswordChange = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const result = account
-            ? changePassword(account.id, { currentPassword, newPassword })
-            : { success: false };
+        if (!account) return;
+        
+        const result = await changePassword(account.id, { currentPassword, newPassword });
 
         if (!result.success) {
             toastError(result.message ?? t('error'));

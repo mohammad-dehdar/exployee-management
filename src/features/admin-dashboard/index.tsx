@@ -1,70 +1,59 @@
 'use client';
 
-import { FormEvent, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useTranslations } from 'next-intl';
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TextInput } from "@/components/ui";
 import { Label } from "@/components/ui/label";
-import { toastError, toastSuccess } from "@/components/feedback/toast-provider/toast-provider";
 import UserCard from "./components/user-card";
 import { useAuthStore } from "@/store/store";
-import { DEFAULT_ADMIN_EMAIL, DEFAULT_ADMIN_PASSWORD } from "@/features/home/constants";
+import { DEFAULT_ADMIN_EMAIL, DEFAULT_ADMIN_PASSWORD } from "@/features/login/constants";
+import { useRequireAuth } from "@/utils/route-guards";
+import { useCreateUserForm } from "./hooks/useCreateUserForm";
 
 export default function AdminDashboardFeature() {
     const t = useTranslations();
     const router = useRouter();
-    const { accounts, profiles, registerUser, logout, currentUserId } = useAuthStore();
-    const [email, setEmail] = useState("");
-    const [orgEmail, setOrgEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [displayName, setDisplayName] = useState("");
-
-    const currentAccount = useMemo(
-        () => accounts.find((acc) => acc.id === currentUserId),
-        [accounts, currentUserId]
-    );
-
-    if (!currentAccount || currentAccount.role !== "admin") {
-        router.replace("/");
-        return null;
-    }
+    const { accounts, profiles, logout } = useAuthStore();
+    const { currentAccount } = useRequireAuth('admin');
+    const {
+        email,
+        setEmail,
+        orgEmail,
+        setOrgEmail,
+        password,
+        setPassword,
+        displayName,
+        setDisplayName,
+        handleSubmit: handleCreateUser,
+        isLoading,
+    } = useCreateUserForm();
 
     const userAccounts = accounts.filter((acc) => acc.role === "user");
 
-    const users = userAccounts.map((account) =>
-        profiles[account.id] ?? {
-            id: account.id,
-            personal: { username: account.displayName ?? t('common.name') },
-            contact: { personalEmail: account.email },
-            job: {},
-        }
+    const users = useMemo(
+        () => userAccounts.map((account) =>
+            profiles[account.id] ?? {
+                id: account.id,
+                personal: { username: account.displayName ?? t('common.name') },
+                contact: { personalEmail: account.email },
+                job: {},
+            }
+        ),
+        [userAccounts, profiles, t]
     );
 
-    const handleCreateUser = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const result = registerUser({ email, password, displayName, orgEmail });
+    if (!currentAccount) return null;
 
-        if (!result.success) {
-            toastError(result.message ?? t('adminDashboard.createUser.error'));
-            return;
-        }
-
-        toastSuccess(t('adminDashboard.createUser.success'));
-        setEmail("");
-        setOrgEmail("");
-        setPassword("");
-        setDisplayName("");
-    };
-
-    const handleLogout = () => {
-        logout();
+    const handleLogout = async () => {
+        await logout();
         router.replace("/");
     };
 
     return (
-        <main className="mx-auto flex min-h-[70vh] w-full max-w-6xl flex-col gap-8 px-6 py-10">
+        <>
             <section className="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white/80 p-8 shadow-xl backdrop-blur dark:border-slate-800/60 dark:bg-slate-900/80">
                 <div className="pointer-events-none absolute inset-0 opacity-40">
                     <div className="absolute -left-10 top-6 h-48 w-48 rounded-full bg-sky-200 blur-3xl dark:bg-sky-500/30" />
@@ -138,7 +127,9 @@ export default function AdminDashboardFeature() {
                                         required
                                     />
                                 </div>
-                                <Button type="submit" className="w-full mt-4">{t('adminDashboard.createUser.button')}</Button>
+                                <Button type="submit" disabled={isLoading} className="w-full mt-4 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    {isLoading ? t('common.loading') || 'در حال ایجاد...' : t('adminDashboard.createUser.button')}
+                                </Button>
                             </form>
                         </CardContent>
                     </Card>
@@ -164,6 +155,6 @@ export default function AdminDashboardFeature() {
                     ))}
                 </div>
             )}
-        </main>
+        </>
     );
 }

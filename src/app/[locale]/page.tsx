@@ -1,6 +1,6 @@
-import HomeFeature from "@/features/home";
+import LoginFeature from "@/features/login";
 
-export default function Home() {
-    return <HomeFeature />;
+export default function LoginPage() {
+    return <LoginFeature />;
 }
 

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { OPTIONS_CONFIG } from './options.schema';
 
 /**
  * ======================
@@ -35,13 +36,13 @@ export const contactInfoSchema = z.object({
 
 // Job Info Schema
 export const jobInfoSchema = z.object({
-    position: z.string().optional(),
+    position: z.enum([...OPTIONS_CONFIG.position.values] as [string, ...string[]]).optional(),
     contractType: z
-        .enum(['fulltime', 'parttime', 'freelancer', 'project', 'hourly'])
+        .enum([...OPTIONS_CONFIG.contractType.values] as [string, ...string[]])
         .optional(),
     startDate: z.string().optional(),
     endDate: z.string().optional(),
-    location: z.enum(['tehran', 'mashhad', 'remote', 'other']).optional(),
+    location: z.enum([...OPTIONS_CONFIG.location.values] as [string, ...string[]]).optional(),
 });
 
 // Financial Info Schema (Admin Only)
@@ -55,7 +56,7 @@ export const financialInfoSchema = z.object({
 // Education Info Schema
 export const educationInfoSchema = z.object({
     degree: z
-        .enum(['diploma', 'associate', 'bachelor', 'master', 'phd'])
+        .enum([...OPTIONS_CONFIG.degree.values] as [string, ...string[]])
         .optional(),
     major: z.string().optional(),
     university: z.string().optional(),
@@ -135,43 +136,34 @@ export type UserRecord = z.infer<typeof userRecordSchema>;
  * ======================
  */
 
-export const GENDER_OPTIONS = [
-    { label: 'مرد', value: 'male' as const },
-    { label: 'زن', value: 'female' as const },
-    { label: 'ترجیح می‌دهم نگویم', value: 'none' as const },
-] as const;
+/**
+ * ======================
+ * LEGACY CONSTANTS (for backward compatibility)
+ * ======================
+ * 
+ * These constants are kept for backward compatibility.
+ * New code should use OPTIONS_CONFIG from options.schema.ts
+ * and translateOption from option-helpers.ts
+ */
 
-export const CONTRACT_TYPES = [
-    { label: 'تمام‌وقت', value: 'fulltime' as const },
-    { label: 'پاره‌وقت', value: 'parttime' as const },
-    { label: 'فریلنسر', value: 'freelancer' as const },
-    { label: 'پروژه‌ای', value: 'project' as const },
-    { label: 'ساعتی', value: 'hourly' as const },
-] as const;
+// Legacy format: { label, value } - labels should come from translations
+export const CONTRACT_TYPES = OPTIONS_CONFIG.contractType.values.map(value => ({ 
+    value 
+})) as Array<{ value: typeof OPTIONS_CONFIG.contractType.values[number] }>;
 
-export const WORK_LOCATIONS = [
-    { label: 'دفتر تهران', value: 'tehran' as const },
-    { label: 'دفتر مشهد', value: 'mashhad' as const },
-    { label: 'ریموت', value: 'remote' as const },
-    { label: 'سایر', value: 'other' as const },
-] as const;
+export const WORK_LOCATIONS = OPTIONS_CONFIG.location.values.map(value => ({ 
+    value 
+})) as Array<{ value: typeof OPTIONS_CONFIG.location.values[number] }>;
 
-export const POSITIONS = [
-    { label: 'فرانت‌اند دولوپر', value: 'frontend' },
-    { label: 'بک‌اند دولوپر', value: 'backend' },
-    { label: 'دیزاینر', value: 'designer' },
-    { label: 'محصول / سایر', value: 'other' },
-] as const;
+export const POSITIONS = OPTIONS_CONFIG.position.values.map(value => ({ 
+    value 
+})) as Array<{ value: typeof OPTIONS_CONFIG.position.values[number] }>;
 
-export const DEGREE_LEVELS = [
-    'diploma',
-    'associate',
-    'bachelor',
-    'master',
-    'phd',
-] as const;
-
-export const MARITAL_STATUSES = ['single', 'married', 'other'] as const;
+export const DEGREE_LEVELS = [...OPTIONS_CONFIG.degree.values] as const;
+export const MARITAL_STATUSES = [...OPTIONS_CONFIG.maritalStatus.values] as const;
+export const GENDER_OPTIONS = OPTIONS_CONFIG.gender.values.map(value => ({ 
+    value 
+})) as Array<{ value: typeof OPTIONS_CONFIG.gender.values[number] }>;
 
 /**
  * ======================

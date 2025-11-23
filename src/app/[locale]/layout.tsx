@@ -9,11 +9,11 @@ export default async function LocaleLayout({
   children,
   params,
 }: PropsWithChildren & {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: 'fa' | 'en' | 'de' }>;
 }) {
   const { locale } = await params;
 
-  if (!routing.locales.includes(locale as 'fa' | 'en' | 'de')) {
+  if (!routing.locales.includes(locale)) {
     notFound();
   }
   const messages = await getMessages();

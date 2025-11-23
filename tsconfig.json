@@ -23,18 +23,21 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@icons": [
-        "./src/components/shared/icons/index.ts"
-      ],
-      "@icons/*": [
-        "./src/components/shared/icons/*"
-      ],
-      "~/*": [
-        "./*"
-      ]
+      "@/*": ["./src/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/features/*": ["./src/features/*"],
+      "@/utils/*": ["./src/utils/*"],
+      "@/store": ["./src/store/store.ts"],
+      "@/schemas/*": ["./src/schemas/*"],
+      "@/i18n/*": ["./src/i18n/*"],
+      "@/services/*": ["./src/services/*"],
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/config/*": ["./src/config/*"],
+      "@/layouts/*": ["./src/layouts/*"],
+      "@/types/*": ["./src/types/*"],
+      "@icons": ["./src/components/shared/icons/index.ts"],
+      "@icons/*": ["./src/components/shared/icons/*"],
+      "~/*": ["./*"]
     }
   },
   "types": [

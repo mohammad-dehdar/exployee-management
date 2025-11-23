@@ -1,44 +1,15 @@
 'use client';
 
-import { FormEvent, useEffect, useState } from "react";
 import { useTranslations } from 'next-intl';
-import { useRouter } from "@/i18n/routing";
-import { toastError, toastSuccess } from "@/components/feedback/toast-provider/toast-provider";
-import { useAuthStore } from "@/store/store";
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/ui";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ROUTES } from "./constants";
+import { useLoginForm } from "./hooks/useLoginForm";
 
-export default function HomeFeature() {
+export default function LoginFeature() {
     const t = useTranslations();
-    const router = useRouter();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const login = useAuthStore((state) => state.login);
-    const currentUserId = useAuthStore((state) => state.currentUserId);
-    const accounts = useAuthStore((state) => state.accounts);
-
-    useEffect(() => {
-        if (!currentUserId) return;
-        const account = accounts.find((acc) => acc.id === currentUserId);
-        if (!account) return;
-        router.push(account.role === "admin" ? ROUTES.ADMIN_DASHBOARD : ROUTES.USER_DASHBOARD);
-    }, [accounts, currentUserId, router]);
-
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const result = login(email, password);
-
-        if (!result.success) {
-            toastError(result.message ?? t('home.errors.loginFailed'));
-            return;
-        }
-
-        toastSuccess(t('home.success.welcome'));
-        router.push(result.role === "admin" ? ROUTES.ADMIN_DASHBOARD : ROUTES.USER_DASHBOARD);
-    };
+    const { email, setEmail, password, setPassword, handleSubmit, isLoading } = useLoginForm();
 
     return (
         <main className="mx-auto flex min-h-dvh w-full max-w-md flex-col justify-center gap-4 px-4 py-8 sm:px-6 sm:py-12">
@@ -82,9 +53,10 @@ export default function HomeFeature() {
                         </div>
                         <Button
                             type="submit"
-                            className="w-full rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 text-sm sm:text-base py-2.5 sm:py-2"
+                            disabled={isLoading}
+                            className="w-full rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 text-sm sm:text-base py-2.5 sm:py-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {t('common.login')}
+                            {isLoading ? t('common.loading') || 'در حال ورود...' : t('common.login')}
                         </Button>
                     </form>
                 </CardContent>

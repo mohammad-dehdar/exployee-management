@@ -14,8 +14,8 @@ export function HeroCard({ completionPercent }: HeroCardProps) {
   const t = useTranslations('userDashboard');
   const router = useRouter();
   const {logout} = useAuthStore();
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     router.replace("/");
   };
   return (
