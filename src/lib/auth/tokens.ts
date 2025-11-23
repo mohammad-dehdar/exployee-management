@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { getApiUrl } from './custom-fetch';
+import { getApiUrl } from '../api/endpoints';
 
 export const getAccessToken = (): string | undefined => {
   return Cookies.get('accessToken');
