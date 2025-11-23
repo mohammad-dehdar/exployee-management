@@ -9,9 +9,9 @@ export default async function LocaleLayout({
   children,
   params,
 }: PropsWithChildren & {
-  params: Promise<{ locale: string }>;
+  params: { locale: string };
 }) {
-  const { locale } = await params;
+  const { locale } = params;
 
   if (!routing.locales.includes(locale as 'fa' | 'en' | 'de')) {
     notFound();
