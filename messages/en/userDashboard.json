@@ -42,12 +42,40 @@
     "fullName": "Full Name",
     "nationalId": "National ID",
     "phone": "Mobile Number",
+    "personalEmail": "Personal Email",
     "orgEmail": "Organizational Email",
     "position": "Job Position",
     "fileStatus": {
       "ready": "Ready to Submit",
       "pending": "Pending Completion"
-    }
+    },
+    "notRegistered": "Not Registered"
+  },
+  "statusCard": {
+    "title": "Section Status",
+    "completed": "Completed",
+    "pending": "Pending"
+  },
+  "profileSummaryCard": {
+    "title": "Registered Information Summary"
+  },
+  "heroCard": {
+    "completionPercent": "Completion Percentage",
+    "completeProfile": "Complete User Profile",
+    "logout": "Logout"
+  },
+  "changePasswordCard": {
+    "title": "Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "currentPasswordPlaceholder": "Enter your current password",
+    "newPasswordPlaceholder": "Enter your new password",
+    "submit": "Submit New Password",
+    "success": "Password changed successfully",
+    "error": "Password change failed"
+  },
+  "remindersCard": {
+    "title": "Reminders"
   },
   "reminders": {
     "prepareDocs": {

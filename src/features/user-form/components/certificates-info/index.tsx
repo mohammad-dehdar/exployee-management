@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,8 @@ import { TextInput } from "@/components/ui/text-input";
 export const CertificatesInfo = ({ editable = true }: { editable?: boolean }) => {
     const { control, register } = useFormContext();
     const { fields, append, remove } = useFieldArray({ control, name: "certificates" });
+    const t = useTranslations('userForm.sections.certificates');
+    const tCommon = useTranslations('common');
 
     const handleAdd = () => append({ title: "", issuer: "", issueDate: "", duration: "" });
 
@@ -15,10 +18,10 @@ export const CertificatesInfo = ({ editable = true }: { editable?: boolean }) =>
         <Card className="rounded-xl border-2 border-primary/50 bg-background p-0 shadow-lg">
             <CardHeader className="space-y-2 px-6 pt-6">
                 <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                    گواهینامه‌ها و دوره‌ها <span className="text-primary">📜</span>
+                    {t('title')} <span className="text-primary">📜</span>
                 </CardTitle>
                 <CardDescription className="text-sm text-muted-foreground">
-                    دوره‌های اخذ شده یا گواهینامه‌ها را به صورت لیست وارد کنید.
+                    {t('description')}
                 </CardDescription>
             </CardHeader>
 
@@ -28,18 +31,20 @@ export const CertificatesInfo = ({ editable = true }: { editable?: boolean }) =>
                         <div className="grid gap-4 md:grid-cols-2">
                             <TextInput
                                 fullWidth
-                                label="عنوان دوره / گواهینامه"
+                                label={t('fields.title')}
                                 variant="outline"
                                 color="neutral"
+                                placeholder={t('placeholders.title')}
                                 {...register(`certificates.${index}.title` as const)}
                                 className="rounded-lg"
                                 disabled={!editable}
                             />
                             <TextInput
                                 fullWidth
-                                label="صادرکننده"
+                                label={t('fields.issuer')}
                                 variant="outline"
                                 color="neutral"
+                                placeholder={t('placeholders.issuer')}
                                 {...register(`certificates.${index}.issuer` as const)}
                                 className="rounded-lg"
                                 disabled={!editable}
@@ -49,7 +54,7 @@ export const CertificatesInfo = ({ editable = true }: { editable?: boolean }) =>
                             <TextInput
                                 fullWidth
                                 type="date"
-                                label="تاریخ دریافت"
+                                label={t('fields.issueDate')}
                                 variant="outline"
                                 color="neutral"
                                 {...register(`certificates.${index}.issueDate` as const)}
@@ -58,9 +63,10 @@ export const CertificatesInfo = ({ editable = true }: { editable?: boolean }) =>
                             />
                             <TextInput
                                 fullWidth
-                                label="مدت زمان دوره (اختیاری)"
+                                label={t('fields.duration')}
                                 variant="outline"
                                 color="neutral"
+                                placeholder={t('placeholders.duration')}
                                 {...register(`certificates.${index}.duration` as const)}
                                 className="rounded-lg"
                                 disabled={!editable}
@@ -69,7 +75,7 @@ export const CertificatesInfo = ({ editable = true }: { editable?: boolean }) =>
                         {editable && fields.length > 1 && (
                             <div className="flex justify-end">
                                 <Button variant="ghost"  onClick={() => remove(index)}>
-                                    حذف دوره
+                                    {t('remove')}
                                 </Button>
                             </div>
                         )}
@@ -79,7 +85,7 @@ export const CertificatesInfo = ({ editable = true }: { editable?: boolean }) =>
                 {editable && (
                     <div className="flex justify-start">
                         <Button type="button" variant="outline" onClick={handleAdd} className="rounded-lg">
-                            افزودن دوره جدید
+                            {t('addNew')}
                         </Button>
                     </div>
                 )}

@@ -11,6 +11,14 @@
         "nationalId": "National ID / Passport",
         "birthDate": "Date of Birth",
         "gender": "Gender"
+      },
+      "placeholders": {
+        "username": "Enter your username",
+        "firstName": "Enter your first name",
+        "lastName": "Enter your last name",
+        "fatherName": "Father's name (optional)",
+        "nationalId": "National ID or passport number",
+        "birthDate": "Date of birth"
       }
     },
     "contact": {
@@ -23,6 +31,14 @@
         "personalEmail": "Personal Email",
         "address": "Address",
         "city": "City/Province"
+      },
+      "placeholders": {
+        "phone": "09123456789",
+        "emergencyPhone": "Emergency contact number",
+        "orgEmail": "user@company.com",
+        "personalEmail": "user@example.com",
+        "address": "Residential address",
+        "city": "City or province"
       }
     },
     "job": {
@@ -44,6 +60,11 @@
         "major": "Major",
         "university": "University / Institution Name",
         "graduationYear": "Graduation Year"
+      },
+      "placeholders": {
+        "major": "Enter your major",
+        "university": "University or institution name",
+        "graduationYear": "Graduation year"
       }
     },
     "workHistory": {
@@ -56,6 +77,11 @@
         "startDate": "Start Date",
         "endDate": "End Date"
       },
+      "placeholders": {
+        "company": "Company name",
+        "role": "Job position",
+        "description": "Job responsibilities and duties"
+      },
       "addNew": "Add New Work History"
     },
     "certificates": {
@@ -66,6 +92,11 @@
         "issuer": "Issuer",
         "issueDate": "Issue Date",
         "duration": "Course Duration (Optional)"
+      },
+      "placeholders": {
+        "title": "Course or certificate title",
+        "issuer": "Issuer name",
+        "duration": "Course duration (e.g., 40 hours)"
       },
       "addNew": "Add New Course",
       "remove": "Remove Course"
@@ -79,6 +110,13 @@
         "avatar": "Personal Photo",
         "educationDocs": "Educational Documents",
         "certificates": "Certificates and Courses"
+      },
+      "placeholders": {
+        "resume": "Link or file name of resume",
+        "idScan": "Link or file name of ID scan",
+        "avatar": "Link or file name of photo",
+        "educationDocs": "Link or file name of education documents",
+        "certificates": "Link or file name of certificates"
       }
     },
     "financial": {
@@ -89,6 +127,12 @@
         "benefits": "Benefits",
         "commission": "Commission",
         "overtimeRate": "Overtime Rate"
+      },
+      "placeholders": {
+        "baseSalary": "Base salary amount",
+        "benefits": "Job benefits",
+        "commission": "Commission amount",
+        "overtimeRate": "Overtime rate"
       }
     },
     "additional": {
@@ -101,6 +145,12 @@
         "website": "Personal Website",
         "maritalStatus": "Marital Status (Optional)",
         "notes": "Additional Notes"
+      },
+      "placeholders": {
+        "linkedin": "https://linkedin.com/in/username",
+        "github": "https://github.com/username",
+        "website": "https://example.com",
+        "notes": "Additional notes"
       }
     }
   },

@@ -1,7 +1,7 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { profileSections } from "../../constants";
 import { cn } from "@/utils/ui";
 
 interface StatusCardProps {
@@ -25,16 +25,29 @@ export function StatusCard({
   attachments, 
   additional 
 }: StatusCardProps) {
+  const t = useTranslations('userDashboard');
+  
+  const sections = [
+    { key: 'personal' as const },
+    { key: 'contact' as const },
+    { key: 'job' as const },
+    { key: 'education' as const },
+    { key: 'workHistory' as const },
+    { key: 'certificates' as const },
+    { key: 'attachments' as const },
+    { key: 'additional' as const },
+  ];
+
   return (
     <Card className="rounded-xl border border-border/60 bg-card/80 shadow-sm backdrop-blur">
       <CardHeader className="px-5 pt-5">
         <CardTitle className="text-base font-semibold text-foreground">
-          وضعیت هر بخش
+          {t('statusCard.title')}
         </CardTitle>
       </CardHeader>
       <CardContent className="px-5 pb-5">
         <div className="space-y-3">
-          {profileSections.map((section, index) => {
+          {sections.map((section, index) => {
             const isDone = Boolean(
               index === 0
                 ? personal && Object.keys(personal).length
@@ -54,16 +67,16 @@ export function StatusCard({
             );
             return (
               <div
-                key={section.title}
+                key={section.key}
                 className="mt-4 items-center justify-between rounded-2xl border border-border/40 bg-background/60 px-4 py-3"
               >
                 <div className="relative">
                   <div>
                     <p className="text-sm font-medium text-foreground">
-                      {section.title}
+                      {t(`sections.${section.key}.title`)}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      {section.description}
+                      {t(`sections.${section.key}.description`)}
                     </p>
                   </div>
                   <span
@@ -74,7 +87,7 @@ export function StatusCard({
                         : "bg-warning-20 text-warning-40"
                     )}
                   >
-                    {isDone ? "تکمیل شد" : "در انتظار"}
+                    {isDone ? t('statusCard.completed') : t('statusCard.pending')}
                   </span>
                 </div>
               </div>

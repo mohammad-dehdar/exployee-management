@@ -9,7 +9,7 @@ import { TextInput } from "@/components/ui";
 import { Label } from "@/components/ui/label";
 import { toastError, toastSuccess } from "@/components/feedback/toast-provider/toast-provider";
 import UserCard from "./components/user-card";
-import { useAuthStore } from "@/features/auth";
+import { useAuthStore } from "@/store/store";
 import { DEFAULT_ADMIN_EMAIL, DEFAULT_ADMIN_PASSWORD } from "@/features/home/constants";
 
 export default function AdminDashboardFeature() {

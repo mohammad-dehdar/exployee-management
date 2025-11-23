@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo } from "react";
+import { useTranslations } from 'next-intl';
 import { useRouter } from "@/i18n/routing";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,6 +27,8 @@ import {
 } from "./components";
 
 export default function UserFormFeature() {
+    const t = useTranslations('userForm');
+    const tCommon = useTranslations('common');
     const router = useRouter();
     const { profiles, updateProfile, currentUserId, accounts } = useAuthStore();
     
@@ -84,13 +87,13 @@ export default function UserFormFeature() {
         // Validation قبل از ارسال
         const validation = userRecordSchema.safeParse(data);
         if (!validation.success) {
-            toastError("لطفاً فیلدها را به درستی پر کنید");
+            toastError(t('messages.validationError'));
             console.error(validation.error);
             return;
         }
         
         updateProfile(account.id, data);
-        toastSuccess("اطلاعات شما با موفقیت ذخیره شد.");
+        toastSuccess(t('messages.saveSuccess'));
     };
 
     const handleReset = () => {
@@ -117,14 +120,14 @@ export default function UserFormFeature() {
                 <div className="mx-auto max-w-3xl w-full space-y-6">
                     <Card className="rounded-xl border shadow-lg p-4 bg-background">
                         <CardHeader className="p-2 space-y-2">
-                            <p className="text-xs text-muted-foreground">فرم پروفایل</p>
-                            <CardTitle className="text-2xl font-bold text-foreground">تکمیل اطلاعات کاربری 📝</CardTitle>
+                            <p className="text-xs text-muted-foreground">{t('profileForm')}</p>
+                            <CardTitle className="text-2xl font-bold text-foreground">{t('completeProfile')} 📝</CardTitle>
                         </CardHeader>
 
                         <CardContent className="space-y-3 p-2 pt-4">
                             <div>
                                 <div className="flex items-center justify-between text-sm font-medium text-foreground">
-                                    <span>درصد تکمیل</span>
+                                    <span>{t('completionPercent')}</span>
                                     <span className="text-primary font-extrabold">%{completionPercent}</span>
                                 </div>
 
@@ -156,13 +159,13 @@ export default function UserFormFeature() {
                                 onClick={() => router.push("/user-dashboard")}
                                 className="w-full sm:w-auto rounded-lg text-base px-6 py-3"
                             >
-                                بازگشت
+                                {tCommon('back')}
                             </Button>
                             <Button
                                 type="submit"
                                 className="w-full sm:w-auto rounded-lg text-base px-6 py-3"
                             >
-                                ذخیره و ارسال اطلاعات
+                                {t('saveAndSubmit')}
                             </Button>
                             <Button
                                 type="button"
@@ -170,7 +173,7 @@ export default function UserFormFeature() {
                                 className="w-full sm:w-auto rounded-lg text-base px-6 py-3"
                                 onClick={handleReset}
                             >
-                                بازنشانی فرم
+                                {t('resetForm')}
                             </Button>
                         </div>
                     </form>

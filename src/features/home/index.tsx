@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { useTranslations } from 'next-intl';
 import { useRouter } from "@/i18n/routing";
 import { toastError, toastSuccess } from "@/components/feedback/toast-provider/toast-provider";
-import { useAuthStore } from "@/features/auth";
+import { useAuthStore } from "@/store/store";
 import { LoginCard } from "./components";
 import type { LoginType } from "./types";
 import { ROUTES } from "./constants";

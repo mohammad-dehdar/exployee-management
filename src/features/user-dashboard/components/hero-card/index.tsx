@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuthStore } from "@/features/auth";
@@ -10,6 +11,7 @@ interface HeroCardProps {
 }
 
 export function HeroCard({ completionPercent }: HeroCardProps) {
+  const t = useTranslations('userDashboard');
   const router = useRouter();
   const {logout} = useAuthStore();
   const handleLogout = () => {
@@ -25,14 +27,14 @@ export function HeroCard({ completionPercent }: HeroCardProps) {
       <CardHeader className="relative z-10 p-6 mb-4">
         <CardTitle className="mt-2 text-2xl font-semibold leading-10">
           {completionPercent === 100
-            ? "اطلاعات شما کامل است."
-            : "پروفایل شما در انتظار تکمیل است."}
+            ? t('profile.complete')
+            : t('profile.incomplete')}
         </CardTitle>
       </CardHeader>
       <CardContent className="relative z-10 flex flex-col gap-5 px-6 pb-6">
         <div>
           <div className="flex items-center justify-between text-xs text-white/70">
-            <span>درصد تکمیل</span>
+            <span>{t('heroCard.completionPercent')}</span>
             <span>%{completionPercent}</span>
           </div>
           <div className="mt-2 h-2 rounded-full bg-white/20">
@@ -48,10 +50,10 @@ export function HeroCard({ completionPercent }: HeroCardProps) {
           href="/user-dashboard/user-form"
           className="w-full md:w-5/6 rounded-lg md:rounded-2xl bg-white/15  py-3 md:py-5 text-sm font-semibold text-white backdrop-blur transition hover:bg-primary/25"
         >
-          تکمیل پروفایل کاربری
+          {t('heroCard.completeProfile')}
         </Button>
         <Button variant="fill" color="error" className="w-full md:w-1/6 rounded-lg md:rounded-2xl bg-white/15 py-3 md:py-5 text-sm font-semibold text-white backdrop-blur transition hover:bg-error/25" onClick={handleLogout}>
-          خروج از حساب
+          {t('heroCard.logout')}
         </Button>
        </div>
       </CardContent>

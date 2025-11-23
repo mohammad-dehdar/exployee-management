@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,8 @@ import { TextInput } from "@/components/ui/text-input";
 export const WorkHistory = ({ editable = true }: { editable?: boolean }) => {
     const { control, register } = useFormContext();
     const { fields, append, remove } = useFieldArray({ control, name: "workHistory" });
+    const t = useTranslations('userForm.sections.workHistory');
+    const tCommon = useTranslations('common');
 
     const handleAdd = () =>
         append({ company: "", role: "", description: "", startDate: "", endDate: "" });
@@ -16,10 +19,10 @@ export const WorkHistory = ({ editable = true }: { editable?: boolean }) => {
         <Card className="rounded-xl border-2 border-primary/50 bg-background p-0 shadow-lg">
             <CardHeader className="space-y-2 px-6 pt-6">
                 <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                    سوابق شغلی <span className="text-primary">📂</span>
+                    {t('title')} <span className="text-primary">📂</span>
                 </CardTitle>
                 <CardDescription className="text-sm text-muted-foreground">
-                    حداقل یک سابقه کاری را ثبت کنید. در صورت نیاز موارد بیشتری اضافه کنید.
+                    {t('description')}
                 </CardDescription>
             </CardHeader>
 
@@ -32,18 +35,20 @@ export const WorkHistory = ({ editable = true }: { editable?: boolean }) => {
                         <div className="grid gap-4 md:grid-cols-2">
                             <TextInput
                                 fullWidth
-                                label="نام شرکت"
+                                label={t('fields.company')}
                                 variant="outline"
                                 color="neutral"
+                                placeholder={t('placeholders.company')}
                                 {...register(`workHistory.${index}.company` as const)}
                                 className="rounded-lg"
                                 disabled={!editable}
                             />
                             <TextInput
                                 fullWidth
-                                label="سمت"
+                                label={t('fields.role')}
                                 variant="outline"
                                 color="neutral"
+                                placeholder={t('placeholders.role')}
                                 {...register(`workHistory.${index}.role` as const)}
                                 className="rounded-lg"
                                 disabled={!editable}
@@ -52,9 +57,10 @@ export const WorkHistory = ({ editable = true }: { editable?: boolean }) => {
 
                         <TextInput
                             fullWidth
-                            label="توضیحات وظایف (اختیاری)"
+                            label={t('fields.description')}
                             variant="outline"
                             color="neutral"
+                            placeholder={t('placeholders.description')}
                             {...register(`workHistory.${index}.description` as const)}
                             className="rounded-lg"
                             disabled={!editable}
@@ -64,7 +70,7 @@ export const WorkHistory = ({ editable = true }: { editable?: boolean }) => {
                             <TextInput
                                 fullWidth
                                 type="date"
-                                label="تاریخ شروع"
+                                label={t('fields.startDate')}
                                 variant="outline"
                                 color="neutral"
                                 {...register(`workHistory.${index}.startDate` as const)}
@@ -74,7 +80,7 @@ export const WorkHistory = ({ editable = true }: { editable?: boolean }) => {
                             <TextInput
                                 fullWidth
                                 type="date"
-                                label="تاریخ پایان"
+                                label={t('fields.endDate')}
                                 variant="outline"
                                 color="neutral"
                                 {...register(`workHistory.${index}.endDate` as const)}
@@ -86,7 +92,7 @@ export const WorkHistory = ({ editable = true }: { editable?: boolean }) => {
                         {editable && fields.length > 1 && (
                             <div className="flex justify-end">
                                 <Button variant="ghost" onClick={() => remove(index)}>
-                                    حذف سابقه
+                                    {tCommon('delete')}
                                 </Button>
                             </div>
                         )}
@@ -96,7 +102,7 @@ export const WorkHistory = ({ editable = true }: { editable?: boolean }) => {
                 {editable && (
                     <div className="flex justify-start">
                         <Button type="button" variant="outline" onClick={handleAdd} className="rounded-lg">
-                            افزودن سابقه جدید
+                            {t('addNew')}
                         </Button>
                     </div>
                 )}

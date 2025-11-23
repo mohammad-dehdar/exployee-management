@@ -11,6 +11,14 @@
         "nationalId": "Personalausweisnummer / Reisepass",
         "birthDate": "Geburtsdatum",
         "gender": "Geschlecht"
+      },
+      "placeholders": {
+        "username": "Geben Sie Ihren Benutzernamen ein",
+        "firstName": "Geben Sie Ihren Vornamen ein",
+        "lastName": "Geben Sie Ihren Nachnamen ein",
+        "fatherName": "Vatersname (optional)",
+        "nationalId": "Personalausweisnummer oder Reisepassnummer",
+        "birthDate": "Geburtsdatum"
       }
     },
     "contact": {
@@ -23,6 +31,14 @@
         "personalEmail": "Persönliche E-Mail",
         "address": "Adresse",
         "city": "Stadt/Provinz"
+      },
+      "placeholders": {
+        "phone": "09123456789",
+        "emergencyPhone": "Notfallkontaktnummer",
+        "orgEmail": "user@company.com",
+        "personalEmail": "user@example.com",
+        "address": "Wohnadresse",
+        "city": "Stadt oder Provinz"
       }
     },
     "job": {
@@ -44,6 +60,11 @@
         "major": "Hauptfach",
         "university": "Universität / Institution Name",
         "graduationYear": "Abschlussjahr"
+      },
+      "placeholders": {
+        "major": "Geben Sie Ihr Hauptfach ein",
+        "university": "Universitäts- oder Institution Name",
+        "graduationYear": "Abschlussjahr"
       }
     },
     "workHistory": {
@@ -56,6 +77,11 @@
         "startDate": "Startdatum",
         "endDate": "Enddatum"
       },
+      "placeholders": {
+        "company": "Firmenname",
+        "role": "Berufsposition",
+        "description": "Aufgaben und Verantwortlichkeiten"
+      },
       "addNew": "Neue Berufserfahrung hinzufügen"
     },
     "certificates": {
@@ -66,6 +92,11 @@
         "issuer": "Aussteller",
         "issueDate": "Ausstellungsdatum",
         "duration": "Kursdauer (Optional)"
+      },
+      "placeholders": {
+        "title": "Kurs- oder Zertifikatstitel",
+        "issuer": "Ausstellername",
+        "duration": "Kursdauer (z.B. 40 Stunden)"
       },
       "addNew": "Neuen Kurs hinzufügen",
       "remove": "Kurs entfernen"
@@ -79,6 +110,13 @@
         "avatar": "Persönliches Foto",
         "educationDocs": "Bildungsdokumente",
         "certificates": "Zertifikate und Kurse"
+      },
+      "placeholders": {
+        "resume": "Link oder Dateiname des Lebenslaufs",
+        "idScan": "Link oder Dateiname des ID-Scans",
+        "avatar": "Link oder Dateiname des Fotos",
+        "educationDocs": "Link oder Dateiname der Bildungsdokumente",
+        "certificates": "Link oder Dateiname der Zertifikate"
       }
     },
     "financial": {
@@ -88,6 +126,12 @@
         "baseSalary": "Grundgehalt",
         "benefits": "Leistungen",
         "commission": "Provision",
+        "overtimeRate": "Überstundensatz"
+      },
+      "placeholders": {
+        "baseSalary": "Grundgehaltsbetrag",
+        "benefits": "Arbeitsleistungen",
+        "commission": "Provisionsbetrag",
         "overtimeRate": "Überstundensatz"
       }
     },
@@ -100,6 +144,12 @@
         "github": "GitHub",
         "website": "Persönliche Website",
         "maritalStatus": "Familienstand (Optional)",
+        "notes": "Zusätzliche Notizen"
+      },
+      "placeholders": {
+        "linkedin": "https://linkedin.com/in/username",
+        "github": "https://github.com/username",
+        "website": "https://example.com",
         "notes": "Zusätzliche Notizen"
       }
     }

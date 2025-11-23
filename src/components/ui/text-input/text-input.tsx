@@ -42,7 +42,7 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       color,
       disabled,
       fullWidth = false,
-      placeholder = 'جست و جو...',
+      placeholder,
       value,
       dir = 'rtl',
       onValueChange,
@@ -60,6 +60,9 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
   ) => {
     const stateColor = state || color;
 
+    // Extract placeholder from props to avoid duplication
+    const { placeholder: propsPlaceholder, ...restProps } = props;
+
     const inputClasses = cn(
       textInputVariants({
         color: stateColor,
@@ -68,12 +71,14 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         disabled,
       }),
       classNames?.root,
-      { ...props },
     );
 
     const inputId = React.useId();
     const hasLabel = !!label;
     const showMessage = !!inputMessage && !!state;
+
+    // Use placeholder from parameter first, then from props, or undefined
+    const finalPlaceholder = placeholder ?? propsPlaceholder;
 
     return (
       <div className={cn('flex flex-col items-start', fullWidth ? 'w-full' : 'w-fit')} dir={dir}>
@@ -93,15 +98,15 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           <input
             id={inputId}
             dir={dir}
-            type={props.type}
+            type={restProps.type}
             ref={ref}
             data-slot="input"
             value={value}
-            placeholder={placeholder}
             onChange={onValueChange}
             onBlur={onBlur}
             disabled={disabled}
-            {...props}
+            placeholder={finalPlaceholder}
+            {...restProps}
             className={cn('w-full flex-1 focus:outline-none', classNames?.input)}
           />
           {endAction ? endAction : endIcon && endIcon}

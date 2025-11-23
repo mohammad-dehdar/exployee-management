@@ -42,12 +42,40 @@
     "fullName": "نام و نام خانوادگی",
     "nationalId": "کد ملی",
     "phone": "شماره موبایل",
+    "personalEmail": "ایمیل شخصی",
     "orgEmail": "ایمیل سازمانی",
     "position": "سمت شغلی",
     "fileStatus": {
       "ready": "آماده ارسال",
       "pending": "در انتظار تکمیل"
-    }
+    },
+    "notRegistered": "ثبت نشده"
+  },
+  "statusCard": {
+    "title": "وضعیت هر بخش",
+    "completed": "تکمیل شد",
+    "pending": "در انتظار"
+  },
+  "profileSummaryCard": {
+    "title": "خلاصه اطلاعات ثبت‌شده"
+  },
+  "heroCard": {
+    "completionPercent": "درصد تکمیل",
+    "completeProfile": "تکمیل پروفایل کاربری",
+    "logout": "خروج از حساب"
+  },
+  "changePasswordCard": {
+    "title": "تغییر رمز عبور",
+    "currentPassword": "رمز فعلی",
+    "newPassword": "رمز جدید",
+    "currentPasswordPlaceholder": "رمز عبور فعلی را وارد کنید",
+    "newPasswordPlaceholder": "رمز عبور جدید وارد کنید",
+    "submit": "ثبت رمز جدید",
+    "success": "رمز عبور با موفقیت تغییر کرد",
+    "error": "تغییر رمز ناموفق بود"
+  },
+  "remindersCard": {
+    "title": "یادآوری‌ها"
   },
   "reminders": {
     "prepareDocs": {

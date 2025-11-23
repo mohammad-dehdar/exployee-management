@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo } from "react";
+import { useTranslations } from 'next-intl';
 import { useRouter } from "@/i18n/routing";
 import { useAuthStore } from "@/features/auth";
 import type { SummaryItem } from "./types";
@@ -13,6 +14,9 @@ import {
 } from "./components";
 
 export default function UserDashboardFeature() {
+    const t = useTranslations('userDashboard');
+    const tCommon = useTranslations('common');
+    const tOptions = useTranslations('options');
     const router = useRouter();
     const { profiles, currentUserId, accounts, getCompletionPercent } = useAuthStore();
     
@@ -63,20 +67,32 @@ export default function UserDashboardFeature() {
         const fullName =
             firstName || lastName
                 ? `${firstName ?? ""} ${lastName ?? ""}`.trim()
-                : "ثبت نشده";
+                : t('info.notRegistered');
+
+        // Translate position value to localized text
+        const positionValue = job?.position as string | undefined;
+        let positionText = t('info.notRegistered');
+        if (positionValue) {
+            const positionKey = positionValue as 'frontend' | 'backend' | 'designer' | 'other';
+            if (['frontend', 'backend', 'designer', 'other'].includes(positionValue)) {
+                positionText = tOptions(`position.${positionKey}`);
+            } else {
+                positionText = positionValue;
+            }
+        }
 
         return [
-            { label: "نام و نام خانوادگی", value: fullName },
-            { label: "کد ملی", value: (personal?.nationalId as string | undefined) ?? "ثبت نشده" },
-            { label: "شماره موبایل", value: (contact?.phone as string | undefined) ?? "ثبت نشده" },
-            { label: "ایمیل شخصی", value: (contact?.personalEmail as string | undefined) ?? account?.email ?? "" },
-            { label: "سمت شغلی", value: (job?.position as string | undefined) ?? "ثبت نشده" },
+            { label: t('info.fullName'), value: fullName },
+            { label: t('info.nationalId'), value: (personal?.nationalId as string | undefined) ?? t('info.notRegistered') },
+            { label: t('info.phone'), value: (contact?.phone as string | undefined) ?? t('info.notRegistered') },
+            { label: t('info.personalEmail'), value: (contact?.personalEmail as string | undefined) ?? account?.email ?? "" },
+            { label: t('info.position'), value: positionText },
             {
-                label: "وضعیت پرونده",
-                value: completionPercent === 100 ? "آماده ارسال" : "در انتظار تکمیل",
+                label: t('info.fileStatus.ready'),
+                value: completionPercent === 100 ? t('info.fileStatus.ready') : t('info.fileStatus.pending'),
             },
         ];
-    }, [safeProfile, completionPercent, account?.email]);
+    }, [safeProfile, completionPercent, account?.email, t, tOptions]);
 
     if (!account || account.role !== "user") {
         return null;

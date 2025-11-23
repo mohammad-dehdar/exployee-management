@@ -8,8 +8,8 @@ export interface JobInfoValues {
 
   export interface JobInfoProps {
     values: JobInfoValues;
-    onChange: (field: keyof JobInfoValues, value: any) => void;
+    onChange: (field: keyof JobInfoValues, value: string) => void;
   }
 
 export type ContractTypeValue = 'fulltime' | 'parttime' | 'freelancer' | 'project' | 'hourly';
-export type WorkLocationValue = 'tehran' | 'mashhad' | 'remote' | 'other';
+export type WorkLocationValue = 'german' | 'remote';

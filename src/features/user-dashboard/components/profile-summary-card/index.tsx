@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { SummaryItem } from "../../types";
 
@@ -8,11 +9,13 @@ interface ProfileSummaryCardProps {
 }
 
 export function ProfileSummaryCard({ summary }: ProfileSummaryCardProps) {
+  const t = useTranslations('userDashboard');
+  
   return (
     <Card className="rounded-3xl border border-border/60 bg-card/80 shadow-sm backdrop-blur">
       <CardHeader className="px-6 pt-6">
         <CardTitle className="text-lg font-semibold text-foreground mb-4">
-          خلاصه اطلاعات ثبت‌شده
+          {t('profileSummaryCard.title')}
         </CardTitle>
       </CardHeader>
       <CardContent className="px-6 pb-6">

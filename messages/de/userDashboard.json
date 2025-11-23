@@ -42,12 +42,40 @@
     "fullName": "Vollständiger Name",
     "nationalId": "Personalausweisnummer",
     "phone": "Handynummer",
+    "personalEmail": "Persönliche E-Mail",
     "orgEmail": "Organisatorische E-Mail",
     "position": "Berufsposition",
     "fileStatus": {
       "ready": "Bereit zum Einreichen",
       "pending": "Wartet auf Vervollständigung"
-    }
+    },
+    "notRegistered": "Nicht registriert"
+  },
+  "statusCard": {
+    "title": "Status jeder Sektion",
+    "completed": "Abgeschlossen",
+    "pending": "Ausstehend"
+  },
+  "profileSummaryCard": {
+    "title": "Zusammenfassung der registrierten Informationen"
+  },
+  "heroCard": {
+    "completionPercent": "Vervollständigungsprozentsatz",
+    "completeProfile": "Benutzerprofil vervollständigen",
+    "logout": "Abmelden"
+  },
+  "changePasswordCard": {
+    "title": "Passwort ändern",
+    "currentPassword": "Aktuelles Passwort",
+    "newPassword": "Neues Passwort",
+    "currentPasswordPlaceholder": "Geben Sie Ihr aktuelles Passwort ein",
+    "newPasswordPlaceholder": "Geben Sie Ihr neues Passwort ein",
+    "submit": "Neues Passwort übermitteln",
+    "success": "Passwort erfolgreich geändert",
+    "error": "Passwortänderung fehlgeschlagen"
+  },
+  "remindersCard": {
+    "title": "Erinnerungen"
   },
   "reminders": {
     "prepareDocs": {

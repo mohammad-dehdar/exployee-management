@@ -7,25 +7,26 @@ import { TextInput } from "@/components/ui/text-input";
 
 export const ContactInfo = ({ editable = true }: { editable?: boolean }) => {
     const { register } = useFormContext();
-    const t = useTranslations();
+    const t = useTranslations('userForm.sections.contact');
 
     return (
         <Card className="rounded-xl border-2 border-primary/50 bg-background p-0 shadow-lg">
             <CardHeader className="space-y-2 px-6 pt-6">
                 <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                    {t('userForm.sections.contact.title')} <span className="text-primary">📞</span>
+                    {t('title')} <span className="text-primary">📞</span>
                 </CardTitle>
                 <CardDescription className="text-sm text-muted-foreground">
-                    {t('userForm.sections.contact.description')}
+                    {t('description')}
                 </CardDescription>
             </CardHeader>
 
             <CardContent className="grid gap-6 px-6 pb-6 md:grid-cols-2">
                 <TextInput
                     fullWidth
-                    label={t('userForm.sections.contact.fields.phone')}
+                    label={t('fields.phone')}
                     variant="outline"
                     color="neutral"
+                    placeholder={t('placeholders.phone')}
                     {...register("contact.phone")}
                     disabled={!editable}
                     className="rounded-lg"
@@ -33,9 +34,10 @@ export const ContactInfo = ({ editable = true }: { editable?: boolean }) => {
 
                 <TextInput
                     fullWidth
-                    label={t('userForm.sections.contact.fields.emergencyPhone')}
+                    label={t('fields.emergencyPhone')}
                     variant="outline"
                     color="neutral"
+                    placeholder={t('placeholders.emergencyPhone')}
                     {...register("contact.emergencyPhone")}
                     disabled={!editable}
                     className="rounded-lg"
@@ -43,9 +45,10 @@ export const ContactInfo = ({ editable = true }: { editable?: boolean }) => {
 
                 <TextInput
                     fullWidth
-                    label={t('userForm.sections.contact.fields.orgEmail')}
+                    label={t('fields.orgEmail')}
                     variant="outline"
                     color="neutral"
+                    placeholder={t('placeholders.orgEmail')}
                     {...register("contact.orgEmail")}
                     disabled={!editable}
                     className="rounded-lg"
@@ -53,9 +56,10 @@ export const ContactInfo = ({ editable = true }: { editable?: boolean }) => {
 
                 <TextInput
                     fullWidth
-                    label={t('userForm.sections.contact.fields.personalEmail')}
+                    label={t('fields.personalEmail')}
                     variant="outline"
                     color="neutral"
+                    placeholder={t('placeholders.personalEmail')}
                     {...register("contact.personalEmail")}
                     disabled={!editable}
                     className="rounded-lg"
@@ -63,9 +67,10 @@ export const ContactInfo = ({ editable = true }: { editable?: boolean }) => {
 
                 <TextInput
                     fullWidth
-                    label={t('userForm.sections.contact.fields.address')}
+                    label={t('fields.address')}
                     variant="outline"
                     color="neutral"
+                    placeholder={t('placeholders.address')}
                     {...register("contact.address")}
                     disabled={!editable}
                     className="rounded-lg"
@@ -73,9 +78,10 @@ export const ContactInfo = ({ editable = true }: { editable?: boolean }) => {
 
                 <TextInput
                     fullWidth
-                    label={t('userForm.sections.contact.fields.city')}
+                    label={t('fields.city')}
                     variant="outline"
                     color="neutral"
+                    placeholder={t('placeholders.city')}
                     {...register("contact.city")}
                     disabled={!editable}
                     className="rounded-lg"

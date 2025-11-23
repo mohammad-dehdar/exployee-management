@@ -11,6 +11,14 @@
         "nationalId": "کد ملی / پاسپورت",
         "birthDate": "تاریخ تولد",
         "gender": "جنسیت"
+      },
+      "placeholders": {
+        "username": "نام کاربری خود را وارد کنید",
+        "firstName": "نام خود را وارد کنید",
+        "lastName": "نام خانوادگی خود را وارد کنید",
+        "fatherName": "نام پدر (اختیاری)",
+        "nationalId": "کد ملی یا شماره پاسپورت",
+        "birthDate": "تاریخ تولد"
       }
     },
     "contact": {
@@ -23,6 +31,14 @@
         "personalEmail": "ایمیل شخصی",
         "address": "آدرس",
         "city": "شهر/استان"
+      },
+      "placeholders": {
+        "phone": "09123456789",
+        "emergencyPhone": "شماره تماس اضطراری",
+        "orgEmail": "user@company.com",
+        "personalEmail": "user@example.com",
+        "address": "آدرس محل سکونت",
+        "city": "شهر یا استان"
       }
     },
     "job": {
@@ -44,6 +60,11 @@
         "major": "رشته تحصیلی",
         "university": "نام دانشگاه / مؤسسه",
         "graduationYear": "سال فارغ‌التحصیلی"
+      },
+      "placeholders": {
+        "major": "رشته تحصیلی خود را وارد کنید",
+        "university": "نام دانشگاه یا مؤسسه",
+        "graduationYear": "سال فارغ‌التحصیلی"
       }
     },
     "workHistory": {
@@ -56,6 +77,11 @@
         "startDate": "تاریخ شروع",
         "endDate": "تاریخ پایان"
       },
+      "placeholders": {
+        "company": "نام شرکت",
+        "role": "سمت شغلی",
+        "description": "توضیحات وظایف و مسئولیت‌ها"
+      },
       "addNew": "افزودن سابقه جدید"
     },
     "certificates": {
@@ -66,6 +92,11 @@
         "issuer": "صادرکننده",
         "issueDate": "تاریخ دریافت",
         "duration": "مدت زمان دوره (اختیاری)"
+      },
+      "placeholders": {
+        "title": "عنوان دوره یا گواهینامه",
+        "issuer": "نام صادرکننده",
+        "duration": "مدت زمان دوره (مثلاً 40 ساعت)"
       },
       "addNew": "افزودن دوره جدید",
       "remove": "حذف دوره"
@@ -79,6 +110,13 @@
         "avatar": "عکس پرسنلی",
         "educationDocs": "مدارک تحصیلی",
         "certificates": "گواهینامه‌ها و دوره‌ها"
+      },
+      "placeholders": {
+        "resume": "لینک یا نام فایل رزومه",
+        "idScan": "لینک یا نام فایل اسکن کارت ملی",
+        "avatar": "لینک یا نام فایل عکس",
+        "educationDocs": "لینک یا نام فایل مدارک تحصیلی",
+        "certificates": "لینک یا نام فایل گواهینامه‌ها"
       }
     },
     "financial": {
@@ -88,6 +126,12 @@
         "baseSalary": "حقوق پایه",
         "benefits": "مزایا",
         "commission": "پورسانت",
+        "overtimeRate": "نرخ اضافه‌کاری"
+      },
+      "placeholders": {
+        "baseSalary": "مبلغ حقوق پایه",
+        "benefits": "مزایای شغلی",
+        "commission": "مبلغ پورسانت",
         "overtimeRate": "نرخ اضافه‌کاری"
       }
     },
@@ -100,6 +144,12 @@
         "github": "گیت‌هاب",
         "website": "وب‌سایت شخصی",
         "maritalStatus": "وضعیت تأهل (اختیاری)",
+        "notes": "توضیحات اضافی"
+      },
+      "placeholders": {
+        "linkedin": "https://linkedin.com/in/username",
+        "github": "https://github.com/username",
+        "website": "https://example.com",
         "notes": "توضیحات اضافی"
       }
     }

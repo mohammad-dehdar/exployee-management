@@ -1,10 +1,13 @@
+'use client';
+
 import Link from "next/link";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
+import { useTranslations } from 'next-intl';
 import { useRouter } from "@/i18n/routing";
 import { FormProvider, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { toastSuccess } from "@/components/feedback";
-import { useAuthStore } from "@/features/auth";
+import { useAuthStore } from "@/store/store";
 import {
     AdditionalInfo,
     AttachmentsInfo,
@@ -19,6 +22,8 @@ import {
 import type { UserRecord } from "@/schemas/user.schema";
 
 export default function UserDetails({ user }: { user: UserRecord }) {
+    const t = useTranslations('adminDashboard.userDetails');
+    const tOptions = useTranslations('options');
     const router = useRouter();
     const { updateProfile } = useAuthStore();
     const defaults = useMemo(
@@ -46,18 +51,37 @@ export default function UserDetails({ user }: { user: UserRecord }) {
         methods.reset(defaults);
     }, [defaults, methods]);
 
+    // Helper functions to translate position and contractType
+    const getPositionText = useCallback((position?: string) => {
+        if (!position) return t('position');
+        const positionKey = position as 'frontend' | 'backend' | 'designer' | 'other';
+        if (['frontend', 'backend', 'designer', 'other'].includes(position)) {
+            return tOptions(`position.${positionKey}`);
+        }
+        return position;
+    }, [t, tOptions]);
+
+    const getContractTypeText = useCallback((contractType?: string) => {
+        if (!contractType) return t('contract');
+        const contractKey = contractType as 'fulltime' | 'parttime' | 'freelancer' | 'project' | 'hourly';
+        if (['fulltime', 'parttime', 'freelancer', 'project', 'hourly'].includes(contractType)) {
+            return tOptions(`contractType.${contractKey}`);
+        }
+        return contractType;
+    }, [t, tOptions]);
+
     const header = useMemo(
         () => ({
-            name: `${defaults.personal.firstName || "نام"} ${defaults.personal.lastName || "نام خانوادگی"}`.trim(),
-            position: defaults.job.position || "سمت مشخص نشده",
-            contract: defaults.job.contractType || "نوع قرارداد نامشخص",
+            name: `${defaults.personal.firstName || t('name')} ${defaults.personal.lastName || t('lastName')}`.trim(),
+            position: getPositionText(defaults.job.position),
+            contract: getContractTypeText(defaults.job.contractType),
         }),
-        [defaults.personal.firstName, defaults.personal.lastName, defaults.job.position, defaults.job.contractType]
+        [defaults.personal.firstName, defaults.personal.lastName, defaults.job.position, defaults.job.contractType, getPositionText, getContractTypeText, t]
     );
 
     const onSubmit = (values: UserRecord) => {
         updateProfile(user.id, values);
-        toastSuccess("پروفایل کاربر با موفقیت به‌روزرسانی شد.");
+        toastSuccess(t('updateSuccess'));
     };
 
     return (
@@ -74,7 +98,7 @@ export default function UserDetails({ user }: { user: UserRecord }) {
                         </div>
                         <div className="space-y-1">
                             <p className="text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-300">
-                                پروفایل کاربر
+                                {t('profileTitle')}
                             </p>
                             <h1 className="text-2xl font-bold text-foreground">{header.name}</h1>
                             <p className="text-sm text-muted-foreground leading-6">
@@ -86,7 +110,7 @@ export default function UserDetails({ user }: { user: UserRecord }) {
                         href="/admin-dashboard"
                         className="inline-flex items-center justify-center rounded-xl border border-indigo-200/80 bg-indigo-50 px-4 py-2 text-sm font-semibold text-indigo-700 transition hover:-translate-y-0.5 hover:shadow-md dark:border-indigo-500/40 dark:bg-indigo-500/15 dark:text-indigo-100"
                     >
-                        بازگشت به لیست کاربران
+                        {t('backToList')}
                     </Link>
                 </div>
             </div>
@@ -113,13 +137,13 @@ export default function UserDetails({ user }: { user: UserRecord }) {
                             onClick={() => router.push("/admin-dashboard")}
                             className="rounded-xl"
                         >
-                            بازگشت
+                            {t('back')}
                         </Button>
                         <Button type="submit" className="rounded-xl">
-                            ذخیره تغییرات
+                            {t('saveChanges')}
                         </Button>
                         <Button type="button" variant="ghost" onClick={() => methods.reset(user)}>
-                            بازنشانی
+                            {t('reset')}
                         </Button>
                     </div>
                 </form>
