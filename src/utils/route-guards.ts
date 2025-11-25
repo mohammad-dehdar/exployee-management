@@ -4,7 +4,9 @@ import { useEffect } from 'react';
 import { useRouter } from '@/i18n/routing';
 import { useAuthStore, type Account } from '@/store/store';
 
-export function useRequireAuth(requiredRole?: 'admin' | 'user') {
+type Role = 'admin' | 'user' | 'employee';
+
+export function useRequireAuth(requiredRole?: Role) {
   const router = useRouter();
   const { currentUserId, accounts } = useAuthStore();
 
@@ -16,7 +18,9 @@ export function useRequireAuth(requiredRole?: 'admin' | 'user') {
 
     if (requiredRole) {
       const account = accounts.find(acc => acc.id === currentUserId);
-      if (!account || account.role !== requiredRole) {
+      const allowedRoles = requiredRole === 'user' ? ['user', 'employee'] : [requiredRole];
+
+      if (!account || !allowedRoles.includes(account.role as Role)) {
         router.replace('/');
       }
     }
