@@ -3,7 +3,7 @@ import { useAuthStore as useAuthStoreBase, type Account } from "./auth.store";
 import { useProfileStore } from "./profile.store";
 import { registerUserApi } from "@/features/admin-dashboard/api/register.api";
 
-type Role = "admin" | "user";
+type Role = "admin" | "user" | "employee";
 
 export type { Account };
 export { useAuthStore };

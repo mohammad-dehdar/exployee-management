@@ -16,12 +16,13 @@ export type LoginFormData = z.infer<typeof loginSchema>;
 export const LoginResponseSchema = z.discriminatedUnion('success', [
   z.object({
     success: z.literal(true),
+    message: z.string().optional(),
     accessToken: z.string(),
     refreshToken: z.string().optional(),
     user: z.object({
       id: z.string(),
       email: z.string().email(),
-      role: z.enum(['admin', 'user']),
+      role: z.enum(['admin', 'user', 'employee']),
       name: z.string().optional(),
     }),
   }),

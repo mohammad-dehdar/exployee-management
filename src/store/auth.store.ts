@@ -4,7 +4,7 @@ import { loginApi } from "@/features/login/api";
 import { changePasswordApi } from "@/features/user-dashboard/api";
 import { clearTokens } from "@/utils/auth-service";
 
-type Role = "admin" | "user";
+type Role = "admin" | "user" | "employee";
 
 export interface Account {
     id: string;
