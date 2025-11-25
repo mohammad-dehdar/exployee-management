@@ -81,8 +81,8 @@ export function StatusItem({
           className={cn(
             "rounded-full px-3 py-1 text-[11px] font-semibold shadow-sm",
             isCompleted
-              ? "bg-success-10 text-success-50 ring-1 ring-success-30"
-              : "bg-warning-10 text-warning-50 ring-1 ring-warning-30",
+              ? "bg-success-10 text-success-40 ring-1 ring-success-30"
+              : "bg-warning-10 text-warning-40 ring-1 ring-warning-30",
           )}
         >
           {isCompleted ? completedText || t("statusCard.completed") : pendingText || t("statusCard.pending")}

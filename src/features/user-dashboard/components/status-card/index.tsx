@@ -83,7 +83,7 @@ export function StatusCard({
               {t('profileSummaryCard.title')}
             </CardDescription>
           </div>
-          <Badge className="rounded-full bg-success-10 px-4 py-1 text-xs text-success-50">
+          <Badge className="rounded-full  bg-success-10 px-4 py-1 text-xs text-success-40">
             {completedCount}/{sections.length}
           </Badge>
         </div>

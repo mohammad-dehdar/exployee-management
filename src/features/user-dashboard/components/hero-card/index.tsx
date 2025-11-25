@@ -63,18 +63,17 @@ export function HeroCard({ completionPercent }: HeroCardProps) {
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 md:flex-row">
+        <div className="flex flex-col  gap-2 md:flex-row">
           <Button
             type="button"
-            className="w-full rounded-xl border border-white/30 bg-linear-to-r from-primary to-primary-60 py-3 text-base font-semibold text-white shadow-lg transition hover:shadow-xl dark:border-transparent"
+            className="md:w-5/6 w-full rounded-xl border border-white/30 bg-linear-to-r from-primary to-primary-60 py-3 text-base font-semibold text-white shadow-lg transition hover:shadow-xl dark:border-transparent"
             onClick={handleCompleteProfile}
           >
             {t("heroCard.completeProfile")}
           </Button>
           <Button
             type="button"
-            variant="ghost"
-            className="w-full rounded-xl border border-error/20 bg-error-10/20 py-3 text-sm font-semibold text-error hover:bg-error-10/40"
+            className="md:w-1/6 w-full rounded-xl border border-error/20 bg-error-10 py-3 text-sm font-semibold text-error hover:bg-error-10/40"
             onClick={handleLogout}
           >
             <LogOut className="size-4" />

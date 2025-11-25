@@ -58,7 +58,7 @@ export const ContactInfo = ({ editable = true }: { editable?: boolean }) => {
             <Input
               placeholder={t("placeholders.orgEmail")}
               {...register("contact.orgEmail")}
-              disabled={!editable}
+              disabled
               className={inputStyles}
             />
             {contactErrors.orgEmail?.message && (

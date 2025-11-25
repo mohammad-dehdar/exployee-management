@@ -44,7 +44,7 @@ export const AttachmentsInfo = ({ editable = true }: { editable?: boolean }) => 
               <Input
                 placeholder={t(`placeholders.${field.name}`)}
                 {...register(fieldPath)}
-                disabled={!editable}
+                disabled
                 className={inputStyles}
               />
               {errorMessage && (
