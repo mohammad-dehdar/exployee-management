@@ -101,6 +101,8 @@ export const useAuthStore = create<AuthState>()(
         {
             name: "auth-store",
             storage: clientStorage,
+            // SECURITY: Only persist non-sensitive data. Passwords are NEVER stored.
+            // Only accounts (id, email, role, name) and currentUserId are persisted.
             partialize: (state) =>
                 ({
                     accounts: state.accounts,

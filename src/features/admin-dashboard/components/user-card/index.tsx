@@ -8,7 +8,7 @@ import { Mail, Phone, Briefcase, ChevronLeft } from "lucide-react"
 import { AvatarFallback, Badge, Card, CardContent, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui"
 import { Avatar } from "@radix-ui/react-avatar"
 
-export default function UserCard({ user }: { user: UserRecord }) {
+export const UserCard = ({ user }: { user: UserRecord }) => {
   const t = useTranslations("adminDashboard.userCard")
   const tOptions = useTranslations("options")
 
@@ -18,7 +18,7 @@ export default function UserCard({ user }: { user: UserRecord }) {
     <Link href={`/admin-dashboard/users/${user.id}`}>
       <TooltipProvider>
         <Card className="group relative cursor-pointer overflow-hidden rounded-xl border border-neutral-40 bg-neutral-10 transition-all duration-300 hover:-translate-y-1 hover:border-primary-30 hover:shadow-lg dark:bg-neutral-100 dark:border-neutral-90">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary-10/50 via-transparent to-secondary-10/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <div className="absolute inset-0 bg-linear-to-br from-primary-10/50 via-transparent to-secondary-10/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
           <CardContent className="relative p-5">
             <div className="flex items-start gap-4">

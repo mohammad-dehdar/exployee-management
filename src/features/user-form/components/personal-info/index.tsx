@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field"
 import { GENDER_OPTIONS, type UserRecord } from "@/schemas/user.schema"
 import { FormSectionWrapper, SelectField } from "@/components/shared"
+import { User } from "lucide-react";
 
 const inputStyles =
   "mt-1.5 border-neutral-40 bg-neutral-20/80 text-sm text-neutral-100 shadow-xs focus-visible:border-primary focus-visible:ring-primary/40 dark:border-neutral-90 dark:bg-neutral-100/40 dark:text-neutral-10"

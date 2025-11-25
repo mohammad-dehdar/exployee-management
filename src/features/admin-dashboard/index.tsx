@@ -1,40 +1,61 @@
 "use client"
 
-import { useMemo } from "react"
+import { useState } from "react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/routing"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
-import UserCard from "./components/user-card"
+import { Spinner } from "@/components/ui/spinner"
+import { UserCard } from "./components/user-card"
 import { RegisterUserForm } from "./components/register-user"
 import { useAuthStore } from "@/store/store"
 import { DEFAULT_ADMIN_EMAIL, DEFAULT_ADMIN_PASSWORD } from "@/features/login/constants"
 import { useRequireAuth } from "@/utils/route-guards"
-import { Users, LogOut, Shield, UserPlus, UsersRound } from "lucide-react"
+import { Users, LogOut, Shield, UserPlus, UsersRound, ChevronLeft, ChevronRight } from "lucide-react"
+import { useEmployees } from "./hooks/useEmployees"
+import type { UserRecord } from "@/schemas/user.schema"
 
 export default function AdminDashboardFeature() {
   const t = useTranslations()
   const router = useRouter()
-  const { accounts, profiles, logout } = useAuthStore()
+  const { logout } = useAuthStore()
   const { currentAccount } = useRequireAuth("admin")
+  const [page, setPage] = useState(1)
+  const limit = 12
 
-  const userAccounts = accounts.filter((acc) => acc.role === "user")
+  const { employees, isLoading, pagination } = useEmployees(page, limit)
 
-  const users = useMemo(
-    () =>
-      userAccounts.map(
-        (account) =>
-          profiles[account.id] ?? {
-            id: account.id,
-            personal: { username: account.name ?? t("common.name") },
-            contact: { personalEmail: account.email },
-            job: {},
-          },
-      ),
-    [userAccounts, profiles, t],
-  )
+  // Convert EmployeeItem to UserRecord for UserCard
+  const users: UserRecord[] = employees.map((emp) => {
+    // Convert EmployeeItem to UserRecord format
+    return {
+      id: emp.id,
+      personal: {
+        username: emp.user.name,
+        firstName: emp.firstName || emp.user.name?.split(' ')[0],
+        lastName: emp.lastName || emp.user.name?.split(' ').slice(1).join(' '),
+        nationalId: emp.nationalId,
+      },
+      contact: {
+        personalEmail: emp.user.email,
+        phone: emp.mobile,
+      },
+      job: {
+        position: emp.position,
+        contractType: emp.contractType,
+        location: emp.workLocation,
+        startDate: emp.startDate,
+      },
+      financial: {},
+      education: emp.details?.education as UserRecord['education'] || {},
+      workHistory: (emp.details?.workHistory as UserRecord['workHistory']) || [],
+      certificates: (emp.details?.certificates as UserRecord['certificates']) || [],
+      attachments: {},
+      additional: emp.details?.additional as UserRecord['additional'] || {},
+    } as UserRecord
+  })
 
   if (!currentAccount) return null
 
@@ -56,7 +77,7 @@ export default function AdminDashboardFeature() {
             {/* Welcome Section */}
             <div className="space-y-5 max-w-xl">
               <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center size-12 rounded-xl bg-gradient-to-br from-primary to-primary-70 shadow-lg">
+                <div className="flex items-center justify-center size-12 rounded-xl bg-linear-to-br from-primary to-primary-70 shadow-lg">
                   <Shield className="size-6 text-neutral-10" />
                 </div>
                 <Badge className="bg-primary-10 text-primary-80 hover:bg-primary-20 text-sm px-3 py-1">
@@ -76,7 +97,9 @@ export default function AdminDashboardFeature() {
               <div className="flex flex-wrap items-center gap-3">
                 <Badge className="gap-2 py-2 px-4 bg-success-10 text-success-40 hover:bg-success-20 border-0">
                   <Users className="size-4" />
-                  {t("adminDashboard.stats.usersCreated", { count: userAccounts.length })}
+                  {t("adminDashboard.stats.usersCreated", { 
+                    count: pagination?.total ?? employees.length 
+                  })}
                 </Badge>
                 <Badge variant="outline" className="gap-2 py-2 px-4 text-xs border-neutral-50 text-neutral-80">
                   {t("adminDashboard.stats.adminHint", {
@@ -123,7 +146,18 @@ export default function AdminDashboardFeature() {
         </CardContent>
       </Card>
 
-      {users.length === 0 ? (
+      {isLoading ? (
+        <Card className="border-neutral-40 bg-neutral-10 dark:bg-neutral-100 dark:border-neutral-90 rounded-xl">
+          <CardContent className="py-16">
+            <div className="flex flex-col items-center justify-center gap-4">
+              <Spinner className="size-8 text-primary" />
+              <p className="text-sm text-neutral-80 dark:text-neutral-60">
+                {t("common.loading")}
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      ) : users.length === 0 ? (
         <Card className="border-dashed border-2 border-neutral-50 bg-neutral-20/30 dark:bg-neutral-110/30 rounded-xl">
           <CardContent className="py-16">
             <Empty>
@@ -144,10 +178,58 @@ export default function AdminDashboardFeature() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {users.map((user) => (
-            <UserCard key={user.id} user={user} />
-          ))}
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {users.map((user) => (
+              <UserCard key={user.id} user={user} />
+            ))}
+          </div>
+
+          {pagination && pagination.pages > 1 && (
+            <Card className="border-neutral-40 bg-neutral-10 dark:bg-neutral-100 dark:border-neutral-90 rounded-xl">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="text-sm text-neutral-80 dark:text-neutral-60">
+                    {t("adminDashboard.pagination.showing", {
+                      from: (pagination.page - 1) * pagination.limit + 1,
+                      to: Math.min(pagination.page * pagination.limit, pagination.total),
+                      total: pagination.total,
+                    })}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setPage((p) => Math.max(1, p - 1))}
+                      disabled={!pagination.hasPrev || isLoading}
+                      className="gap-2"
+                    >
+                      <ChevronRight className="size-4" />
+                      {t("common.previous")}
+                    </Button>
+                    <div className="flex items-center gap-1 px-3">
+                      <span className="text-sm text-neutral-80 dark:text-neutral-60">
+                        {t("adminDashboard.pagination.page", {
+                          current: pagination.page,
+                          total: pagination.pages,
+                        })}
+                      </span>
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setPage((p) => Math.min(pagination.pages, p + 1))}
+                      disabled={!pagination.hasNext || isLoading}
+                      className="gap-2"
+                    >
+                      {t("common.next")}
+                      <ChevronLeft className="size-4" />
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
       )}
     </div>

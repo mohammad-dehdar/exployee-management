@@ -1,26 +1,71 @@
 "use client"
 
+import { useMemo } from "react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/routing"
 import { useParams } from "next/navigation"
 import UserDetails from "@/features/admin-dashboard/components/user-details"
-import { useAuthStore } from "@/store/store"
 import { useRequireAuth } from "@/utils/route-guards"
-import { UserIcon , ArrowRightIcon } from "@/components/shared/icons"
-import { Button, Card, CardContent, Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui"
+import { useEmployeeDetails } from "@/features/admin-dashboard/hooks/useEmployeeDetails"
+import { UserIcon, ArrowRightIcon } from "@/components/shared/icons"
+import { Button, Card, CardContent, Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, Spinner } from "@/components/ui"
+import type { UserRecord } from "@/schemas/user.schema"
 
 export default function AdminUserDetailsPageFeature() {
   const t = useTranslations("adminDashboard.userDetailsPage")
   const params = useParams()
-  const userId = Array.isArray(params.id) ? params.id[0] : params.id
-  const { profiles } = useAuthStore()
+  const employeeId = Array.isArray(params.id) ? params.id[0] : params.id
   const { currentAccount } = useRequireAuth("admin")
+  const { employee, isLoading } = useEmployeeDetails(employeeId)
 
   if (!currentAccount) {
     return null
   }
 
-  const user = userId ? profiles[userId] : undefined
+  // Convert EmployeeDetails to UserRecord
+  const user: UserRecord | undefined = useMemo(() => {
+    if (!employee) return undefined
+
+    return {
+      id: employee.id,
+      personal: {
+        username: employee.user.name,
+        firstName: employee.firstName || employee.user.name?.split(' ')[0],
+        lastName: employee.lastName || employee.user.name?.split(' ').slice(1).join(' '),
+        nationalId: employee.nationalId,
+      },
+      contact: {
+        personalEmail: employee.user.email,
+        phone: employee.mobile,
+      },
+      job: {
+        position: employee.position,
+      },
+      financial: {},
+      education: employee.details?.education as UserRecord['education'] || {},
+      workHistory: (employee.details?.workHistory as UserRecord['workHistory']) || [],
+      certificates: (employee.details?.certificates as UserRecord['certificates']) || [],
+      attachments: {},
+      additional: employee.details?.additional as UserRecord['additional'] || {},
+    } as UserRecord
+  }, [employee])
+
+  if (isLoading) {
+    return (
+      <div className="mx-auto flex min-h-[60vh] max-w-xl items-center justify-center p-4">
+        <Card className="w-full border-neutral-40 bg-neutral-10 dark:bg-neutral-100 dark:border-neutral-90 rounded-2xl shadow-lg">
+          <CardContent className="p-10">
+            <div className="flex flex-col items-center justify-center gap-4">
+              <Spinner className="size-8 text-primary" />
+              <p className="text-sm text-neutral-80 dark:text-neutral-60">
+                {t("loading") || "در حال بارگذاری..."}
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
 
   if (!user) {
     return (

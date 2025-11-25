@@ -25,6 +25,8 @@
   "date": "Datum",
   "status": "Status",
   "notRegistered": "Nicht registriert",
-  "unknown": "Unbekannt"
+  "unknown": "Unbekannt",
+  "next": "Weiter",
+  "previous": "Zurück"
 }
 

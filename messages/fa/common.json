@@ -25,6 +25,8 @@
   "date": "تاریخ",
   "status": "وضعیت",
   "notRegistered": "ثبت نشده",
-  "unknown": "نامشخص"
+  "unknown": "نامشخص",
+  "next": "بعدی",
+  "previous": "قبلی"
 }
 

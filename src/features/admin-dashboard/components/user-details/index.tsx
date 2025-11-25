@@ -1,14 +1,15 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/routing"
 import { FormProvider, useForm } from "react-hook-form"
 import { Avatar, AvatarFallback, Badge, Button, Card, CardContent, CardHeader, Tabs, TabsContent, TabsList, TabsTrigger, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui"
-import { toastSuccess } from "@/components/feedback"
+import { toastSuccess, toastError } from "@/components/feedback"
 import { useAuthStore } from "@/store/store"
 import { translateOption } from "@/utils/option-helpers"
+import { updateEmployeeProfileApi, convertUserRecordToPayload } from "@/features/admin-dashboard/api"
 import {
   AdditionalInfo,
   AttachmentsInfo,
@@ -40,6 +41,7 @@ export default function UserDetails({ user }: { user: UserRecord }) {
   const tOptions = useTranslations("options")
   const router = useRouter()
   const { updateProfile } = useAuthStore()
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const defaults = useMemo(
     () => ({
@@ -86,23 +88,42 @@ export default function UserDetails({ user }: { user: UserRecord }) {
     `${defaults.personal.firstName?.[0] ?? ""}${defaults.personal.lastName?.[0] ?? ""}`.toUpperCase() || "؟"
 
   const onSubmit = async (values: UserRecord) => {
-    await updateProfile(user.id, values)
-    toastSuccess(t("updateSuccess"))
+    setIsSubmitting(true);
+    try {
+      // Convert UserRecord to API payload format
+      const payload = convertUserRecordToPayload(values);
+      
+      // Call API to update employee profile
+      const result = await updateEmployeeProfileApi(payload);
+      
+      if (result.success) {
+        // Also update local store for immediate UI update
+        await updateProfile(user.id, values);
+        toastSuccess(t("updateSuccess"));
+      } else {
+        toastError(result.message || t("updateError") || "خطا در به‌روزرسانی پروفایل");
+      }
+    } catch (error) {
+      console.error('Error updating employee profile:', error);
+      toastError(t("updateError") || "خطا در به‌روزرسانی پروفایل");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 space-y-6">
-      <Card className="relative overflow-hidden border-neutral-40 bg-neutral-10 dark:bg-neutral-100 dark:border-neutral-90 rounded-2xl">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -right-20 -top-20 size-72 rounded-full bg-primary-10/60 blur-3xl" />
-          <div className="absolute -left-20 -bottom-20 size-72 rounded-full bg-secondary-10/40 blur-3xl" />
+      <Card className="relative overflow-hidden rounded-2xl border border-neutral-40 bg-neutral-10/80 shadow-lg backdrop-blur-xl dark:border-neutral-90 dark:bg-neutral-100/70">
+        <div className="pointer-events-none absolute inset-0 opacity-60">
+          <div className="absolute -right-16 -top-20 size-52 rounded-full bg-primary-10 blur-[120px]" />
+          <div className="absolute -left-20 -bottom-16 size-60 rounded-full bg-secondary-10 blur-[120px]" />
         </div>
 
-        <CardContent className="relative p-6 lg:p-8">
+        <CardContent className="relative z-10 p-6 lg:p-8">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-5">
               <Avatar className="size-18 border-3 border-primary-20 shadow-xl ring-4 ring-primary-10/50">
-                <AvatarFallback className="bg-gradient-to-br from-primary to-primary-70 text-neutral-10 text-2xl font-bold">
+                <AvatarFallback className="bg-linear-to-br from-primary to-primary-70 text-neutral-10 text-2xl font-bold">
                   {initials}
                 </AvatarFallback>
               </Avatar>
@@ -112,11 +133,11 @@ export default function UserDetails({ user }: { user: UserRecord }) {
                   <h1 className="text-2xl lg:text-3xl font-bold text-neutral-110 dark:text-neutral-10">
                     {header.name}
                   </h1>
-                  <Badge className="text-xs bg-secondary-10 text-secondary-80 hover:bg-secondary-20 dark:bg-secondary-90 dark:text-secondary-20">
+                  <Badge className="rounded-full bg-secondary-10 px-3 py-1 text-xs font-medium text-secondary-80 dark:bg-secondary-90 dark:text-secondary-20">
                     {header.contract}
                   </Badge>
                 </div>
-                <p className="text-sm text-neutral-80 dark:text-neutral-60 flex items-center gap-2">
+                <p className="flex items-center gap-2 text-sm text-neutral-80 dark:text-neutral-60">
                   <Briefcase className="size-4 text-primary" />
                   {header.position}
                 </p>
@@ -126,9 +147,9 @@ export default function UserDetails({ user }: { user: UserRecord }) {
             <Button
               variant="outline"
               asChild
-              className="w-fit border-neutral-50 hover:border-primary hover:bg-primary-10 transition-all bg-transparent"
+              className="w-fit gap-2 rounded-xl border-neutral-50 bg-transparent transition-all hover:border-primary hover:bg-primary-10"
             >
-              <Link href="/admin-dashboard" className="gap-2">
+              <Link href="/admin-dashboard">
                 {t("backToList")}
                 <ArrowRight className="size-4" />
               </Link>
@@ -140,35 +161,38 @@ export default function UserDetails({ user }: { user: UserRecord }) {
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-6">
           <Tabs defaultValue="personal" className="w-full">
-            <Card className="border-neutral-40 bg-neutral-10 dark:bg-neutral-100 dark:border-neutral-90 rounded-2xl overflow-hidden">
-              <CardHeader className="pb-0 bg-neutral-20/50 dark:bg-neutral-110/50">
+            <Card className="relative overflow-hidden rounded-2xl border border-neutral-40 bg-neutral-10/80 shadow-lg backdrop-blur-xl dark:border-neutral-90 dark:bg-neutral-100/70">
+              <div className="pointer-events-none absolute inset-0 opacity-50">
+                <div className="absolute -right-12 -top-12 size-40 rounded-full bg-primary-10 blur-[100px]" />
+                <div className="absolute -left-12 -bottom-12 size-40 rounded-full bg-secondary-10 blur-[100px]" />
+              </div>
+              <CardHeader className="relative z-10 pb-0 bg-neutral-20/50 dark:bg-neutral-110/50">
                 <TabsList className="w-full justify-start gap-2 overflow-x-auto bg-transparent h-auto p-2 flex-wrap">
                   {[
-                    { value: "personal", icon: User, label: "اطلاعات شخصی" },
-                    { value: "contact", icon: Phone, label: "تماس" },
-                    { value: "job", icon: Briefcase, label: "شغلی" },
-                    { value: "financial", icon: Wallet, label: "مالی" },
-                    { value: "education", icon: GraduationCap, label: "تحصیلات" },
-                    { value: "history", icon: History, label: "سوابق" },
-                    { value: "attachments", icon: Paperclip, label: "پیوست‌ها" },
-                  ].map(({ value, icon: Icon, label }) => (
+                    { value: "personal", icon: User, labelKey: "tabs.personal" },
+                    { value: "contact", icon: Phone, labelKey: "tabs.contact" },
+                    { value: "job", icon: Briefcase, labelKey: "tabs.job" },
+                    { value: "financial", icon: Wallet, labelKey: "tabs.financial" },
+                    { value: "education", icon: GraduationCap, labelKey: "tabs.education" },
+                    { value: "history", icon: History, labelKey: "tabs.history" },
+                    { value: "attachments", icon: Paperclip, labelKey: "tabs.attachments" },
+                  ].map(({ value, icon: Icon, labelKey }) => (
                     <TabsTrigger
                       key={value}
                       value={value}
-                      className="gap-2 px-4 py-2.5 rounded-lg border border-transparent data-[state=active]:bg-primary data-[state=active]:text-neutral-10 data-[state=active]:border-primary data-[state=active]:shadow-md data-[state=inactive]:hover:bg-neutral-30 dark:data-[state=inactive]:hover:bg-neutral-90 transition-all"
+                      className="gap-2 rounded-lg border border-transparent px-4 py-2.5 text-sm font-medium transition-all data-[state=active]:border-primary data-[state=active]:bg-primary data-[state=active]:text-neutral-10 data-[state=active]:shadow-md data-[state=inactive]:hover:bg-neutral-30 dark:data-[state=inactive]:hover:bg-neutral-90"
                     >
                       <Icon className="size-4" />
-                      <span className="hidden sm:inline text-sm font-medium">{label}</span>
+                      <span className="hidden sm:inline">{t(labelKey)}</span>
                     </TabsTrigger>
                   ))}
                 </TabsList>
               </CardHeader>
 
-              <CardContent className="p-6">
+              <CardContent className="relative z-10 p-6">
                 <TabsContent value="personal" className="mt-0 space-y-4">
-                  <div className="grid gap-6 lg:grid-cols-2">
+                  <div className="grid gap-6">
                     <PersonalInfoFields editable />
-                    <ContactInfoFields editable />
                   </div>
                 </TabsContent>
 
@@ -190,20 +214,20 @@ export default function UserDetails({ user }: { user: UserRecord }) {
 
                 <TabsContent value="history" className="mt-0 space-y-8">
                   <div className="space-y-4">
-                    <h3 className="text-lg font-semibold flex items-center gap-2 text-neutral-100 dark:text-neutral-20">
-                      <div className="p-2 rounded-lg bg-info-10">
+                    <h3 className="flex items-center gap-2 text-lg font-semibold text-neutral-100 dark:text-neutral-20">
+                      <div className="rounded-lg bg-info-10 p-2">
                         <History className="size-5 text-info" />
                       </div>
-                      سوابق کاری
+                      {t("sections.workHistory")}
                     </h3>
                     <WorkHistory />
                   </div>
                   <div className="space-y-4">
-                    <h3 className="text-lg font-semibold flex items-center gap-2 text-neutral-100 dark:text-neutral-20">
-                      <div className="p-2 rounded-lg bg-success-10">
+                    <h3 className="flex items-center gap-2 text-lg font-semibold text-neutral-100 dark:text-neutral-20">
+                      <div className="rounded-lg bg-success-10 p-2">
                         <Award className="size-5 text-success" />
                       </div>
-                      گواهینامه‌ها
+                      {t("sections.certificates")}
                     </h3>
                     <CertificatesInfo />
                   </div>
@@ -217,19 +241,27 @@ export default function UserDetails({ user }: { user: UserRecord }) {
             </Card>
           </Tabs>
 
-          <Card className="border-neutral-40 bg-neutral-10 dark:bg-neutral-100 dark:border-neutral-90 rounded-xl">
-            <CardContent className="p-4">
+          <Card className="relative overflow-hidden rounded-xl border border-neutral-40 bg-neutral-10/80 shadow-lg backdrop-blur-xl dark:border-neutral-90 dark:bg-neutral-100/70">
+            <div className="pointer-events-none absolute inset-0 opacity-40">
+              <div className="absolute -right-8 -top-8 size-32 rounded-full bg-primary-10 blur-[80px]" />
+              <div className="absolute -left-8 -bottom-8 size-32 rounded-full bg-secondary-10 blur-[80px]" />
+            </div>
+            <CardContent className="relative z-10 p-4">
               <div className="flex flex-wrap items-center gap-3">
-                <Button type="submit" className="gap-2 bg-success hover:bg-success-30 text-neutral-10 shadow-md">
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="gap-2 rounded-xl bg-linear-to-r from-success to-success-60 py-2.5 text-sm font-semibold text-neutral-10 shadow-md hover:shadow-lg disabled:opacity-60"
+                >
                   <Save className="size-4" />
-                  {t("saveChanges")}
+                  {isSubmitting ? t("common.loading") || "در حال ذخیره..." : t("saveChanges")}
                 </Button>
 
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => router.push("/admin-dashboard")}
-                  className="gap-2 border-neutral-50 hover:border-primary hover:bg-primary-10"
+                  className="gap-2 rounded-xl border-neutral-50 transition-all hover:border-primary hover:bg-primary-10"
                 >
                   <ArrowRight className="size-4" />
                   {t("back")}
@@ -243,12 +275,14 @@ export default function UserDetails({ user }: { user: UserRecord }) {
                         variant="ghost"
                         size="icon"
                         onClick={() => methods.reset(user)}
-                        className="hover:bg-warning-10 hover:text-warning-40"
+                        className="rounded-xl transition-all hover:bg-warning-10 hover:text-warning-40"
                       >
                         <RotateCcw className="size-4" />
                       </Button>
                     </TooltipTrigger>
-                    <TooltipContent className="bg-neutral-100 text-neutral-10">{t("reset")}</TooltipContent>
+                    <TooltipContent className="rounded-lg bg-neutral-100 text-neutral-10 shadow-lg">
+                      {t("reset")}
+                    </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
               </div>

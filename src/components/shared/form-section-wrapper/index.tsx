@@ -7,7 +7,7 @@ import { cn } from "@/utils/ui"
 
 interface FormSectionWrapperProps {
     sectionKey: string; // e.g., 'personal', 'contact', 'job'
-    emoji: string;
+    emoji: string | ReactNode;
     children: ReactNode;
     contentLayout?: 'grid' | 'stack'; // grid for 2-column layout, stack for vertical
     borderColor?: 'primary' | 'amber';

@@ -43,12 +43,30 @@
     "back": "بازگشت",
     "saveChanges": "ذخیره تغییرات",
     "reset": "بازنشانی",
-    "updateSuccess": "پروفایل کاربر با موفقیت به‌روزرسانی شد."
+    "updateSuccess": "پروفایل کاربر با موفقیت به‌روزرسانی شد.",
+    "updateError": "خطا در به‌روزرسانی پروفایل",
+    "tabs": {
+      "personal": "اطلاعات شخصی",
+      "contact": "تماس",
+      "job": "شغلی",
+      "financial": "مالی",
+      "education": "تحصیلات",
+      "history": "سوابق",
+      "attachments": "پیوست‌ها"
+    },
+    "sections": {
+      "workHistory": "سوابق کاری",
+      "certificates": "گواهینامه‌ها"
+    }
   },
   "userDetailsPage": {
     "userNotFound": "کاربر پیدا نشد",
     "userNotFoundDescription": "کاربری با شناسه وارد شده در لیست ثبت نشده است.",
     "backToAdminDashboard": "بازگشت به داشبورد ادمین"
+  },
+  "pagination": {
+    "showing": "نمایش {from} تا {to} از {total}",
+    "page": "صفحه {current} از {total}"
   }
 }
 

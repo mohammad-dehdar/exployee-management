@@ -43,12 +43,30 @@
     "back": "Zurück",
     "saveChanges": "Änderungen speichern",
     "reset": "Zurücksetzen",
-    "updateSuccess": "Benutzerprofil erfolgreich aktualisiert."
+    "updateSuccess": "Benutzerprofil erfolgreich aktualisiert.",
+    "updateError": "Fehler beim Aktualisieren des Profils",
+    "tabs": {
+      "personal": "Persönlich",
+      "contact": "Kontakt",
+      "job": "Beruf",
+      "financial": "Finanziell",
+      "education": "Bildung",
+      "history": "Geschichte",
+      "attachments": "Anhänge"
+    },
+    "sections": {
+      "workHistory": "Berufserfahrung",
+      "certificates": "Zertifikate"
+    }
   },
   "userDetailsPage": {
     "userNotFound": "Benutzer nicht gefunden",
     "userNotFoundDescription": "Ein Benutzer mit der eingegebenen ID ist nicht in der Liste registriert.",
     "backToAdminDashboard": "Zurück zum Administrator-Dashboard"
+  },
+  "pagination": {
+    "showing": "Zeige {from} bis {to} von {total}",
+    "page": "Seite {current} von {total}"
   }
 }
 

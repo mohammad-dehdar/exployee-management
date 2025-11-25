@@ -25,6 +25,8 @@
   "date": "Date",
   "status": "Status",
   "notRegistered": "Not Registered",
-  "unknown": "Unknown"
+  "unknown": "Unknown",
+  "next": "Next",
+  "previous": "Previous"
 }
 
