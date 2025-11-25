@@ -4,9 +4,10 @@ import { useMemo, useState, useEffect } from "react";
 import { useAuthStore } from "@/store/store";
 import { useRequireAuth } from "@/utils/route-guards";
 import { StatusCard, ChangePasswordCard, HeroCard } from "./components";
+import { getEmployeeProfileApi } from "./api";
 
 export default function UserDashboardFeature() {
-  const { profiles, currentUserId, getCompletionPercent } = useAuthStore()
+  const { profiles, currentUserId, getCompletionPercent, addProfile } = useAuthStore()
   const { currentAccount: account } = useRequireAuth("user")
 
   const profile = currentUserId ? profiles[currentUserId] : undefined
@@ -29,6 +30,18 @@ export default function UserDashboardFeature() {
   )
 
   const [completionPercent, setCompletionPercent] = useState(0)
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      if (!account || profile) return
+      const result = await getEmployeeProfileApi()
+      if (result.success && result.profile) {
+        addProfile(account.id, result.profile)
+      }
+    }
+
+    loadProfile()
+  }, [account, profile, addProfile])
 
   useEffect(() => {
     let cancelled = false

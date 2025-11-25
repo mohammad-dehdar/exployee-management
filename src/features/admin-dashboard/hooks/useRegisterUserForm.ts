@@ -9,7 +9,7 @@ import type { RegisterUserFormData } from '../schemas/register-user.schema';
 
 export function useRegisterUserForm() {
   const t = useTranslations();
-  const { addAccount, setCurrentUserId, setAuthToken, addProfile } = useAuthStore();
+  const { addAccount, addProfile } = useAuthStore();
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data: RegisterUserFormData) => {
@@ -28,10 +28,11 @@ export function useRegisterUserForm() {
         return;
       }
 
-      if (result.account && result.profile && result.token) {
+      if (result.account) {
         addAccount(result.account);
-        setCurrentUserId(result.account.id);
-        setAuthToken(result.token);
+      }
+
+      if (result.account && result.profile) {
         addProfile(result.account.id, result.profile);
       }
 

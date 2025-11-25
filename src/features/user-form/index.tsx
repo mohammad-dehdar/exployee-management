@@ -23,7 +23,7 @@ export default function UserFormFeature() {
   const t = useTranslations("userForm")
   const tCommon = useTranslations("common")
   const router = useRouter()
-  const { methods, onSubmit, handleReset, completionPercent, account } = useUserForm()
+  const { methods, onSubmit, handleReset, completionPercent, account, isSubmitting } = useUserForm()
 
   if (!account) {
     return null
@@ -81,9 +81,10 @@ export default function UserFormFeature() {
             </Button>
             <Button
               type="submit"
+              disabled={isSubmitting}
               className="w-full rounded-xl bg-linear-to-r from-primary to-primary-70 px-6 py-3 text-base font-semibold text-white shadow-lg hover:shadow-xl sm:w-auto"
             >
-              {t("saveAndSubmit")}
+              {isSubmitting ? tCommon("loading") : t("saveAndSubmit")}
             </Button>
             <Button
               type="button"

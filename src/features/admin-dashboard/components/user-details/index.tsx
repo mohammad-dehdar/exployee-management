@@ -101,11 +101,11 @@ export default function UserDetails({ user }: { user: UserRecord }) {
         await updateProfile(user.id, values);
         toastSuccess(t("updateSuccess"));
       } else {
-        toastError(result.message || t("updateError") || "خطا در به‌روزرسانی پروفایل");
+        toastError(result.message || t("updateError") || "Update failed.");
       }
     } catch (error) {
       console.error('Error updating employee profile:', error);
-      toastError(t("updateError") || "خطا در به‌روزرسانی پروفایل");
+      toastError(t("updateError") || "Update failed.");
     } finally {
       setIsSubmitting(false);
     }
@@ -293,3 +293,4 @@ export default function UserDetails({ user }: { user: UserRecord }) {
     </div>
   )
 }
+

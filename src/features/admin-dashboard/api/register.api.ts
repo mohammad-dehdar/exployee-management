@@ -48,11 +48,14 @@ export interface RegisterUserResult {
 }
 
 export async function registerUserApi(
-  payload: { email: string; password: string; name?: string; orgEmail?: string }
+  payload: { email: string; password: string; name?: string; orgEmail?: string; role?: Account['role'] },
+  options: { persistTokens?: boolean } = {}
 ): Promise<RegisterUserResult> {
   try {
     const normalizedEmail = payload.email.trim().toLowerCase();
     const normalizedOrgEmail = payload.orgEmail?.trim().toLowerCase();
+    const role: Account['role'] = payload.role ?? 'employee';
+    const persistTokens = options.persistTokens ?? false;
 
     const response = await customFetch<RegisterApiResponse>('/accounts/register', {
       method: 'POST',
@@ -60,7 +63,7 @@ export async function registerUserApi(
         email: normalizedEmail,
         password: payload.password,
         name: payload.name || '',
-        orgEmail: normalizedOrgEmail || '',
+        role,
       },
       requiresAuth: false,
     });
@@ -75,14 +78,14 @@ export async function registerUserApi(
     }
 
     const resolvedToken = token ?? accessToken;
-    if (resolvedToken) {
+    if (persistTokens && resolvedToken) {
       setTokens({ accessToken: resolvedToken, refreshToken });
     }
 
     const account: Account = {
       id: user.id,
       email: user.email,
-      role: user.role,
+      role: user.role || role,
       name: user.name,
     };
 

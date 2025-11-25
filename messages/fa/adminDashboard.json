@@ -60,6 +60,7 @@
     }
   },
   "userDetailsPage": {
+    "loading": "Loading user profile...",
     "userNotFound": "کاربر پیدا نشد",
     "userNotFoundDescription": "کاربری با شناسه وارد شده در لیست ثبت نشده است.",
     "backToAdminDashboard": "بازگشت به داشبورد ادمین"

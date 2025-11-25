@@ -22,11 +22,16 @@ export async function customFetch<T = unknown>(
 ): Promise<T> {
   const { requiresAuth = false, body, headers, ...rest } = options;
   const requestUrl = getApiUrl(url);
+  const isFormData = typeof FormData !== 'undefined' && body instanceof FormData;
 
-  const resolvedHeaders: Record<string, string> = {
-    'Content-Type': 'application/json',
-    ...(headers ? (headers as Record<string, string>) : {}),
-  };
+  const resolvedHeaders: Record<string, string> = isFormData
+    ? {
+        ...(headers ? (headers as Record<string, string>) : {}),
+      }
+    : {
+        'Content-Type': 'application/json',
+        ...(headers ? (headers as Record<string, string>) : {}),
+      };
 
   if (requiresAuth) {
     const token = getAccessToken();
@@ -36,7 +41,9 @@ export async function customFetch<T = unknown>(
   }
 
   let resolvedBody: BodyInit | undefined;
-  if (body instanceof FormData || typeof body === 'string') {
+  if (isFormData) {
+    resolvedBody = body as BodyInit;
+  } else if (typeof body === 'string') {
     resolvedBody = body as BodyInit;
   } else if (body !== undefined && body !== null) {
     resolvedBody = JSON.stringify(body);
@@ -57,7 +64,7 @@ export async function customFetch<T = unknown>(
     if (!response.ok) {
       throw new ApiError(
         response.status,
-        (data as { message?: string })?.message || 'خطا در ارتباط با سرور',
+        (data as { message?: string })?.message || 'Request failed. Please try again.',
         data,
       );
     }
@@ -67,7 +74,6 @@ export async function customFetch<T = unknown>(
     if (error instanceof ApiError) {
       throw error;
     }
-    throw new ApiError(0, 'خطا در برقراری ارتباط با سرور', error);
+    throw new ApiError(0, 'Network error. Please check your connection.', error);
   }
 }
-
