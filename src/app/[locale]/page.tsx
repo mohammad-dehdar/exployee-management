@@ -1,6 +1,7 @@
 import LoginFeature from "@/features/login";
+import LoginLayout from "@/layouts/login-layout";
 
 export default function LoginPage() {
-    return <LoginFeature />;
+    return <LoginLayout><LoginFeature /></LoginLayout>;
 }
 

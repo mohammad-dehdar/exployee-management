@@ -20,7 +20,7 @@ const icons = {
 
 const classes = {
   success: 'bg-success-10 text-success-30 dark:bg-success-40 dark:text-success-20 font-dana!',
-  error: 'bg-error-10 text-error-30 dark:bg-error-40 dark:text-error-20 font-dana!',
+  error: 'bg-error-10 text-error-600 dark:bg-error-40 dark:text-error-20 font-dana!',
   warning: 'bg-warning-10 text-warning-30 dark:bg-warning-40 dark:text-warning-20 font-dana!',
   info: 'bg-info-10 text-info-30 dark:bg-info-40 dark:text-info-20 font-dana!',
 };

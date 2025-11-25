@@ -1,18 +1,20 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { StatusItem } from "@/components/shared/status-item";
 import { useTranslations } from 'next-intl';
+import type { PersonalInfo, ContactInfo, JobInfo, EducationInfo, WorkHistoryItem, CertificateItem, AttachmentInfo, AdditionalInfo } from "@/schemas/user.schema";
 
 interface StatusCardProps {
-  personal?: Record<string, unknown>;
-  contact?: Record<string, unknown>;
-  job?: Record<string, unknown>;
-  education?: Record<string, unknown>;
-  workHistory?: Array<{ company?: string; role?: string; [key: string]: unknown }>;
-  certificates?: Array<{ title?: string; issuer?: string; [key: string]: unknown }>;
-  attachments?: Record<string, unknown>;
-  additional?: Record<string, unknown>;
+  personal?: PersonalInfo;
+  contact?: ContactInfo;
+  job?: JobInfo;
+  education?: EducationInfo;
+  workHistory?: WorkHistoryItem[];
+  certificates?: CertificateItem[];
+  attachments?: AttachmentInfo;
+  additional?: AdditionalInfo;
 }
 
 export function StatusCard({ 
@@ -62,14 +64,31 @@ export function StatusCard({
     },
   ];
 
+  const completedCount = sections.filter((section) => section.isDone).length
+
   return (
-    <Card className="rounded-xl border border-border/60 bg-card/80 shadow-sm backdrop-blur">
-      <CardHeader className="px-5 pt-5">
-        <CardTitle className="text-base font-semibold text-foreground">
-          {t('statusCard.title')}
-        </CardTitle>
+    <Card className="relative overflow-hidden rounded-2xl border border-neutral-40 bg-neutral-10/80 shadow-lg backdrop-blur-xl dark:border-neutral-90 dark:bg-neutral-110">
+      <div className="pointer-events-none absolute inset-0 opacity-60">
+        <div className="absolute -right-16 -top-20 size-56 rounded-full bg-primary-10 blur-[120px]" />
+        <div className="absolute -left-12 -bottom-16 size-48 rounded-full bg-secondary-10 blur-[110px]" />
+      </div>
+
+      <CardHeader className="relative z-10 space-y-3 px-6 pt-6">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <CardTitle className="text-lg font-semibold text-neutral-110 dark:text-neutral-10">
+              {t('statusCard.title')}
+            </CardTitle>
+            <CardDescription className="text-sm text-neutral-70 dark:text-neutral-50">
+              {t('profileSummaryCard.title')}
+            </CardDescription>
+          </div>
+          <Badge className="rounded-full bg-success-10 px-4 py-1 text-xs text-success-50">
+            {completedCount}/{sections.length}
+          </Badge>
+        </div>
       </CardHeader>
-      <CardContent className="px-5 pb-5">
+      <CardContent className="relative z-10 px-6 pb-6">
         <div className="space-y-3">
           {sections.map((section) => (
             <StatusItem

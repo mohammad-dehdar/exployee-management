@@ -39,11 +39,21 @@ export function translateOption(
   const values = config.values as readonly string[];
   if (values.includes(value)) {
     const translationKey = `${config.translationKey}.${value}`;
-    return tOptions(translationKey);
+    try {
+      const translated = tOptions(translationKey);
+      // If translation returns the key itself, it means translation is missing
+      if (translated === translationKey) {
+        return fallback ?? value;
+      }
+      return translated;
+    } catch {
+      // If translation fails, return fallback or original value
+      return fallback ?? value;
+    }
   }
 
-  // If value is not in the config, return it as-is (might be custom text)
-  return value;
+  // If value is not in the config, return fallback or value
+  return fallback ?? value;
 }
 
 /**

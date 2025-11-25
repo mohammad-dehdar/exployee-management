@@ -1,4 +1,13 @@
 {
+  "email": {
+    "required": "Email is required",
+    "invalid": "Invalid email format"
+  },
+  "password": {
+    "required": "Password is required",
+    "minLength": "Password must be at least 6 characters"
+  },
+  "generic": "Please check your input",
   "firstName": {
     "min": "First name must be at least 2 characters"
   },
@@ -10,9 +19,6 @@
   },
   "phone": {
     "regex": "Invalid mobile number"
-  },
-  "email": {
-    "invalid": "Invalid email"
   },
   "url": {
     "invalid": "Invalid link",

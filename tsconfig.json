@@ -54,7 +54,7 @@
     "**/*.stories.tsx",
     "**/*.stories.ts",
     ".next/dev/types/**/*.ts"
-  ],
+, "src/components/ui/avatar"  ],
   "exclude": [
     "node_modules"
   ]

@@ -1,0 +1,79 @@
+import { customFetch, ApiError } from '@/utils/custom-fetch';
+import { setTokens } from '@/utils/auth-service';
+import { logger } from '@/utils/logger';
+import type { Account } from '@/store/auth.store';
+
+const ERROR_MESSAGES = {
+  INVALID_CREDENTIALS: 'auth.errors.invalidCredentials',
+  NETWORK_ERROR: 'auth.errors.networkError',
+} as const;
+
+interface LoginResponse {
+  success: boolean;
+  message?: string;
+  accessToken?: string;
+  refreshToken?: string;
+  user?: {
+    id: string;
+    email: string;
+    role: Account['role'];
+    name?: string;
+  };
+}
+
+const mapApiErrorToMessage = (error: ApiError | unknown): string => {
+  if (error && typeof error === 'object' && 'status' in error) {
+    const apiError = error as ApiError;
+    if (apiError.status === 401) {
+      return ERROR_MESSAGES.INVALID_CREDENTIALS;
+    }
+  }
+  return ERROR_MESSAGES.NETWORK_ERROR;
+};
+
+export async function loginApi(email: string, password: string) {
+  try {
+    const response = await customFetch<LoginResponse>('/accounts/login', {
+      method: 'POST',
+      body: {
+        email: email.trim().toLowerCase(),
+        password,
+      },
+    });
+
+    if (!response.success || !response.user || !response.accessToken) {
+      return {
+        success: false,
+        message: response.message ?? ERROR_MESSAGES.INVALID_CREDENTIALS,
+      };
+    }
+
+    setTokens({
+      accessToken: response.accessToken,
+      refreshToken: response.refreshToken,
+    });
+
+    const account: Account = {
+      id: response.user.id,
+      email: response.user.email,
+      role: response.user.role,
+      name: response.user.name,
+    };
+
+    logger.info('Login successful', { userId: account.id, email: account.email });
+
+    return {
+      success: true,
+      account,
+      role: account.role,
+      token: response.accessToken,
+    };
+  } catch (error) {
+    logger.error('Login failed', error, { email });
+    return {
+      success: false,
+      message: mapApiErrorToMessage(error),
+    };
+  }
+}
+

@@ -1,160 +1,155 @@
-'use client';
+"use client"
 
-import { useMemo } from "react";
-import { useTranslations } from 'next-intl';
-import { useRouter } from "@/i18n/routing";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TextInput } from "@/components/ui";
-import { Label } from "@/components/ui/label";
-import UserCard from "./components/user-card";
-import { useAuthStore } from "@/store/store";
-import { DEFAULT_ADMIN_EMAIL, DEFAULT_ADMIN_PASSWORD } from "@/features/login/constants";
-import { useRequireAuth } from "@/utils/route-guards";
-import { useCreateUserForm } from "./hooks/useCreateUserForm";
+import { useMemo } from "react"
+import { useTranslations } from "next-intl"
+import { useRouter } from "@/i18n/routing"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
+import UserCard from "./components/user-card"
+import { RegisterUserForm } from "./components/register-user"
+import { useAuthStore } from "@/store/store"
+import { DEFAULT_ADMIN_EMAIL, DEFAULT_ADMIN_PASSWORD } from "@/features/login/constants"
+import { useRequireAuth } from "@/utils/route-guards"
+import { Users, LogOut, Shield, UserPlus, UsersRound } from "lucide-react"
 
 export default function AdminDashboardFeature() {
-    const t = useTranslations();
-    const router = useRouter();
-    const { accounts, profiles, logout } = useAuthStore();
-    const { currentAccount } = useRequireAuth('admin');
-    const {
-        email,
-        setEmail,
-        orgEmail,
-        setOrgEmail,
-        password,
-        setPassword,
-        displayName,
-        setDisplayName,
-        handleSubmit: handleCreateUser,
-        isLoading,
-    } = useCreateUserForm();
+  const t = useTranslations()
+  const router = useRouter()
+  const { accounts, profiles, logout } = useAuthStore()
+  const { currentAccount } = useRequireAuth("admin")
 
-    const userAccounts = accounts.filter((acc) => acc.role === "user");
+  const userAccounts = accounts.filter((acc) => acc.role === "user")
 
-    const users = useMemo(
-        () => userAccounts.map((account) =>
-            profiles[account.id] ?? {
-                id: account.id,
-                personal: { username: account.displayName ?? t('common.name') },
-                contact: { personalEmail: account.email },
-                job: {},
-            }
-        ),
-        [userAccounts, profiles, t]
-    );
+  const users = useMemo(
+    () =>
+      userAccounts.map(
+        (account) =>
+          profiles[account.id] ?? {
+            id: account.id,
+            personal: { username: account.name ?? t("common.name") },
+            contact: { personalEmail: account.email },
+            job: {},
+          },
+      ),
+    [userAccounts, profiles, t],
+  )
 
-    if (!currentAccount) return null;
+  if (!currentAccount) return null
 
-    const handleLogout = async () => {
-        await logout();
-        router.replace("/");
-    };
+  const handleLogout = async () => {
+    await logout()
+    router.replace("/")
+  }
 
-    return (
-        <>
-            <section className="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white/80 p-8 shadow-xl backdrop-blur dark:border-slate-800/60 dark:bg-slate-900/80">
-                <div className="pointer-events-none absolute inset-0 opacity-40">
-                    <div className="absolute -left-10 top-6 h-48 w-48 rounded-full bg-sky-200 blur-3xl dark:bg-sky-500/30" />
-                    <div className="absolute bottom-0 right-0 h-64 w-64 rounded-full bg-indigo-200 blur-3xl dark:bg-indigo-500/30" />
+  return (
+    <div className="space-y-6">
+      <Card className="relative overflow-hidden border-neutral-40 bg-neutral-10 dark:bg-neutral-100 dark:border-neutral-90 rounded-2xl">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -right-24 -top-24 size-80 rounded-full bg-primary-10/70 blur-3xl" />
+          <div className="absolute -left-24 -bottom-24 size-80 rounded-full bg-secondary-10/50 blur-3xl" />
+        </div>
+
+        <CardContent className="relative p-6 lg:p-8">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+            {/* Welcome Section */}
+            <div className="space-y-5 max-w-xl">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center justify-center size-12 rounded-xl bg-gradient-to-br from-primary to-primary-70 shadow-lg">
+                  <Shield className="size-6 text-neutral-10" />
                 </div>
-                <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-                    <div className="space-y-3">
-                        <p className="text-sm font-semibold text-indigo-600 dark:text-indigo-300">{t('adminDashboard.title')}</p>
-                        <h1 className="text-3xl font-bold leading-tight">{t('adminDashboard.subtitle')}</h1>
-                        <p className="text-sm text-muted-foreground leading-6">
-                            {t('adminDashboard.description')}
-                        </p>
-                        <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
-                            <span className="rounded-full bg-indigo-50 px-3 py-1 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-100">
-                                {t('adminDashboard.stats.usersCreated', { count: userAccounts.length })}
-                            </span>
-                            <span className="rounded-full bg-emerald-50 px-3 py-1 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-100">
-                                {t('adminDashboard.stats.adminHint', { email: DEFAULT_ADMIN_EMAIL, password: DEFAULT_ADMIN_PASSWORD })}
-                            </span>
-                        </div>
-                    </div>
-                    <Card className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200/70 shadow-sm dark:border-neutral-70/70 p-4 dark:bg-neutral-80/20">
-                        <CardHeader className="pb-3">
-                            <CardTitle className="text-base font-semibold">{t('adminDashboard.createUser.title')}</CardTitle>
-                            <p className="text-xs text-muted-foreground mt-2">{t('adminDashboard.createUser.description')}</p>
-                        </CardHeader>
-                        <CardContent>
-                            <form onSubmit={handleCreateUser} className="space-y-3">
-                                <div className="space-y-1">
-                                    <Label htmlFor="displayName" className="text-sm">{t('adminDashboard.createUser.displayName')}</Label>
-                                    <TextInput
-                                        id="displayName"
-                                        value={displayName}
-                                        fullWidth
-                                        onChange={(e) => setDisplayName(e.target.value)}
-                                        placeholder={t('adminDashboard.createUser.placeholders.displayName')}
-                                    />
-                                </div>
-                                <div className="space-y-1">
-                                    <Label htmlFor="userEmail" className="text-sm">{t('adminDashboard.createUser.personalEmail')}</Label>
-                                    <TextInput
-                                        id="userEmail"
-                                        type="email"
-                                        fullWidth
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        placeholder={t('adminDashboard.createUser.placeholders.personalEmail')}
-                                        required
-                                    />
-                                </div>
-                                <div className="space-y-1">
-                                    <Label htmlFor="orgEmail" className="text-sm">{t('adminDashboard.createUser.orgEmail')}</Label>
-                                    <TextInput
-                                        id="orgEmail"
-                                        type="email"
-                                        fullWidth
-                                        value={orgEmail}
-                                        onChange={(e) => setOrgEmail(e.target.value)}
-                                        placeholder={t('adminDashboard.createUser.placeholders.orgEmail')}
-                                    />
-                                </div>
-                                <div className="space-y-1">
-                                    <Label htmlFor="userPassword" className="text-sm">{t('adminDashboard.createUser.password')}</Label>
-                                    <TextInput
-                                        id="userPassword"
-                                        type="password"
-                                        value={password}
-                                        fullWidth
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        placeholder={t('adminDashboard.createUser.placeholders.password')}
-                                        required
-                                    />
-                                </div>
-                                <Button type="submit" disabled={isLoading} className="w-full mt-4 disabled:opacity-50 disabled:cursor-not-allowed">
-                                    {isLoading ? t('common.loading') || 'در حال ایجاد...' : t('adminDashboard.createUser.button')}
-                                </Button>
-                            </form>
-                        </CardContent>
-                    </Card>
-                </div>
-                <div className="relative z-10 mt-4 flex justify-end">
-                    <Button variant="ghost" className="text-sm text-muted-foreground" onClick={handleLogout}>
-                        {t('common.logout')}
-                    </Button>
-                </div>
-            </section>
+                <Badge className="bg-primary-10 text-primary-80 hover:bg-primary-20 text-sm px-3 py-1">
+                  {t("adminDashboard.title")}
+                </Badge>
+              </div>
 
-            {users.length === 0 ? (
-                <div className="rounded-2xl border border-dashed border-slate-300/80 bg-white/70 p-10 text-center text-muted-foreground shadow-lg backdrop-blur dark:border-slate-700/70 dark:bg-slate-900/70">
-                    <h2 className="text-xl font-semibold text-foreground">{t('adminDashboard.emptyState.title')}</h2>
-                    <p className="mt-2 text-sm text-muted-foreground">
-                        {t('adminDashboard.emptyState.description')}
-                    </p>
+              <div className="space-y-3">
+                <h1 className="text-2xl lg:text-3xl font-bold text-neutral-110 dark:text-neutral-10">
+                  {t("adminDashboard.subtitle")}
+                </h1>
+                <p className="text-sm text-neutral-80 dark:text-neutral-60 leading-relaxed">
+                  {t("adminDashboard.description")}
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <Badge className="gap-2 py-2 px-4 bg-success-10 text-success-40 hover:bg-success-20 border-0">
+                  <Users className="size-4" />
+                  {t("adminDashboard.stats.usersCreated", { count: userAccounts.length })}
+                </Badge>
+                <Badge variant="outline" className="gap-2 py-2 px-4 text-xs border-neutral-50 text-neutral-80">
+                  {t("adminDashboard.stats.adminHint", {
+                    email: DEFAULT_ADMIN_EMAIL,
+                    password: DEFAULT_ADMIN_PASSWORD,
+                  })}
+                </Badge>
+              </div>
+            </div>
+
+            <Card className="w-full lg:max-w-sm border-neutral-40 bg-neutral-20/50 dark:bg-neutral-110/50 dark:border-neutral-90 backdrop-blur-sm rounded-xl">
+              <CardHeader className="pb-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center size-10 rounded-lg bg-secondary-10">
+                    <UserPlus className="size-5 text-secondary" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-base font-semibold text-neutral-110 dark:text-neutral-10">
+                      {t("adminDashboard.createUser.title")}
+                    </CardTitle>
+                    <CardDescription className="text-xs mt-0.5 text-neutral-80 dark:text-neutral-60">
+                      {t("adminDashboard.createUser.description")}
+                    </CardDescription>
+                  </div>
                 </div>
-            ) : (
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-                    {users.map((user) => (
-                        <UserCard key={user.id} user={user} />
-                    ))}
+              </CardHeader>
+              <CardContent className="pt-0">
+                <RegisterUserForm />
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="relative mt-6 pt-4 border-t border-neutral-40 dark:border-neutral-90 flex justify-end">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-2 text-error-30  hover:text-error hover:bg-error-10 transition-all"
+              onClick={handleLogout}
+            >
+              <LogOut className="size-4" />
+              {t("common.logout")}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {users.length === 0 ? (
+        <Card className="border-dashed border-2 border-neutral-50 bg-neutral-20/30 dark:bg-neutral-110/30 rounded-xl">
+          <CardContent className="py-16">
+            <Empty>
+              <EmptyMedia>
+                <div className="flex items-center justify-center size-20 rounded-full bg-neutral-30 dark:bg-neutral-90">
+                  <UsersRound className="size-10 text-neutral" />
                 </div>
-            )}
-        </>
-    );
+              </EmptyMedia>
+              <EmptyHeader>
+                <EmptyTitle className="text-neutral-100 dark:text-neutral-20">
+                  {t("adminDashboard.emptyState.title")}
+                </EmptyTitle>
+                <EmptyDescription className="text-neutral-70">
+                  {t("adminDashboard.emptyState.description")}
+                </EmptyDescription>
+              </EmptyHeader>
+            </Empty>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {users.map((user) => (
+            <UserCard key={user.id} user={user} />
+          ))}
+        </div>
+      )}
+    </div>
+  )
 }

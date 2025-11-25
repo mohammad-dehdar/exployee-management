@@ -1,101 +1,113 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-import { useFieldArray, useFormContext } from "react-hook-form";
-import { Button } from "@/components/ui/button";
-import { TextInput } from "@/components/ui/text-input";
-import { FormSectionWrapper } from "@/components/shared";
+import { useTranslations } from "next-intl"
+import { useFieldArray, useFormContext } from "react-hook-form"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field"
+import { type UserRecord } from "@/schemas/user.schema"
+import { FormSectionWrapper } from "@/components/shared"
+
+const inputStyles =
+  "mt-1.5 border-neutral-40 bg-neutral-20/80 text-sm text-neutral-100 shadow-xs focus-visible:border-primary focus-visible:ring-primary/40 dark:border-neutral-90 dark:bg-neutral-100/40 dark:text-neutral-10"
+const textAreaStyles =
+  "mt-1.5 w-full rounded-lg border border-neutral-40 bg-neutral-20/80 px-3 py-2 text-sm text-neutral-100 shadow-xs focus-visible:border-primary focus-visible:ring-primary/40 dark:border-neutral-90 dark:bg-neutral-100/40 dark:text-neutral-10"
 
 export const WorkHistory = ({ editable = true }: { editable?: boolean }) => {
-    const { control, register } = useFormContext();
-    const { fields, append, remove } = useFieldArray({ control, name: "workHistory" });
-    const t = useTranslations('userForm.sections.workHistory');
-    const tCommon = useTranslations('common');
+  const { control, register } = useFormContext<UserRecord>()
+  const { fields, append, remove } = useFieldArray({ control, name: "workHistory" })
+  const t = useTranslations("userForm.sections.workHistory")
+  const tCommon = useTranslations("common")
 
-    const handleAdd = () =>
-        append({ company: "", role: "", description: "", startDate: "", endDate: "" });
+  const handleAdd = () => append({ company: "", role: "", description: "", startDate: "", endDate: "" })
 
-    return (
-        <FormSectionWrapper sectionKey="workHistory" emoji="📂" contentLayout="stack">
-                {fields.map((field, index) => (
-                    <div
-                        key={field.id}
-                        className="rounded-lg border border-border/60 bg-muted/30 p-4 shadow-inner space-y-3"
-                    >
-                        <div className="grid gap-4 md:grid-cols-2">
-                            <TextInput
-                                fullWidth
-                                label={t('fields.company')}
-                                variant="outline"
-                                color="neutral"
-                                placeholder={t('placeholders.company')}
-                                {...register(`workHistory.${index}.company` as const)}
-                                className="rounded-lg"
-                                disabled={!editable}
-                            />
-                            <TextInput
-                                fullWidth
-                                label={t('fields.role')}
-                                variant="outline"
-                                color="neutral"
-                                placeholder={t('placeholders.role')}
-                                {...register(`workHistory.${index}.role` as const)}
-                                className="rounded-lg"
-                                disabled={!editable}
-                            />
-                        </div>
+  return (
+    <FormSectionWrapper sectionKey="workHistory" emoji="📂" contentLayout="stack">
+      {fields.map((field, index) => (
+        <FieldSet
+          key={field.id}
+          className="space-y-4 rounded-2xl border border-neutral-40 bg-neutral-10/60 p-4 shadow-sm dark:border-neutral-90 dark:bg-neutral-110/40"
+        >
+          <FieldGroup className="grid gap-4 md:grid-cols-2">
+            <Field>
+              <FieldLabel className="text-sm font-semibold text-neutral-90 dark:text-neutral-10">
+                {t("fields.company")}
+              </FieldLabel>
+              <Input
+                placeholder={t("placeholders.company")}
+                {...register(`workHistory.${index}.company` as const)}
+                disabled={!editable}
+                className={inputStyles}
+              />
+            </Field>
+            <Field>
+              <FieldLabel className="text-sm font-semibold text-neutral-90 dark:text-neutral-10">
+                {t("fields.role")}
+              </FieldLabel>
+              <Input
+                placeholder={t("placeholders.role")}
+                {...register(`workHistory.${index}.role` as const)}
+                disabled={!editable}
+                className={inputStyles}
+              />
+            </Field>
+          </FieldGroup>
 
-                        <TextInput
-                            fullWidth
-                            label={t('fields.description')}
-                            variant="outline"
-                            color="neutral"
-                            placeholder={t('placeholders.description')}
-                            {...register(`workHistory.${index}.description` as const)}
-                            className="rounded-lg"
-                            disabled={!editable}
-                        />
+          <Field>
+            <FieldLabel className="text-sm font-semibold text-neutral-90 dark:text-neutral-10">
+              {t("fields.description")}
+            </FieldLabel>
+            <textarea
+              rows={3}
+              placeholder={t("placeholders.description")}
+              {...register(`workHistory.${index}.description` as const)}
+              disabled={!editable}
+              className={textAreaStyles}
+            />
+          </Field>
 
-                        <div className="grid gap-4 md:grid-cols-2">
-                            <TextInput
-                                fullWidth
-                                type="date"
-                                label={t('fields.startDate')}
-                                variant="outline"
-                                color="neutral"
-                                {...register(`workHistory.${index}.startDate` as const)}
-                                className="rounded-lg"
-                                disabled={!editable}
-                            />
-                            <TextInput
-                                fullWidth
-                                type="date"
-                                label={t('fields.endDate')}
-                                variant="outline"
-                                color="neutral"
-                                {...register(`workHistory.${index}.endDate` as const)}
-                                className="rounded-lg"
-                                disabled={!editable}
-                            />
-                        </div>
+          <FieldGroup className="grid gap-4 md:grid-cols-2">
+            <Field>
+              <FieldLabel className="text-sm font-semibold text-neutral-90 dark:text-neutral-10">
+                {t("fields.startDate")}
+              </FieldLabel>
+              <Input
+                type="date"
+                {...register(`workHistory.${index}.startDate` as const)}
+                disabled={!editable}
+                className={inputStyles}
+              />
+            </Field>
+            <Field>
+              <FieldLabel className="text-sm font-semibold text-neutral-90 dark:text-neutral-10">
+                {t("fields.endDate")}
+              </FieldLabel>
+              <Input
+                type="date"
+                {...register(`workHistory.${index}.endDate` as const)}
+                disabled={!editable}
+                className={inputStyles}
+              />
+            </Field>
+          </FieldGroup>
 
-                        {editable && fields.length > 1 && (
-                            <div className="flex justify-end">
-                                <Button variant="ghost" onClick={() => remove(index)}>
-                                    {tCommon('delete')}
-                                </Button>
-                            </div>
-                        )}
-                    </div>
-                ))}
+          {editable && fields.length > 1 && (
+            <div className="flex justify-end">
+              <Button type="button" variant="ghost" onClick={() => remove(index)}>
+                {tCommon("delete")}
+              </Button>
+            </div>
+          )}
+        </FieldSet>
+      ))}
 
-                {editable && (
-                    <div className="flex justify-start">
-                        <Button type="button" variant="outline" onClick={handleAdd} className="rounded-lg">
-                            {t('addNew')}
-                        </Button>
-                    </div>
-                )}
-        </FormSectionWrapper>
-    );
-};
+      {editable && (
+        <div className="flex justify-start">
+          <Button type="button" variant="outline" onClick={handleAdd} className="rounded-xl">
+            {t("addNew")}
+          </Button>
+        </div>
+      )}
+    </FormSectionWrapper>
+  )
+}

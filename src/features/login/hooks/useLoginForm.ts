@@ -1,24 +1,36 @@
 'use client';
 
-import { useState, FormEvent, useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from '@/i18n/routing';
 import { useAuthStore } from '@/store/store';
 import { toastError, toastSuccess } from '@/components/feedback/toast-provider/toast-provider';
 import { ROUTES } from '@/features/login/constants';
+import { logger } from '@/utils/logger';
+import { loginSchema, type LoginFormData } from '../schemas/login.schema';
 
 export function useLoginForm() {
   const t = useTranslations();
   const router = useRouter();
-  const login = useAuthStore((state) => state.login);
-  const currentUserId = useAuthStore((state) => state.currentUserId);
-  const accounts = useAuthStore((state) => state.accounts);
+  const authStore = useAuthStore();
+  const login = authStore.login;
+  const currentUserId = authStore.currentUserId;
+  const accounts = authStore.accounts;
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const methods = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    mode: 'onBlur',
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
-  // Auto-redirect if already logged in
+  const isLoading = methods.formState.isSubmitting;
+  const error = methods.formState.errors;
+
   useEffect(() => {
     if (!currentUserId) return;
     const account = accounts.find((acc) => acc.id === currentUserId);
@@ -26,35 +38,66 @@ export function useLoginForm() {
     router.push(account.role === 'admin' ? ROUTES.ADMIN_DASHBOARD : ROUTES.USER_DASHBOARD);
   }, [accounts, currentUserId, router]);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsLoading(true);
-
+  const onSubmit = useCallback(async (data: LoginFormData) => {
     try {
-      const result = await login(email, password);
+      logger.info('Login attempt', { email: data.email });
+      
+      const result = await login(data.email, data.password);
 
       if (!result.success) {
-        toastError(result.message ?? t('home.errors.loginFailed'));
+        let errorMessage = result.message;
+        if (errorMessage && errorMessage.includes('.')) {
+          try {
+            const translated = t(errorMessage);
+            if (translated !== errorMessage) {
+              errorMessage = translated;
+            }
+          } catch {
+            errorMessage = t('auth.errors.invalidCredentials');
+          }
+        } else if (!errorMessage) {
+          errorMessage = t('auth.errors.invalidCredentials');
+        }
+        
+        methods.setError('root', {
+          type: 'manual',
+          message: errorMessage,
+        });
+        toastError(errorMessage);
+        logger.warn('Login failed', { email: data.email, reason: result.message });
         return;
       }
 
+      logger.info('Login successful', { 
+        role: result.role,
+        email: data.email 
+      });
+      
       toastSuccess(t('home.success.welcome'));
+      
       const targetRoute = result.role === 'admin' 
         ? ROUTES.ADMIN_DASHBOARD 
         : ROUTES.USER_DASHBOARD;
-      router.push(targetRoute);
-    } finally {
-      setIsLoading(false);
+      
+      setTimeout(() => {
+        router.push(targetRoute);
+      }, 300);
+    } catch (error) {
+      const errorMessage = t('home.errors.loginFailed');
+      methods.setError('root', {
+        type: 'manual',
+        message: errorMessage,
+      });
+      toastError(errorMessage);
+      logger.error('Login error', error, { email: data.email });
     }
-  };
+  }, [login, router, t, methods]);
 
   return {
-    email,
-    setEmail,
-    password,
-    setPassword,
-    handleSubmit,
+    methods,
+    onSubmit,
     isLoading,
+    error,
   };
 }
 

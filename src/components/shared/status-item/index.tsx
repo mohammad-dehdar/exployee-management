@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { useTranslations } from 'next-intl';
-import { cn } from '@/utils/ui';
+import { useTranslations } from "next-intl"
+import { cn } from "@/utils/ui"
 
 export interface StatusItemProps {
   /**
@@ -58,40 +58,37 @@ export function StatusItem({
   completedText,
   pendingText,
 }: StatusItemProps) {
-  const t = useTranslations('userDashboard');
+  const t = useTranslations("userDashboard")
 
   return (
     <div
       className={cn(
-        'mt-4 items-center justify-between rounded-2xl border border-border/40 bg-background/60 px-4 py-3',
-        className
+        "relative overflow-hidden rounded-2xl border border-neutral-40 bg-neutral-10/80 px-4 py-4 shadow-sm dark:border-neutral-90 dark:bg-neutral-110/70",
+        className,
       )}
     >
-      <div className="relative">
-        <div>
-          <div className="flex items-center justify-between gap-2">
-            <p className="text-sm font-medium text-foreground">
-              {t(titleKey)}
-            </p>
-            <span
-              className={cn(
-                'rounded-sm md:px-2 md:py-0.5 text-xs px-2 py-1 text-[8px] md:text-xs font-semibold',
-                isCompleted
-                  ? 'bg-success-20 text-success-40 dark:bg-success-50/20'
-                  : 'bg-warning-20 text-warning-40'
-              )}
-            >
-              {isCompleted
-                ? completedText || t('statusCard.completed')
-                : pendingText || t('statusCard.pending')}
-            </span>
-          </div>
-          <p className="text-xs text-muted-foreground">
-            {t(descriptionKey)}
-          </p>
+      <div className="pointer-events-none absolute inset-0 opacity-70">
+        <div className="absolute -right-10 -top-8 size-24 rounded-full bg-primary-10 blur-3xl" />
+        <div className="absolute -left-10 -bottom-12 size-24 rounded-full bg-secondary-10 blur-3xl" />
+      </div>
+
+      <div className="relative flex items-start justify-between gap-3">
+        <div className="space-y-1">
+          <p className="text-sm font-semibold text-neutral-110 dark:text-neutral-10">{t(titleKey)}</p>
+          <p className="text-xs text-neutral-70 dark:text-neutral-50">{t(descriptionKey)}</p>
         </div>
+        <span
+          className={cn(
+            "rounded-full px-3 py-1 text-[11px] font-semibold shadow-sm",
+            isCompleted
+              ? "bg-success-10 text-success-50 ring-1 ring-success-30"
+              : "bg-warning-10 text-warning-50 ring-1 ring-warning-30",
+          )}
+        >
+          {isCompleted ? completedText || t("statusCard.completed") : pendingText || t("statusCard.pending")}
+        </span>
       </div>
     </div>
-  );
+  )
 }
 

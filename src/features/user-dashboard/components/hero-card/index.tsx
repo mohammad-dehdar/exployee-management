@@ -1,62 +1,87 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAuthStore } from "@/store/store";
-import { useRouter } from "@/i18n/routing";
+import { useTranslations } from "next-intl"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { useAuthStore } from "@/store/store"
+import { useRouter } from "@/i18n/routing"
+import { Sparkles, LogOut } from "lucide-react"
 
 interface HeroCardProps {
-  completionPercent: number;
+  completionPercent: number
 }
 
 export function HeroCard({ completionPercent }: HeroCardProps) {
-  const t = useTranslations('userDashboard');
-  const router = useRouter();
-  const {logout} = useAuthStore();
+  const t = useTranslations("userDashboard")
+  const router = useRouter()
+  const { logout } = useAuthStore()
+
   const handleLogout = async () => {
-    await logout();
-    router.replace("/");
-  };
+    await logout()
+    router.replace("/")
+  }
+
+  const handleCompleteProfile = () => {
+    router.push("/user-dashboard/user-form")
+  }
+
+  const progressWidth = `${Math.max(completionPercent, 8)}%`
+
   return (
-    <Card className="relative overflow-hidden rounded-3xl border border-border/60 bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white shadow-xl">
-      <div className="pointer-events-none absolute inset-0 opacity-20">
-        <div className="absolute -left-10 top-10 h-48 w-48 rounded-full bg-emerald-400 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-48 w-48 rounded-full bg-cyan-400 blur-3xl" />
+    <Card className="relative overflow-hidden rounded-2xl border border-neutral-40 bg-neutral-10/90 text-neutral-110 shadow-lg backdrop-blur-xl dark:border-neutral-90 dark:bg-neutral-110">
+      <div className="pointer-events-none absolute inset-0 opacity-70 dark:opacity-60">
+        <div className="absolute -left-16 top-0 size-48 rounded-full bg-primary-20 blur-[120px]" />
+        <div className="absolute right-0 -bottom-16 size-48 rounded-full bg-secondary-10 blur-[110px]" />
       </div>
-      <CardHeader className="relative z-10 p-6 mb-4">
-        <CardTitle className="mt-2 text-2xl font-semibold leading-10">
-          {completionPercent === 100
-            ? t('profile.complete')
-            : t('profile.incomplete')}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="relative z-10 flex flex-col gap-5 px-6 pb-6">
-        <div>
-          <div className="flex items-center justify-between text-xs text-white/70">
-            <span>{t('heroCard.completionPercent')}</span>
-            <span>%{completionPercent}</span>
+
+      <CardHeader className="relative z-10 space-y-3 p-6 pb-2">
+        <div className="flex items-center gap-3">
+          <div className="flex size-12 items-center justify-center rounded-2xl bg-linear-to-br from-primary to-primary-70 text-white shadow-lg">
+            <Sparkles className="size-5" />
           </div>
-          <div className="mt-2 h-2 rounded-full bg-white/20">
-            <div
-              className="h-full rounded-full bg-success transition-all"
-              style={{ width: `${Math.max(completionPercent, 10)}%` }}
-            />
+          <div className="space-y-1">
+            <Badge className="w-fit bg-primary-10 px-3 py-1 text-xs text-primary-80">{t("title")}</Badge>
+            <CardTitle className="text-2xl font-semibold text-neutral-110 dark:text-neutral-10">
+              {completionPercent === 100 ? t("profile.complete") : t("profile.incomplete")}
+            </CardTitle>
+            <CardDescription className="text-sm text-neutral-80 dark:text-neutral-50">
+              {t("heroCard.completionPercent")}
+            </CardDescription>
           </div>
         </div>
-       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-       <Button
-          as="link"
-          href="/user-dashboard/user-form"
-          className="w-full md:w-5/6 rounded-lg md:rounded-2xl bg-white/15  py-3 md:py-5 text-sm font-semibold text-white backdrop-blur transition hover:bg-primary/25"
-        >
-          {t('heroCard.completeProfile')}
-        </Button>
-        <Button variant="fill" color="error" className="w-full md:w-1/6 rounded-lg md:rounded-2xl bg-white/15 py-3 md:py-5 text-sm font-semibold text-white backdrop-blur transition hover:bg-error/25" onClick={handleLogout}>
-          {t('heroCard.logout')}
-        </Button>
-       </div>
+      </CardHeader>
+
+      <CardContent className="relative z-10 flex flex-col gap-6 p-6 pt-0">
+        <div>
+          <div className="flex items-center justify-between text-xs font-medium text-neutral-70 dark:text-neutral-40">
+            <span>{t("heroCard.completionPercent")}</span>
+            <span className="text-sm font-semibold text-neutral-110 dark:text-neutral-10">%{completionPercent}</span>
+          </div>
+          <div className="mt-3 h-3 rounded-full bg-neutral-30/70 dark:bg-neutral-90">
+            <div className="h-full rounded-full bg-linear-to-r from-primary to-secondary transition-all" style={{ width: progressWidth }} />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-3 md:flex-row">
+          <Button
+            type="button"
+            className="w-full rounded-xl border border-white/30 bg-linear-to-r from-primary to-primary-60 py-3 text-base font-semibold text-white shadow-lg transition hover:shadow-xl dark:border-transparent"
+            onClick={handleCompleteProfile}
+          >
+            {t("heroCard.completeProfile")}
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            className="w-full rounded-xl border border-error/20 bg-error-10/20 py-3 text-sm font-semibold text-error hover:bg-error-10/40"
+            onClick={handleLogout}
+          >
+            <LogOut className="size-4" />
+            {t("heroCard.logout")}
+          </Button>
+        </div>
       </CardContent>
     </Card>
-  );
+  )
 }

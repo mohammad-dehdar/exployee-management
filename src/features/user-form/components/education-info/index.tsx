@@ -1,58 +1,69 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-import { useFormContext } from "react-hook-form";
-import { TextInput } from "@/components/ui/text-input";
-import { DEGREE_LEVELS } from "@/schemas/user.schema";
-import { FormSectionWrapper, SelectField } from "@/components/shared";
+import { useTranslations } from "next-intl"
+import { useFormContext } from "react-hook-form"
+import { Input } from "@/components/ui/input"
+import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field"
+import { DEGREE_LEVELS, type UserRecord } from "@/schemas/user.schema"
+import { FormSectionWrapper, SelectField } from "@/components/shared"
+
+const inputStyles =
+  "mt-1.5 border-neutral-40 bg-neutral-20/80 text-sm text-neutral-100 shadow-xs focus-visible:border-primary focus-visible:ring-primary/40 dark:border-neutral-90 dark:bg-neutral-100/40 dark:text-neutral-10"
 
 export const EducationInfo = ({ editable = true }: { editable?: boolean }) => {
-    const { register } = useFormContext();
-    const t = useTranslations('userForm.sections.education');
+  const { register } = useFormContext<UserRecord>()
+  const t = useTranslations("userForm.sections.education")
 
-    return (
-        <FormSectionWrapper sectionKey="education" emoji="🎓">
-                <SelectField
-                    labelKey="fields.degree"
-                    register={register("education.degree")}
-                    options={DEGREE_LEVELS.map(d => ({ value: d }))}
-                    optionsTranslationKey="degree"
-                    editable={editable}
-                    sectionKey="education"
-                />
+  return (
+    <FormSectionWrapper sectionKey="education" emoji="🎓">
+      <FieldSet>
+        <FieldGroup className="grid gap-5 md:grid-cols-2">
+          <SelectField
+            labelKey="fields.degree"
+            register={register("education.degree")}
+            options={DEGREE_LEVELS.map((degree) => ({ value: degree }))}
+            optionsTranslationKey="degree"
+            editable={editable}
+            sectionKey="education"
+          />
 
-                <TextInput
-                    fullWidth
-                    label={t('fields.major')}
-                    variant="outline"
-                    color="neutral"
-                    placeholder={t('placeholders.major')}
-                    {...register("education.major")}
-                    className="rounded-lg"
-                    disabled={!editable}
-                />
+          <Field>
+            <FieldLabel className="text-sm font-semibold text-neutral-90 dark:text-neutral-20">
+              {t("fields.major")}
+            </FieldLabel>
+            <Input
+              placeholder={t("placeholders.major")}
+              {...register("education.major")}
+              disabled={!editable}
+              className={inputStyles}
+            />
+          </Field>
 
-                <TextInput
-                    fullWidth
-                    label={t('fields.university')}
-                    variant="outline"
-                    color="neutral"
-                    placeholder={t('placeholders.university')}
-                    {...register("education.university")}
-                    className="rounded-lg"
-                    disabled={!editable}
-                />
+          <Field>
+            <FieldLabel className="text-sm font-semibold text-neutral-90 dark:text-neutral-20">
+              {t("fields.university")}
+            </FieldLabel>
+            <Input
+              placeholder={t("placeholders.university")}
+              {...register("education.university")}
+              disabled={!editable}
+              className={inputStyles}
+            />
+          </Field>
 
-                <TextInput
-                    fullWidth
-                    label={t('fields.graduationYear')}
-                    variant="outline"
-                    color="neutral"
-                    placeholder={t('placeholders.graduationYear')}
-                    {...register("education.graduationYear")}
-                    className="rounded-lg"
-                    disabled={!editable}
-                />
-        </FormSectionWrapper>
-    );
-};
+          <Field>
+            <FieldLabel className="text-sm font-semibold text-neutral-90 dark:text-neutral-20">
+              {t("fields.graduationYear")}
+            </FieldLabel>
+            <Input
+              placeholder={t("placeholders.graduationYear")}
+              {...register("education.graduationYear")}
+              disabled={!editable}
+              className={inputStyles}
+            />
+          </Field>
+        </FieldGroup>
+      </FieldSet>
+    </FormSectionWrapper>
+  )
+}

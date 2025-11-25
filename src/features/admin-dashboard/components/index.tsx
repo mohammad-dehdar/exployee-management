@@ -1,3 +1,4 @@
 export * from "./user-card";
 export * from "./user-details";
-export { default as AdminUserDetailsPageFeature } from "./user-details-page";
+export * from "./user-details-page";
+export * from "./register-user";
