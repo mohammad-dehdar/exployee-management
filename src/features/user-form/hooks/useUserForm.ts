@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useCallback } from 'react';
+import { useEffect, useMemo, useCallback, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,11 +13,13 @@ import {
 } from '@/schemas/user.schema';
 import { toastError, toastSuccess } from '@/components/feedback';
 import { logger } from '@/utils/logger';
+import { getEmployeeProfileApi, saveEmployeeProfileApi } from '@/features/user-dashboard/api';
 
 export function useUserForm() {
   const t = useTranslations('userForm');
-  const { profiles, updateProfile, currentUserId } = useAuthStore();
+  const { profiles, updateProfile, currentUserId, addProfile } = useAuthStore();
   const { currentAccount: account } = useRequireAuth('user');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const profile = currentUserId ? profiles[currentUserId] : undefined;
 
@@ -54,23 +56,46 @@ export function useUserForm() {
 
   const onSubmit = useCallback(async (data: UserRecord) => {
     if (!account) return;
+    setIsSubmitting(true);
     
     const validation = userRecordSchema.safeParse(data);
     if (!validation.success) {
       logger.error('Form validation failed', validation.error, { userId: account.id });
       toastError(t('messages.validationError'));
+      setIsSubmitting(false);
       return;
     }
     
     try {
+      const result = await saveEmployeeProfileApi(data);
+      if (result.success && result.profile) {
+        addProfile(account.id, result.profile);
+        methods.reset(result.profile);
+      }
       await updateProfile(account.id, data);
       toastSuccess(t('messages.saveSuccess'));
       logger.info('Profile updated successfully', { userId: account.id });
     } catch (error) {
       logger.error('Failed to update profile', error, { userId: account.id });
       toastError(t('messages.saveError') || 'Failed to save profile');
+    } finally {
+      setIsSubmitting(false);
     }
-  }, [account, updateProfile, t]);
+  }, [account, updateProfile, addProfile, t, methods]);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!account || profile) return;
+      const result = await getEmployeeProfileApi();
+      if (result.success && result.profile) {
+        addProfile(account.id, result.profile);
+      } else if (result.message) {
+        toastError(t(result.message) || result.message);
+      }
+    };
+
+    fetchProfile();
+  }, [account, profile, addProfile, t]);
 
   const handleReset = () => {
     methods.reset({
@@ -92,6 +117,7 @@ export function useUserForm() {
     handleReset,
     completionPercent,
     account,
+    isSubmitting,
   };
 }
 

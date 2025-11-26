@@ -81,10 +81,10 @@ export async function getEmployeesApi(
 ): Promise<GetEmployeesResult> {
   try {
     const queryParams = new URLSearchParams();
-    if (params?.page) {
+    if (params?.page !== undefined) {
       queryParams.append('page', params.page.toString());
     }
-    if (params?.limit) {
+    if (params?.limit !== undefined) {
       queryParams.append('limit', params.limit.toString());
     }
 

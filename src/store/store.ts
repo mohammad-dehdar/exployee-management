@@ -3,7 +3,7 @@ import { useAuthStore as useAuthStoreBase, type Account } from "./auth.store";
 import { useProfileStore } from "./profile.store";
 import { registerUserApi } from "@/features/admin-dashboard/api/register.api";
 
-type Role = "admin" | "user";
+type Role = "admin" | "user" | "employee";
 
 export type { Account };
 export { useAuthStore };
@@ -52,7 +52,15 @@ function useAuthStore(): CombinedAuthState {
         login: authStore.login,
         logout: authStore.logout,
         registerUser: async (payload) => {
-            const result = await registerUserApi(payload);
+            const result = await registerUserApi(
+                {
+                    email: payload.email,
+                    password: payload.password,
+                    name: payload.displayName,
+                    orgEmail: payload.orgEmail,
+                },
+                { persistTokens: true }
+            );
             
             if (result.success && result.account && result.profile && result.token) {
                 authStore.addAccount(result.account);

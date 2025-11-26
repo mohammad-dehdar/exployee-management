@@ -60,6 +60,7 @@
     }
   },
   "userDetailsPage": {
+    "loading": "Loading user profile...",
     "userNotFound": "User Not Found",
     "userNotFoundDescription": "A user with the entered ID is not registered in the list.",
     "backToAdminDashboard": "Back to Admin Dashboard"

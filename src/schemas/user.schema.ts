@@ -81,14 +81,17 @@ export const certificateItemSchema = z.object({
 });
 
 // Attachment Info Schema
-export const attachmentInfoSchema = z.object({
-    resume: z.string().url('لینک نامعتبر است').optional(),
-    idScan: z.string().url('لینک نامعتبر است').optional(),
-    avatar: z.string().url('لینک نامعتبر است').optional(),
-    educationDocs: z.string().url('لینک نامعتبر است').optional(),
-    certificates: z.string().url('لینک نامعتبر است').optional(),
-});
+const fileSchema = typeof File === 'undefined' ? z.any() : z.instanceof(File);
+const fileOrUrl = z.union([z.string().url('validation.file.invalid'), fileSchema]);
+const fileOrUrlList = z.union([fileOrUrl, z.array(fileOrUrl)]);
 
+export const attachmentInfoSchema = z.object({
+    resume: fileOrUrl.optional(),
+    idScan: fileOrUrl.optional(),
+    avatar: fileOrUrl.optional(),
+    educationDocs: fileOrUrlList.optional(),
+    certificates: fileOrUrlList.optional(),
+});
 // Additional Info Schema
 export const additionalInfoSchema = z.object({
     skills: z.array(z.string()).optional(),

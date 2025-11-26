@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getEmployeesApi, type EmployeeItem } from '../api/get-employees.api';
 import { toastError } from '@/components/feedback/toast-provider/toast-provider';
 import { useTranslations } from 'next-intl';
@@ -17,29 +17,29 @@ export function useEmployees(page: number = 1, limit: number = 10) {
     hasPrev: boolean;
   } | null>(null);
 
-  useEffect(() => {
-    const fetchEmployees = async () => {
-      setIsLoading(true);
-      setError(null);
+  const fetchEmployees = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
 
-      const result = await getEmployeesApi({ page, limit });
+    const result = await getEmployeesApi({ page, limit });
 
-      if (result.success && result.employees) {
-        setEmployees(result.employees);
-        if (result.pagination) {
-          setPagination(result.pagination);
-        }
-      } else {
-        const errorMessage = result.message || t('auth.errors.networkError');
-        setError(errorMessage);
-        toastError(errorMessage);
+    if (result.success && result.employees) {
+      setEmployees(result.employees);
+      if (result.pagination) {
+        setPagination(result.pagination);
       }
+    } else {
+      const errorMessage = result.message || t('auth.errors.networkError');
+      setError(errorMessage);
+      toastError(errorMessage);
+    }
 
-      setIsLoading(false);
-    };
-
-    fetchEmployees();
+    setIsLoading(false);
   }, [page, limit, t]);
+
+  useEffect(() => {
+    fetchEmployees();
+  }, [fetchEmployees]);
 
   return {
     employees,
@@ -47,16 +47,7 @@ export function useEmployees(page: number = 1, limit: number = 10) {
     error,
     pagination,
     refetch: () => {
-      setIsLoading(true);
-      getEmployeesApi({ page, limit }).then((result) => {
-        if (result.success && result.employees) {
-          setEmployees(result.employees);
-          if (result.pagination) {
-            setPagination(result.pagination);
-          }
-        }
-        setIsLoading(false);
-      });
+      void fetchEmployees();
     },
   };
 }

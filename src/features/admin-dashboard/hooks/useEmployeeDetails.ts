@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getEmployeeDetailsApi, type EmployeeDetails } from '../api/get-employee-details.api';
 import { toastError } from '@/components/feedback/toast-provider/toast-provider';
 import { useTranslations } from 'next-intl';
@@ -9,59 +9,39 @@ export function useEmployeeDetails(employeeId: string | undefined) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const fetchEmployeeDetails = useCallback(async () => {
     if (!employeeId) {
-      // Use setTimeout to avoid synchronous setState in effect
-      const timer = setTimeout(() => {
-        setEmployee(null);
-        setError(null);
-        setIsLoading(false);
-      }, 0);
-      return () => clearTimeout(timer);
+      setEmployee(null);
+      setError(null);
+      setIsLoading(false);
+      return;
     }
 
-    let cancelled = false;
+    setIsLoading(true);
+    setError(null);
 
-    const fetchEmployeeDetails = async () => {
-      setIsLoading(true);
-      setError(null);
+    const result = await getEmployeeDetailsApi(employeeId);
 
-      const result = await getEmployeeDetailsApi(employeeId);
+    if (result.success && result.employee) {
+      setEmployee(result.employee);
+    } else {
+      const errorMessage = result.message || t('auth.errors.networkError');
+      setError(errorMessage);
+      toastError(errorMessage);
+    }
 
-      if (cancelled) return;
-
-      if (result.success && result.employee) {
-        setEmployee(result.employee);
-      } else {
-        const errorMessage = result.message || t('auth.errors.networkError');
-        setError(errorMessage);
-        toastError(errorMessage);
-      }
-
-      setIsLoading(false);
-    };
-
-    fetchEmployeeDetails();
-
-    return () => {
-      cancelled = true;
-    };
+    setIsLoading(false);
   }, [employeeId, t]);
+
+  useEffect(() => {
+    fetchEmployeeDetails();
+  }, [fetchEmployeeDetails]);
 
   return {
     employee,
     isLoading,
     error,
-    refetch: () => {
-      if (!employeeId) return;
-      setIsLoading(true);
-      getEmployeeDetailsApi(employeeId).then((result) => {
-        if (result.success && result.employee) {
-          setEmployee(result.employee);
-        }
-        setIsLoading(false);
-      });
-    },
+    refetch: fetchEmployeeDetails,
   };
 }
 
